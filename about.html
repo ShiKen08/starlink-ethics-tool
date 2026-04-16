@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — The Choice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0b0b10;
+      --bg-2:   #111118;
+      --text:   #e9e5dd;
+      --muted:  #7a7884;
+      --accent: #e8a04a;
+      --border: rgba(255,255,255,0.07);
+      --serif:  'Crimson Text', Georgia, serif;
+      --sans:   'Inter', -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 3.5rem;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.75; }
+
+    /* Header */
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 0.4rem;
+      line-height: 1.1;
+    }
+
+    .page-subtitle {
+      color: var(--muted);
+      font-size: 0.875rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 3rem;
+    }
+
+    /* Meta grid */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .meta-item {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+    }
+
+    .meta-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .meta-value {
+      font-size: 0.9rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Section headings */
+    h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 3rem 0 1rem;
+    }
+
+    /* Body text */
+    p {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+    }
+
+    p strong { color: var(--text); font-weight: 600; }
+    p em     { color: var(--text); font-style: italic; }
+
+    /* Divider */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    /* Source entries */
+    .source {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .source-ref {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .source-ref em {
+      font-style: italic;
+      color: var(--text);
+    }
+
+    .source-annotation {
+      font-family: var(--serif);
+      font-size: 1rem;
+      line-height: 1.72;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    @media (max-width: 520px) {
+      .meta-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <a href="index.html" class="back-link">← Return to The Choice</a>
+
+    <h1>About This Tool</h1>
+    <p class="page-subtitle">Starlink &amp; Digital Sovereignty — CME Ethics Tool · 2026</p>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Designer</div>
+        <div class="meta-value">[Your Name]</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Course</div>
+        <div class="meta-value">Critical Media Ethics, 2026</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Technology</div>
+        <div class="meta-value">Starlink / Low-Earth Orbit Satellite Internet</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Ethical Framework</div>
+        <div class="meta-value">Post-Colonial Ethics</div>
+      </div>
+    </div>
+
+    <h2>The Ethical Dilemma</h2>
+    <p>
+      <strong>When a developing nation chooses Starlink to connect its most excluded citizens, is it promoting
+      human development — or merely colonial dependency under a new name?</strong>
+    </p>
+    <p>
+      Starlink, operated by SpaceX, has brought high-speed satellite internet to communities across sub-Saharan
+      Africa, Latin America, and Southeast Asia that have never had reliable connectivity. The benefits are
+      concrete: rural schools can access online curricula, isolated clinics can consult specialists, displaced
+      communities can contact relatives. By early 2025, Starlink operated in over 100 countries and had
+      deployed more than 6,000 satellites — the largest constellation in human history.
+    </p>
+    <p>
+      But Starlink is owned entirely by a single private American company, controlled by a single individual,
+      operating under US law with no meaningful accountability to the nations it serves. In September 2022,
+      Elon Musk personally ordered Starlink switched off over Crimea to prevent a Ukrainian drone attack —
+      demonstrating that the same infrastructure that delivers connectivity also delivers control. One private
+      individual determined the outcome of a military conflict with no democratic mandate.
+    </p>
+    <p>
+      Nations in the Global South face a structurally coerced choice: accept Starlink's dependency or accept
+      digital exclusion. This is not a free choice — it is the product of capital inequalities that colonialism
+      itself created. Nations in Africa and Latin America did not choose to lack sovereign satellite
+      infrastructure; they were structurally prevented from building it.
+    </p>
+
+    <h2>Why This Dilemma Is Relevant to You</h2>
+    <p>
+      By 2030, low-earth orbit satellite constellations will be the dominant mode of internet access for an
+      estimated one billion people in underserved regions. The terms under which that connectivity arrives —
+      who owns the infrastructure, under whose law it operates, who can revoke it — will shape geopolitics and
+      sovereignty for decades.
+    </p>
+    <p>
+      This tool is designed for anyone who uses the internet without ever having to think about where it comes
+      from, or who controls it. The goal is not to provide an answer but to make the ethical weight of the
+      question impossible to ignore.
+    </p>
+
+    <hr />
+
+    <h2>Annotated Sources</h2>
+
+    <div class="source">
+      <p class="source-ref">
+        Couldry, N., &amp; Mejias, U. A. (2019).
+        <em>The Costs of Connection: How Data Is Colonizing Human Life and Appropriating It for Capitalism.</em>
+        Stanford University Press.
+      </p>
+      <p class="source-annotation">
+        The primary theoretical framework for this tool. Couldry and Mejias argue that "data colonialism" is
+        a structural continuation of historical colonialism — the same logic of appropriation and extraction,
+        now applied to human data and digital connectivity. Their concept of "data relations" as a mode of
+        dispossession directly informs the dependency phase: the moment the user realises that connectivity
+        and extraction are inseparable in the Starlink model.
+      </p>
+    </div>
+
+    <div class="source">
+      <p class="source-ref">
+        Nkrumah, K. (1965).
+        <em>Neo-Colonialism: The Last Stage of Imperialism.</em>
+        Thomas Nelson &amp; Sons.
+      </p>
+      <p class="source-annotation">
+        Nkrumah argued that formal decolonisation created a new mode of colonial control — dependency
+        maintained through economic and infrastructural means rather than direct rule. His observation that
+        neo-colonial infrastructure presents itself as development while serving the interests of the
+        controlling power maps precisely onto Starlink's expansion model. The colonial railway metaphor in
+        this tool draws directly from his analysis of infrastructure as extraction.
+      </p>
+    </div>
+
+    <div class="source">
+      <p class="source-ref">
+        Fanon, F. (1963).
+        <em>The Wretched of the Earth.</em>
+        Grove Press.
+      </p>
+      <p class="source-annotation">
+        Fanon's analysis of colonial dependency — particularly how dependency structures the agency and
+        self-determination of colonised peoples — provides the ethical ground for why substantive sovereignty
+        matters beyond formal independence. His critique of post-colonial elites who reproduce colonial
+        structures informs the tool's refusal to frame rejection as a clean victory: rejecting Starlink in
+        the name of sovereignty is also a choice made by elites who already have connectivity.
+      </p>
+    </div>
+
+    <div class="source">
+      <p class="source-ref">
+        DeNardis, L. (2014).
+        <em>The Global War for Internet Governance.</em>
+        Yale University Press.
+      </p>
+      <p class="source-annotation">
+        DeNardis demonstrates that control over internet infrastructure constitutes political governance
+        power. Her central argument — "infrastructure is politics" — grounds the claim that Starlink's
+        private ownership is not merely a commercial question but a question of who governs global
+        connectivity. Her framework explains why a developing nation's dependency on SpaceX represents
+        a governance deficit, not simply a market dependency.
+      </p>
+    </div>
+
+    <div class="source">
+      <p class="source-ref">
+        Kwet, M. (2019). Digital colonialism: US empire and the new imperialism in the Global South.
+        <em>Race &amp; Class, 60</em>(4), 3–26. https://doi.org/10.1177/0306396818823172
+      </p>
+      <p class="source-annotation">
+        Kwet argues that US technology corporations are enacting a new form of imperialism in the Global
+        South through control over software, hardware, and network infrastructure, using South Africa as a
+        case study. His analysis of how technical standards, licensing regimes, and platform dependencies
+        reproduce colonial economic relationships maps directly onto SpaceX's position in the satellite
+        internet market.
+      </p>
+    </div>
+
+    <div class="source">
+      <p class="source-ref">
+        Parks, L., &amp; Starosielski, N. (Eds.). (2015).
+        <em>Signal Traffic: Critical Studies of Media Infrastructures.</em>
+        University of Illinois Press.
+      </p>
+      <p class="source-annotation">
+        This volume examines how communication infrastructures — cables, satellites, towers — embed social
+        and political power relations that are typically rendered invisible to their users. Several chapters
+        address satellite infrastructure specifically, arguing that the apparent universality of satellite
+        coverage conceals deeply situated political and economic interests. This provides the bridge between
+        post-colonial theory and the material specificity of Starlink as a physical infrastructure.
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>

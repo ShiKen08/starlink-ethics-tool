@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Choice — Starlink & Digital Sovereignty</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       INTRO
+  ══════════════════════════════════════════ -->
+  <section id="intro">
+    <div class="intro-bg"></div>
+    <div class="intro-content">
+      <p class="intro-eyebrow">2024 · East Africa</p>
+      <h1 class="intro-title">The Choice</h1>
+      <p class="intro-sub">Starlink &amp; Digital Sovereignty</p>
+      <div class="intro-scenario">
+        <p>You are the <strong>Minister of Digital Infrastructure</strong> of Kwanda — a small nation in East Africa.</p>
+        <p><strong>40% of your citizens</strong> have no internet access. Rural hospitals are cut off. Schools are dark.</p>
+        <p>SpaceX is offering you <strong>Starlink</strong> — high-speed satellite internet, operational within weeks.</p>
+        <p>There is no viable alternative. There has never been one.</p>
+      </div>
+      <button class="btn-primary" onclick="showMap()">Make Your Choice →</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       MAP + CHOICE
+  ══════════════════════════════════════════ -->
+  <section id="map-section" class="hidden">
+
+    <!-- Happiness bar — sticky -->
+    <div id="happiness-bar" class="hidden">
+      <div class="happiness-label">
+        <span id="happiness-icon">○</span>
+        <span id="happiness-text">Awaiting your decision</span>
+      </div>
+      <div class="happiness-track">
+        <div id="happiness-fill" class="happiness-fill neutral" style="width:50%"></div>
+      </div>
+      <div id="happiness-state-label" class="happiness-state"></div>
+    </div>
+
+    <div id="map"></div>
+
+    <div id="choice-panel">
+      <div class="choice-context">
+        <h2>Your nation. Your decision.</h2>
+        <p>
+          The dots on the map are your people — communities without internet access.
+          Click any dot to learn about them. Then make your choice.
+        </p>
+      </div>
+      <div class="choice-buttons">
+        <button class="btn-adopt" onclick="makeChoice('adopt')">
+          <span class="btn-icon">◎</span>
+          <span class="btn-title">Adopt Starlink</span>
+          <span class="btn-desc">Connect your people now</span>
+        </button>
+        <button class="btn-reject" onclick="makeChoice('reject')">
+          <span class="btn-icon">◯</span>
+          <span class="btn-title">Reject Starlink</span>
+          <span class="btn-desc">Protect your sovereignty</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CONSEQUENCES
+  ══════════════════════════════════════════ -->
+  <section id="consequence-section" class="hidden">
+
+    <!-- ADOPT — Phase A: Joy -->
+    <div id="phase-joy" class="phase hidden">
+      <div class="phase-header joy-header">
+        <span class="phase-tag">Months 1–6</span>
+        <h2>The Connection Arrives</h2>
+        <p class="phase-sub">Your nation comes online. Happiness soars.</p>
+      </div>
+      <div class="citizen-cards" id="joy-cards"></div>
+      <div class="stats-row">
+        <div class="stat-card joy">
+          <span class="stat-number">847</span>
+          <span class="stat-label">Schools Connected</span>
+        </div>
+        <div class="stat-card joy">
+          <span class="stat-number">312</span>
+          <span class="stat-label">Rural Clinics Online</span>
+        </div>
+        <div class="stat-card joy">
+          <span class="stat-number">2.4M</span>
+          <span class="stat-label">People Connected</span>
+        </div>
+      </div>
+      <div class="phase-transition">
+        <p class="transition-text">Three years pass. Then a notification arrives...</p>
+        <button class="btn-continue" onclick="revealDependency()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ADOPT — Phase B: Anger / Dependency -->
+    <div id="phase-anger" class="phase hidden">
+      <div class="phase-header anger-header">
+        <span class="phase-tag">Year 3</span>
+        <h2>The Dependency Reveals Itself</h2>
+        <p class="phase-sub">Something has changed. Citizens are angry.</p>
+      </div>
+      <div class="citizen-cards" id="anger-cards"></div>
+      <div class="dependency-visual">
+        <p class="dependency-label">Your nation's internet traffic flows through:</p>
+        <div class="dependency-chain">
+          <div class="dep-node nation">Kwanda</div>
+          <div class="dep-arrow">→</div>
+          <div class="dep-node server">SpaceX Ground Stations</div>
+          <div class="dep-arrow">→</div>
+          <div class="dep-node us">US Jurisdiction<br/><small>California Law</small></div>
+        </div>
+        <blockquote class="dependency-quote">
+          "Your nation's sovereignty is now contingent on the decisions of a man your citizens never voted for."
+          <cite>— adapted from Nkrumah (1965), <em>Neo-Colonialism: The Last Stage of Imperialism</em></cite>
+        </blockquote>
+      </div>
+      <div class="phase-transition">
+        <button class="btn-continue" onclick="showResolution()">Reflect on this →</button>
+      </div>
+    </div>
+
+    <!-- REJECT — Grief -->
+    <div id="phase-reject" class="phase hidden">
+      <div class="phase-header reject-header">
+        <span class="phase-tag">Year 1 — Year 3</span>
+        <h2>The Connection Never Came</h2>
+        <p class="phase-sub">Sovereignty is protected. Communities remain dark.</p>
+      </div>
+      <div class="citizen-cards" id="reject-cards"></div>
+      <div class="stats-row">
+        <div class="stat-card grief">
+          <span class="stat-number">0</span>
+          <span class="stat-label">Additional Schools Connected</span>
+        </div>
+        <div class="stat-card grief">
+          <span class="stat-number">78%</span>
+          <span class="stat-label">Rural Clinics Still Offline</span>
+        </div>
+        <div class="stat-card grief">
+          <span class="stat-number">2.4M</span>
+          <span class="stat-label">People Still Excluded</span>
+        </div>
+      </div>
+      <div class="reject-reflection">
+        <p>"Rejecting Starlink in the name of sovereignty can itself become a form of paternalism — elites deciding that abstract sovereignty matters more than a rural hospital's internet access. The ethical tension is genuine: both adoption and rejection carry post-colonial harms."</p>
+        <cite>— CME Progress Check, 2024</cite>
+      </div>
+      <div class="phase-transition">
+        <button class="btn-continue" onclick="showResolution()">Reflect on this →</button>
+      </div>
+    </div>
+
+    <!-- RESOLUTION -->
+    <div id="phase-resolution" class="phase hidden">
+      <div class="resolution-content">
+        <h2>There is no clean answer.</h2>
+        <p class="resolution-sub">This is a real dilemma faced by real nations right now.</p>
+
+        <div class="comparison-grid">
+          <div class="compare-col adopt-col">
+            <h3>If you adopted Starlink:</h3>
+            <ul>
+              <li>2.4 million people came online</li>
+              <li>Schools and hospitals connected</li>
+              <li>But infrastructure is owned in California</li>
+              <li>One man can disconnect your nation</li>
+              <li>Your data flows under US law, not yours</li>
+              <li>Exit costs make leaving nearly impossible</li>
+            </ul>
+          </div>
+          <div class="compare-col reject-col">
+            <h3>If you rejected Starlink:</h3>
+            <ul>
+              <li>Your sovereignty remained intact — formally</li>
+              <li>2.4 million people stayed offline</li>
+              <li>Rural hospitals stayed isolated</li>
+              <li>The cost is borne by the most vulnerable</li>
+              <li>Not by the ministers who made the choice</li>
+              <li>The alternative never materialised</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="framework-box">
+          <h4>Post-Colonial Ethics Analysis</h4>
+          <p>
+            Couldry &amp; Mejias (2019) argue this is not a new dilemma — it is the same logic as colonial railways:
+            <em>infrastructure presented as development, designed for extraction.</em>
+            The choice between adoption and rejection is itself a product of the conditions colonialism created.
+            Nations in the Global South did not create the capital deficit that makes sovereign alternatives impossible.
+          </p>
+          <p>
+            Nkrumah (1965) called this neo-colonialism: "the last stage of imperialism" — formal independence
+            with structural dependency. Starlink's expansion follows the same logic as the telegraph and the
+            railway before it. The infrastructure is real. The benefit is real. The control is real too.
+          </p>
+        </div>
+
+        <div class="crimea-panel">
+          <div class="crimea-icon">!</div>
+          <div>
+            <h4>The Crimea Incident — September 2022</h4>
+            <p>
+              Elon Musk personally ordered Starlink switched off over Crimea to prevent a Ukrainian military
+              drone attack on Russian naval vessels. A private individual determined the outcome of a military
+              operation. No democratic vote. No court order. No appeal process.
+            </p>
+            <p class="crimea-followup">If this power exists in a geopolitical conflict, it exists for your nation too.</p>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a href="about.html" class="btn-about">About This Tool + Sources</a>
+          <button class="btn-restart" onclick="restart()">Try the other choice</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Crimea flash overlay -->
+  <div id="crimea-flash" onclick="dismissCrimea()">
+    <div class="crimea-flash-content">
+      <p class="crimea-flash-date">Breaking — September 2022</p>
+      <h3>Elon Musk personally orders Starlink switched off over Crimea.</h3>
+      <p>A private individual just determined the outcome of a military conflict.</p>
+      <p>No vote. No court. No appeal.</p>
+      <p class="crimea-flash-question">Your nation is not at war. <em>Yet.</em></p>
+      <p class="crimea-flash-hint">Click anywhere to continue</p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
