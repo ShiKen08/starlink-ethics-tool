@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════════
-//  DATA — Real communities affected by the Starlink dilemma
+//  COMMUNITY DATA
 // ══════════════════════════════════════════════════════════════
 
 const COMMUNITIES = [
@@ -8,29 +8,29 @@ const COMMUNITIES = [
     name: 'Bugesera District, Rwanda',
     coords: [-2.15, 30.14],
     population: '350,000 people',
-    context: 'Farming community. One clinic, twelve schools. 8% internet access before Starlink.',
-    quote_joy:   '"My daughter passed her exams using resources she never had before." — Uwase, primary school teacher',
+    context: 'Farming community. One clinic, twelve schools. 8% internet access.',
+    quote_joy:   '"My daughter passed her exams using resources she never had before." — Uwase, teacher',
     quote_anger: '"We traded one master for another. At least the colonialists built roads we still use." — Community elder',
-    quote_grief: '"The government rejected Starlink. The clinic is still dark. Last month a mother died during transfer." — Health worker',
+    quote_grief: '"The clinic is still dark. A mother died in transfer last month." — Health worker',
   },
   {
     id: 'kenya',
     name: 'Turkana County, Kenya',
     coords: [3.12, 35.59],
     population: '926,000 people',
-    context: 'Remote nomadic communities. Lowest internet penetration in Kenya. No fibre infrastructure.',
+    context: 'Remote nomadic communities. Lowest internet penetration in Kenya.',
     quote_joy:   '"For the first time, our children learn from teachers in the capital without leaving home." — School principal',
-    quote_anger: '"Who governs our connection? Not our parliament. Not our courts. One man, in California." — Journalist, Nairobi',
-    quote_grief: '"Another election cycle. Another connectivity promise. Another year of nothing." — Community elder',
+    quote_anger: '"Who governs our connection? Not our parliament. Not our courts. One man, in California." — Journalist',
+    quote_grief: '"Another election. Another connectivity promise. Another year of nothing." — Community elder',
   },
   {
     id: 'nigeria',
     name: 'Borno State, Nigeria',
     coords: [11.85, 13.15],
     population: '5.8 million people',
-    context: 'Conflict-affected. Displacement camps. 14% internet access. Ongoing humanitarian crisis.',
-    quote_joy:   '"Displaced families can contact relatives they have not spoken to in years. This is not internet — it is hope." — UNHCR field worker',
-    quote_anger: '"Our most vulnerable people\'s data is on US servers under US law. No one told them." — Digital rights researcher',
+    context: 'Conflict-affected. Displacement camps. 14% internet access.',
+    quote_joy:   '"Displaced families can contact relatives. This is not internet — it is hope." — UNHCR field worker',
+    quote_anger: '"Our most vulnerable people\'s data is on US servers under US law. No one told them." — Researcher',
     quote_grief: '"We protected our sovereignty. The displaced families are still cut off from the world." — NGO director',
   },
   {
@@ -38,249 +38,381 @@ const COMMUNITIES = [
     name: 'Cabo Delgado, Mozambique',
     coords: [-12.33, 40.56],
     population: '2.3 million people',
-    context: 'Insurgency-affected region. Humanitarian crisis. Almost no telecommunications infrastructure.',
-    quote_joy:   '"Aid workers can coordinate in real time. Lives are being saved this week that were not saved last year." — Aid coordinator',
+    context: 'Insurgency-affected. Humanitarian crisis. Almost no telecommunications infrastructure.',
+    quote_joy:   '"Aid workers can coordinate in real time. Lives are being saved this week that were not last year." — Aid coordinator',
     quote_anger: '"SpaceX can disconnect this province whenever they decide. They owe us no explanation." — Communications minister',
-    quote_grief: '"Aid coordination collapsed without connectivity. We could not track the crisis at all." — Field coordinator',
+    quote_grief: '"Aid coordination collapsed without connectivity. We could not track the crisis." — Field coordinator',
   },
   {
     id: 'brazil',
     name: 'Amazon Basin, Brazil',
     coords: [-3.47, -62.21],
     population: '1.1 million indigenous people',
-    context: 'Remote indigenous communities. Historically excluded from all digital infrastructure. Deforestation surveillance depends on connectivity.',
-    quote_joy:   '"Our elders\' languages are finally being documented. We are visible to the world for the first time." — Indigenous leader',
-    quote_anger: '"Our knowledge — our maps, our languages — now flows through a private American corporation under their terms." — Rights lawyer',
-    quote_grief: '"The government refused foreign control. Our communities remained invisible. The deforestation continued unchecked." — Activist',
+    context: 'Remote indigenous communities. Historically excluded from all digital infrastructure.',
+    quote_joy:   '"Our elders\' languages are being documented for the first time. We are visible to the world." — Indigenous leader',
+    quote_anger: '"Our knowledge — our maps, our languages — now flows through a private American corporation." — Rights lawyer',
+    quote_grief: '"The government refused foreign control. Our communities remained invisible." — Activist',
   },
   {
     id: 'myanmar',
     name: 'Shan State, Myanmar',
     coords: [21.14, 97.04],
     population: '5.8 million people',
-    context: 'Active conflict zone. Military internet blackouts common. Cut off from humanitarian aid and journalism.',
-    quote_joy:   '"We could communicate without the military monitoring every word. It changed what was possible." — Journalist',
-    quote_anger: '"Musk cut Starlink in Ukraine when it suited him. If he disagrees with our resistance, he can cut us too." — Resistance activist',
-    quote_grief: '"At least Starlink was harder for the military to switch off. Our government\'s choice gave them back that power." — Reporter',
+    context: 'Active conflict zone. Military internet blackouts common.',
+    quote_joy:   '"We could communicate without the military monitoring every word. It changed everything." — Journalist',
+    quote_anger: '"Musk cut Starlink in Ukraine when it suited him. If he disagrees with us, he can cut us too." — Activist',
+    quote_grief: '"At least Starlink was harder for the military to switch off. Our choice gave them that power back." — Reporter',
   },
 ];
 
+const SPACEX = [34.05, -118.25]; // SpaceX HQ, California
+
 // ══════════════════════════════════════════════════════════════
-//  STATE
+//  MAP STATE
 // ══════════════════════════════════════════════════════════════
 
 let map = null;
 const markerRefs = {};
-let crimeaDismissed = false;
-let postCrimeaCallback = null;
+let flowLines = [];
+let flowAnimRunning = false;
+let flowDashOffset = 0;
+
+const MARKER = {
+  excluded: { fillColor:'#e8a04a', color:'#c8843a', fillOpacity:.55, radius:9,  weight:2, opacity:.9 },
+  joy:      { fillColor:'#34d27b', color:'#27ae60', fillOpacity:.75, radius:11, weight:2, opacity:1  },
+  angry:    { fillColor:'#e84040', color:'#c0392b', fillOpacity:.75, radius:11, weight:2, opacity:1  },
+  grief:    { fillColor:'#6b7280', color:'#555d6b', fillOpacity:.40, radius:8,  weight:1, opacity:.7 },
+};
 
 // ══════════════════════════════════════════════════════════════
-//  DOM HELPERS
+//  TIMER / INTERVAL REFS
 // ══════════════════════════════════════════════════════════════
 
-function show(id) {
-  document.getElementById(id).classList.remove('hidden');
-}
-
-function hide(id) {
-  document.getElementById(id).classList.add('hidden');
-}
-
-function fadeIn(el) {
-  el.classList.remove('hidden');
-  // Double rAF ensures browser paints at opacity:0 before transitioning
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      el.classList.add('visible');
-    });
-  });
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+let timerInterval  = null;
+let timerSeconds   = 8;
+let quoteInterval  = null;
+let quoteIndex     = 0;
+let crimeaAutoTimer = null;
 
 // ══════════════════════════════════════════════════════════════
 //  HAPPINESS METER
 // ══════════════════════════════════════════════════════════════
 
-const HAPPINESS_STATES = {
-  neutral: { value: 50,  icon: '○', label: 'Awaiting decision',       cls: 'neutral', stateLabel: '' },
-  joy:     { value: 84,  icon: '◉', label: 'Citizens are hopeful',    cls: 'joy',     stateLabel: 'HAPPY' },
-  angry:   { value: 16,  icon: '◎', label: 'Citizens are angry',      cls: 'angry',   stateLabel: 'ANGRY' },
-  grief:   { value: 10,  icon: '●', label: 'Communities in darkness', cls: 'grief',   stateLabel: 'EXCLUDED' },
+const HAPPINESS = {
+  neutral: { value:50,  icon:'○', label:'Awaiting your decision',  cls:'neutral', state:'' },
+  joy:     { value:85,  icon:'◉', label:'Citizens are hopeful',    cls:'joy',     state:'HAPPY' },
+  angry:   { value:14,  icon:'◎', label:'Citizens are angry',      cls:'angry',   state:'ANGRY' },
+  grief:   { value:10,  icon:'●', label:'Communities in darkness', cls:'grief',   state:'EXCLUDED' },
 };
 
 function setHappiness(key) {
-  const s = HAPPINESS_STATES[key];
-  const fill   = document.getElementById('happiness-fill');
-  const text   = document.getElementById('happiness-text');
-  const icon   = document.getElementById('happiness-icon');
-  const state  = document.getElementById('happiness-state-label');
-
-  fill.style.width = s.value + '%';
-  fill.className   = 'happiness-fill ' + s.cls;
-  text.textContent = s.label;
-  icon.textContent = s.icon;
-  state.textContent = s.stateLabel;
-  state.style.color = s.cls === 'joy' ? 'var(--joy)' :
-                      s.cls === 'angry' ? 'var(--angry)' : 'var(--grief)';
+  const s = HAPPINESS[key];
+  document.getElementById('h-fill').style.width  = s.value + '%';
+  document.getElementById('h-fill').className    = 'h-fill ' + s.cls;
+  document.getElementById('h-text').textContent  = s.label;
+  document.getElementById('h-icon').textContent  = s.icon;
+  const st = document.getElementById('h-state');
+  st.textContent = s.state;
+  st.style.color = s.cls==='joy' ? 'var(--joy)' : s.cls==='angry' ? 'var(--angry)' : 'var(--grief)';
 }
 
 // ══════════════════════════════════════════════════════════════
-//  MAP
+//  TOP PANEL SWITCHER
 // ══════════════════════════════════════════════════════════════
 
-const MARKER_STYLES = {
-  excluded: { fillColor: '#e8a04a', color: '#c8843a', fillOpacity: 0.55, radius: 9,  weight: 2, opacity: 0.9 },
-  joy:      { fillColor: '#34d27b', color: '#27ae60', fillOpacity: 0.75, radius: 11, weight: 2, opacity: 1   },
-  angry:    { fillColor: '#e84040', color: '#c0392b', fillOpacity: 0.75, radius: 11, weight: 2, opacity: 1   },
-  grief:    { fillColor: '#6b7280', color: '#555d6b', fillOpacity: 0.4,  radius: 8,  weight: 1, opacity: 0.7 },
-};
+function showPanel(id) {
+  ['tp-choice','tp-joy','tp-anger','tp-reject'].forEach(pid => {
+    document.getElementById(pid).classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  MAP INIT
+// ══════════════════════════════════════════════════════════════
 
 function initMap() {
   map = L.map('map', {
-    center: [5, 22],
-    zoom: 3,
-    zoomControl: true,
-    scrollWheelZoom: false,
-    attributionControl: true,
+    center: [5, 22], zoom: 3,
+    zoomControl: true, scrollWheelZoom: false,
   });
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 18,
+    subdomains: 'abcd', maxZoom: 18,
   }).addTo(map);
 
   COMMUNITIES.forEach(c => {
-    const marker = L.circleMarker(c.coords, MARKER_STYLES.excluded).addTo(map);
-    marker.bindPopup(buildPopup(c, 'excluded'), { maxWidth: 280 });
-    markerRefs[c.id] = marker;
+    const m = L.circleMarker(c.coords, MARKER.excluded).addTo(map);
+    m.bindPopup(buildPopup(c, 'excluded'), { maxWidth: 280 });
+    markerRefs[c.id] = m;
   });
 }
 
 function buildPopup(c, state) {
-  const quoteKey = 'quote_' + state;
-  const quote = c[quoteKey] || c.context;
-  return `
-    <div class="popup-content">
-      <p class="popup-name">${c.name}</p>
-      <p class="popup-context">${c.context}</p>
-      <p class="popup-population">${c.population}</p>
-      <p class="popup-quote">${quote}</p>
-    </div>
-  `;
+  const quote = c['quote_' + state] || c.context;
+  return `<div class="popup-content">
+    <p class="popup-name">${c.name}</p>
+    <p class="popup-context">${c.context}</p>
+    <p class="popup-pop">${c.population}</p>
+    <p class="popup-quote">${quote}</p>
+  </div>`;
 }
 
 function updateMarkers(state) {
   COMMUNITIES.forEach(c => {
-    const marker = markerRefs[c.id];
-    marker.setStyle(MARKER_STYLES[state]);
-    marker.setPopupContent(buildPopup(c, state));
+    markerRefs[c.id].setStyle(MARKER[state]);
+    markerRefs[c.id].setPopupContent(buildPopup(c, state));
   });
 }
 
 // ══════════════════════════════════════════════════════════════
-//  CITIZEN CARDS
+//  FLOW LINES — Money draining to California
 // ══════════════════════════════════════════════════════════════
 
-function buildCards(containerId, quoteKey) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = '';
-  COMMUNITIES.slice(0, 3).forEach(c => {
-    const card = document.createElement('div');
-    card.className = 'citizen-card';
-    card.innerHTML = `
-      <p class="card-location">${c.name}</p>
-      <p class="card-quote">${c[quoteKey]}</p>
-    `;
-    container.appendChild(card);
+function showFlowLines() {
+  // SpaceX marker
+  const spxM = L.circleMarker(SPACEX, {
+    radius:14, fillColor:'#e84040', color:'#ff5050',
+    fillOpacity:.18, weight:2, interactive:true,
+  }).addTo(map);
+  spxM.bindPopup(`<div class="popup-content">
+    <p class="popup-name">SpaceX HQ — California, USA</p>
+    <p class="popup-context">All revenue, data, and decision-making authority flows here. Under US law. Accountable to US shareholders only.</p>
+    <p class="popup-quote">"No vote. No court. No exit." — post-colonial analysis</p>
+  </div>`, { maxWidth:260 });
+  flowLines.push(spxM);
+
+  // Animated drain lines
+  COMMUNITIES.forEach((c, i) => {
+    const arcLat = Math.max(c.coords[0] + 22, 38);
+    const arcLng = (c.coords[1] + SPACEX[1]) / 2;
+
+    const line = L.polyline([c.coords, [arcLat, arcLng], SPACEX], {
+      color:'#e84040', weight:1.8, opacity:0,
+      dashArray:'8 14', interactive:false,
+    }).addTo(map);
+
+    flowLines.push(line);
+    setTimeout(() => line.setStyle({ opacity: 0.65 }), i * 200);
   });
+
+  // Zoom to show global drain
+  map.flyTo([25, -30], 2, { duration: 1.8 });
+
+  // Shared dash-offset animation
+  flowAnimRunning = true;
+  animateFlow();
+}
+
+function animateFlow() {
+  if (!flowAnimRunning) return;
+  flowDashOffset -= 1;
+  flowLines.forEach(l => {
+    if (l._path) l._path.setAttribute('stroke-dashoffset', flowDashOffset);
+  });
+  requestAnimationFrame(animateFlow);
+}
+
+function removeFlowLines() {
+  flowAnimRunning = false;
+  flowLines.forEach(l => { if (l.remove) l.remove(); });
+  flowLines = [];
 }
 
 // ══════════════════════════════════════════════════════════════
-//  FLOW
+//  MONEY COUNTER
 // ══════════════════════════════════════════════════════════════
 
-function showMap() {
-  hide('intro');
-  show('map-section');
+function startMoneyCounter() {
+  const el = document.getElementById('money-value');
+  let val = 0;
+  const target = 2.4;
+  const step = target / 40;
+  const iv = setInterval(() => {
+    val = Math.min(val + step, target);
+    el.textContent = val.toFixed(1);
+    if (val >= target) clearInterval(iv);
+  }, 80);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  QUOTE ROTATION
+// ══════════════════════════════════════════════════════════════
+
+function startQuotes(elId, quoteKey) {
+  stopQuotes();
+  quoteIndex = 0;
+  const el = document.getElementById(elId);
+
+  function next() {
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.textContent = COMMUNITIES[quoteIndex][quoteKey];
+      el.style.opacity = '1';
+      quoteIndex = (quoteIndex + 1) % COMMUNITIES.length;
+    }, 400);
+  }
+  next();
+  quoteInterval = setInterval(next, 3200);
+}
+
+function stopQuotes() {
+  if (quoteInterval) { clearInterval(quoteInterval); quoteInterval = null; }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  JOY TIMER (8s countdown → Crimea flash)
+// ══════════════════════════════════════════════════════════════
+
+function startJoyTimer() {
+  timerSeconds = 8;
+  document.getElementById('timer-sec').textContent = timerSeconds;
+
+  // CSS transition depletion
+  const fill = document.getElementById('timer-fill');
+  fill.style.transition = 'none';
+  fill.style.width = '100%';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    fill.style.transition = 'width 8s linear';
+    fill.style.width = '0%';
+  }));
+
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    const el = document.getElementById('timer-sec');
+    if (el) el.textContent = Math.max(timerSeconds, 0);
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      triggerCrimea();
+    }
+  }, 1000);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  REJECT EFFECTS — staggered death + greyscale + vignette + year counter
+// ══════════════════════════════════════════════════════════════
+
+function doRejectEffects() {
+  const mapEl = document.getElementById('map-container');
+  const vignette = document.getElementById('reject-vignette');
+
+  // 1. Staggered marker flicker → death
+  COMMUNITIES.forEach((c, i) => {
+    setTimeout(() => {
+      const m = markerRefs[c.id];
+      // Brief white flash
+      m.setStyle({ fillColor:'#ffffff', color:'#ffffff', fillOpacity:.9, radius:13, weight:2, opacity:1 });
+      setTimeout(() => m.setStyle(MARKER.grief), 350);
+    }, i * 500);
+  });
+
+  // 2. Map greyscale (starts after all markers die ~3s)
+  setTimeout(() => {
+    mapEl.classList.add('greyscale');
+  }, 3500);
+
+  // 3. Vignette fade in
+  setTimeout(() => {
+    vignette.classList.add('active');
+  }, 2000);
+
+  // 4. Year counter: Year 1 → Year 2 → Year 3 → Still waiting.
+  const yearEl = document.getElementById('reject-year-text');
+  const years = ['Year 1', 'Year 2', 'Year 3', 'Still waiting.'];
+  let yi = 0;
+
+  function advanceYear() {
+    yearEl.style.opacity = '0';
+    setTimeout(() => {
+      yearEl.textContent = years[yi];
+      yearEl.style.opacity = '1';
+      yi++;
+      if (yi < years.length) {
+        setTimeout(advanceYear, 2200);
+      } else {
+        // Show reflect button after "Still waiting."
+        setTimeout(() => {
+          document.getElementById('btn-reflect-reject').classList.remove('hidden');
+        }, 1800);
+      }
+    }, 400);
+  }
+  advanceYear();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  MAIN FLOW
+// ══════════════════════════════════════════════════════════════
+
+function startExperience() {
+  document.getElementById('screen-intro').classList.add('hidden');
+  document.getElementById('screen-main').classList.remove('hidden');
 
   if (!map) {
     initMap();
-    setTimeout(() => map.invalidateSize(), 150);
+    setTimeout(() => map.invalidateSize(), 100);
   }
 
-  show('happiness-bar');
   setHappiness('neutral');
+  showPanel('tp-choice');
 }
 
 function makeChoice(choice) {
-  hide('choice-panel');
-  show('consequence-section');
-
   if (choice === 'adopt') {
-    showJoyPhase();
+    updateMarkers('joy');
+    setHappiness('joy');
+    showPanel('tp-joy');
+    startQuotes('tp-quote-joy', 'quote_joy');
+    startJoyTimer();
   } else {
-    showRejectPhase();
+    setHappiness('grief');
+    showPanel('tp-reject');
+    startQuotes('tp-quote-reject', 'quote_grief');
+    doRejectEffects();
   }
 }
 
-// ── Adopt: Phase A (Joy) ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════════
+//  CRIMEA FLASH
+// ══════════════════════════════════════════════════════════════
 
-function showJoyPhase() {
-  updateMarkers('joy');
-  setHappiness('joy');
-  buildCards('joy-cards', 'quote_joy');
-  fadeIn(document.getElementById('phase-joy'));
-}
-
-// ── Adopt: Phase B (Anger) ───────────────────────────────────
-
-function revealDependency() {
-  // Show Crimea flash
-  const flash = document.getElementById('crimea-flash');
-  flash.classList.add('active');
-  crimeaDismissed = false;
-
-  // Store callback for after dismissal (or auto-advance after 6s)
-  postCrimeaCallback = doAngerPhase;
-  setTimeout(() => {
-    if (!crimeaDismissed) dismissCrimea();
-  }, 6000);
+function triggerCrimea() {
+  stopQuotes();
+  document.getElementById('crimea-flash').classList.add('active');
+  crimeaAutoTimer = setTimeout(dismissCrimea, 6000);
 }
 
 function dismissCrimea() {
-  crimeaDismissed = true;
-  const flash = document.getElementById('crimea-flash');
-  flash.classList.remove('active');
-  if (postCrimeaCallback) {
-    setTimeout(postCrimeaCallback, 300);
-    postCrimeaCallback = null;
-  }
+  clearTimeout(crimeaAutoTimer);
+  document.getElementById('crimea-flash').classList.remove('active');
+  setTimeout(doAngerPhase, 350);
 }
 
 function doAngerPhase() {
   updateMarkers('angry');
   setHappiness('angry');
-  buildCards('anger-cards', 'quote_anger');
-  fadeIn(document.getElementById('phase-anger'));
+  showPanel('tp-anger');
+  startQuotes('tp-quote-anger', 'quote_anger');
+  showFlowLines();
+  startMoneyCounter();
 }
 
-// ── Reject Phase ─────────────────────────────────────────────
-
-function showRejectPhase() {
-  updateMarkers('grief');
-  setHappiness('grief');
-  buildCards('reject-cards', 'quote_grief');
-  fadeIn(document.getElementById('phase-reject'));
-}
-
-// ── Resolution ───────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════
+//  RESOLUTION
+// ══════════════════════════════════════════════════════════════
 
 function showResolution() {
-  fadeIn(document.getElementById('phase-resolution'));
+  stopQuotes();
+  if (timerInterval) clearInterval(timerInterval);
+  const res = document.getElementById('resolution');
+  res.classList.remove('hidden');
+  res.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function restart() {
+  stopQuotes();
+  removeFlowLines();
   location.reload();
 }
 
@@ -289,6 +421,5 @@ function restart() {
 // ══════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Crimea flash click handler
   document.getElementById('crimea-flash').addEventListener('click', dismissCrimea);
 });
