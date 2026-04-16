@@ -168,12 +168,69 @@
 
     </div><!-- /top-panel -->
 
-    <!-- ── Map container ── -->
+    <!-- ── Map container (sidebar + map) ── -->
     <div id="map-container">
-      <div id="map"></div>
-      <!-- Reject dark vignette overlay -->
-      <div id="reject-vignette"></div>
-    </div>
+
+      <!-- LEFT MONEY COLUMN -->
+      <div id="money-sidebar">
+
+        <!-- Joy: what it bought -->
+        <div id="ms-joy" class="ms-state">
+          <p class="ms-header">Monthly Cost</p>
+          <p class="ms-big joy-col">$2.4M</p>
+          <p class="ms-sub">per month to SpaceX</p>
+          <div class="ms-divider"></div>
+          <p class="ms-header">Year 1 Total</p>
+          <p class="ms-big joy-col">$28.8M</p>
+          <p class="ms-sub">invested in connectivity</p>
+          <div class="ms-divider"></div>
+          <p class="ms-header">What it bought:</p>
+          <div class="ms-item ms-good">✓ 847 schools online</div>
+          <div class="ms-item ms-good">✓ 312 clinics connected</div>
+          <div class="ms-item ms-good">✓ 2.4M people online</div>
+        </div>
+
+        <!-- Anger: extraction counter -->
+        <div id="ms-anger" class="ms-state">
+          <p class="ms-header">Monthly Drain</p>
+          <p class="ms-big angry-col">$2.4M</p>
+          <p class="ms-sub">→ California every month</p>
+          <div class="ms-divider"></div>
+          <p class="ms-header">Total Extracted</p>
+          <p class="ms-big angry-col">$<span id="ms-cumulative">0.0</span>M</p>
+          <p class="ms-sub ms-tick">↑ counting now</p>
+          <div class="ms-divider"></div>
+          <p class="ms-header">Also leaving:</p>
+          <div class="ms-item ms-bad">✗ Your data</div>
+          <div class="ms-item ms-bad">✗ Legal jurisdiction</div>
+          <div class="ms-item ms-bad">✗ Infrastructure control</div>
+        </div>
+
+        <!-- Reject: opportunity cost -->
+        <div id="ms-reject" class="ms-state">
+          <p class="ms-header">Paid to SpaceX</p>
+          <p class="ms-big grief-col">$0</p>
+          <p class="ms-sub">sovereignty protected</p>
+          <div class="ms-divider"></div>
+          <p class="ms-header">Still Offline</p>
+          <p class="ms-big grief-col">2.4M</p>
+          <p class="ms-sub">people excluded</p>
+          <div class="ms-divider"></div>
+          <p class="ms-header">Still dark:</p>
+          <div class="ms-item ms-bad">✗ 847 schools</div>
+          <div class="ms-item ms-bad">✗ 312 clinics</div>
+          <div class="ms-item ms-bad">✗ No jobs created</div>
+        </div>
+
+      </div><!-- /money-sidebar -->
+
+      <!-- Map + vignette -->
+      <div id="map-wrapper">
+        <div id="map"></div>
+        <div id="reject-vignette"></div>
+      </div>
+
+    </div><!-- /map-container -->
 
   </div><!-- /screen-main -->
 

@@ -221,7 +221,7 @@ function removeFlowLines() {
 }
 
 // ══════════════════════════════════════════════════════════════
-//  MONEY COUNTER
+//  MONEY COUNTER (top panel)
 // ══════════════════════════════════════════════════════════════
 
 function startMoneyCounter() {
@@ -234,6 +234,51 @@ function startMoneyCounter() {
     el.textContent = val.toFixed(1);
     if (val >= target) clearInterval(iv);
   }, 80);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  LEFT MONEY SIDEBAR
+// ══════════════════════════════════════════════════════════════
+
+function showMoneySidebar(state) {
+  const sidebar = document.getElementById('money-sidebar');
+  sidebar.classList.add('visible');
+
+  // Switch active ms-state panel
+  document.querySelectorAll('.ms-state').forEach(el => el.classList.remove('active'));
+  document.getElementById('ms-' + state).classList.add('active');
+
+  if (state === 'anger') startCumulativeCounter();
+}
+
+function startCumulativeCounter() {
+  const el = document.getElementById('ms-cumulative');
+  if (!el) return;
+
+  // 3 years × 12 months × $2.4M = $86.4M already extracted
+  const extracted = 86.4;
+
+  // Count up from 0 to 86.4 over 2.5 seconds
+  let val = 0;
+  const duration = 2500;
+  const start = Date.now();
+
+  function countUp() {
+    const progress = Math.min((Date.now() - start) / duration, 1);
+    val = extracted * progress;
+    el.textContent = val.toFixed(1);
+    if (progress < 1) {
+      requestAnimationFrame(countUp);
+    } else {
+      // Keep ticking: $2.4M/month = ~$0.0016M per second (real drain rate)
+      // Slightly dramatised to be visible
+      setInterval(() => {
+        val += 0.003;
+        el.textContent = val.toFixed(1);
+      }, 500);
+    }
+  }
+  requestAnimationFrame(countUp);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -294,7 +339,6 @@ function startJoyTimer() {
 // ══════════════════════════════════════════════════════════════
 
 function doRejectEffects() {
-  const mapEl = document.getElementById('map-container');
   const vignette = document.getElementById('reject-vignette');
 
   // 1. Staggered marker flicker → death
@@ -309,7 +353,7 @@ function doRejectEffects() {
 
   // 2. Map greyscale (starts after all markers die ~3s)
   setTimeout(() => {
-    mapEl.classList.add('greyscale');
+    document.getElementById('map-wrapper').classList.add('greyscale');
   }, 3500);
 
   // 3. Vignette fade in
@@ -363,11 +407,13 @@ function makeChoice(choice) {
     updateMarkers('joy');
     setHappiness('joy');
     showPanel('tp-joy');
+    showMoneySidebar('joy');
     startQuotes('tp-quote-joy', 'quote_joy');
     startJoyTimer();
   } else {
     setHappiness('grief');
     showPanel('tp-reject');
+    showMoneySidebar('reject');
     startQuotes('tp-quote-reject', 'quote_grief');
     doRejectEffects();
   }
@@ -393,6 +439,7 @@ function doAngerPhase() {
   updateMarkers('angry');
   setHappiness('angry');
   showPanel('tp-anger');
+  showMoneySidebar('anger');
   startQuotes('tp-quote-anger', 'quote_anger');
   showFlowLines();
   startMoneyCounter();
