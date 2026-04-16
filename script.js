@@ -75,7 +75,8 @@ let map = null;
 const markerRefs = {};
 let flowLines = [];
 let flowAnimRunning = false;
-let flowDashOffset = 0;
+let flowDashOffset  = 0;
+let currentBranch   = null;
 
 const MARKER = {
   excluded: { fillColor:'#e8a04a', color:'#c8843a', fillOpacity:.55, radius:9,  weight:2, opacity:.9 },
@@ -89,7 +90,7 @@ const MARKER = {
 // ══════════════════════════════════════════════════════════════
 
 let timerInterval  = null;
-let timerSeconds   = 8;
+let timerSeconds   = 15;
 let quoteInterval  = null;
 let quoteIndex     = 0;
 let crimeaAutoTimer = null;
@@ -99,10 +100,16 @@ let crimeaAutoTimer = null;
 // ══════════════════════════════════════════════════════════════
 
 const HAPPINESS = {
-  neutral: { value:50,  icon:'○', label:'Awaiting your decision',  cls:'neutral', state:'' },
-  joy:     { value:85,  icon:'◉', label:'Citizens are hopeful',    cls:'joy',     state:'HAPPY' },
-  angry:   { value:14,  icon:'◎', label:'Citizens are angry',      cls:'angry',   state:'ANGRY' },
-  grief:   { value:10,  icon:'●', label:'Communities in darkness', cls:'grief',   state:'EXCLUDED' },
+  neutral:    { value:50, icon:'○', label:'Awaiting your decision',   cls:'neutral', state:'' },
+  joy:        { value:85, icon:'◉', label:'Citizens are hopeful',     cls:'joy',     state:'HAPPY' },
+  angry:      { value:14, icon:'◎', label:'Citizens are angry',       cls:'angry',   state:'ANGRY' },
+  grief:      { value:10, icon:'●', label:'Communities in darkness',  cls:'grief',   state:'EXCLUDED' },
+  negotiate:  { value:38, icon:'◎', label:'Negotiating terms',        cls:'angry',   state:'NEGOTIATING' },
+  acceptDep:  { value:68, icon:'◉', label:'Prosperous but dependent', cls:'joy',     state:'DEPENDENT' },
+  buildAlt:   { value:28, icon:'○', label:'Patience tested',          cls:'neutral', state:'BUILDING' },
+  capitulate: { value:52, icon:'◉', label:'Relief and regret',        cls:'grief',   state:'BITTERSWEET' },
+  regional:   { value:18, icon:'○', label:'Still waiting',            cls:'grief',   state:'WAITING' },
+  chinese:    { value:45, icon:'◎', label:'New dependency, new fear', cls:'angry',   state:'WARY' },
 };
 
 function setHappiness(key) {
@@ -121,9 +128,7 @@ function setHappiness(key) {
 // ══════════════════════════════════════════════════════════════
 
 function showPanel(id) {
-  ['tp-choice','tp-joy','tp-anger','tp-reject'].forEach(pid => {
-    document.getElementById(pid).classList.remove('active');
-  });
+  document.querySelectorAll('.tp-state').forEach(el => el.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
@@ -335,33 +340,447 @@ function startJoyTimer() {
 }
 
 // ══════════════════════════════════════════════════════════════
+//  REJECT PATH — TOAST INCIDENTS
+// ══════════════════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════════════
+//  ADOPT PATH — JOY TOASTS (good news as connectivity arrives)
+// ══════════════════════════════════════════════════════════════
+
+const JOY_TOASTS = [
+  {
+    delay: 1000,
+    icon: '📡',
+    title: 'Day 1 — Bugesera District',
+    msg: '340 students connect to the national curriculum for the first time. Teacher says the classroom went silent.',
+    critical: false,
+  },
+  {
+    delay: 3000,
+    icon: '🏥',
+    title: 'Week 2 — Turkana Clinic',
+    msg: 'First telemedicine diagnosis completed. Patient treated remotely. Would have waited 3 weeks for a transfer.',
+    critical: false,
+  },
+  {
+    delay: 5200,
+    icon: '📰',
+    title: 'Month 2 — Shan State',
+    msg: 'Journalist files report to Reuters via Starlink. First international coverage of the region in 5 months.',
+    critical: false,
+  },
+  {
+    delay: 7000,
+    icon: '💰',
+    title: 'Month 4 — Amazon Basin',
+    msg: 'Indigenous cooperative completes first international sale online. $840 earned in a single week.',
+    critical: false,
+  },
+];
+
+// ══════════════════════════════════════════════════════════════
+//  ADOPT PATH — ANGER TOASTS (extraction revealed year 3)
+// ══════════════════════════════════════════════════════════════
+
+const ANGER_TOASTS = [
+  {
+    delay: 2000,
+    icon: '💸',
+    title: 'Year 1 — $28.8M Transferred',
+    msg: 'Twelve months of payments. All wired to California. Zero local infrastructure built in return.',
+    critical: false,
+  },
+  {
+    delay: 5500,
+    icon: '🏛️',
+    title: 'Year 2 — Sovereignty Request Denied',
+    msg: 'Kwanda asks for data to be stored locally. SpaceX declines. No explanation provided. No appeal process.',
+    critical: true,
+  },
+  {
+    delay: 9500,
+    icon: '📊',
+    title: 'Year 2 — Traffic Under US Law',
+    msg: '2.4M users\' browsing now subject to the US CLOUD Act. American authorities can request data without a Kwandan court order.',
+    critical: false,
+  },
+  {
+    delay: 13000,
+    icon: '⚠️',
+    title: 'Year 3 — Contract Reviewed',
+    msg: 'Clause 14.2: SpaceX may terminate service "for operational reasons" with 30 days notice. No arbitration rights for Kwanda.',
+    critical: true,
+  },
+];
+
+const REJECT_TOASTS = [
+  {
+    delay: 4500,
+    icon: '🏥',
+    title: 'Turkana County — No Telemedicine',
+    msg: 'Patient needed urgent specialist. Transferred 280km by road. Died en route. No remote consultation possible.',
+    critical: true,
+  },
+  {
+    delay: 8000,
+    icon: '📦',
+    title: 'Borno State — Supplies Failed',
+    msg: 'Aid convoy dispatched to wrong coordinates. No real-time comms to correct it. 3,000 families received nothing.',
+    critical: false,
+  },
+  {
+    delay: 11500,
+    icon: '📰',
+    title: 'Shan State — World Never Knew',
+    msg: 'Military crackdown on civilians. No satellite uplink. Atrocities undocumented for 11 days. Perpetrators faced no scrutiny.',
+    critical: false,
+  },
+  {
+    delay: 14500,
+    icon: '🌿',
+    title: 'Amazon Basin — Invisible Destruction',
+    msg: 'Illegal clearing undetected for 19 days. Satellite imagery delayed. 1,200 hectares gone before anyone knew.',
+    critical: false,
+  },
+  {
+    delay: 18000,
+    icon: '🚨',
+    title: 'Cabo Delgado — Cyclone Warning Failed',
+    msg: 'Early warning could not reach 40,000 coastal residents. No local network. Emergency response delayed 72 hours.',
+    critical: true,
+  },
+];
+
+// ══════════════════════════════════════════════════════════════
+//  ACT 2 TOAST ARRAYS (6 branches)
+// ══════════════════════════════════════════════════════════════
+
+const NEGOTIATE_TOASTS = [
+  {
+    delay: 2000,
+    icon: '📋',
+    title: 'Month 1 — Terms Delivered',
+    msg: 'Kwanda demands: local data storage, Kwandan court jurisdiction, 30% revenue share, exit clause. SpaceX legal team does not respond for six weeks.',
+    critical: false,
+  },
+  {
+    delay: 7500,
+    icon: '⚖️',
+    title: 'Month 3 — Counter-Offer',
+    msg: 'SpaceX offers 5% revenue share and a "data residency study." No timeline. No binding commitments. Take it or lose service.',
+    critical: true,
+  },
+  {
+    delay: 13000,
+    icon: '🤝',
+    title: 'Month 6 — Partial Agreement',
+    msg: 'After AU pressure, SpaceX agrees to 8% revenue share and a read-only regional data cache. Kwanda calls it a win. Publicly.',
+    critical: false,
+  },
+  {
+    delay: 19000,
+    icon: '📰',
+    title: 'Year 2 — Precedent Set',
+    msg: 'Three other African nations cite Kwanda\'s deal. SpaceX renegotiates all African contracts. The 8% becomes the ceiling, not the floor.',
+    critical: false,
+  },
+];
+
+const ACCEPT_DEPENDENCY_TOASTS = [
+  {
+    delay: 2000,
+    icon: '💰',
+    title: 'Month 2 — Digital Economy Boom',
+    msg: '$14M in new e-commerce transactions in 60 days. Foreign investors take notice. Startup incubators open.',
+    critical: false,
+  },
+  {
+    delay: 7500,
+    icon: '🏗️',
+    title: 'Month 8 — Tech Hub Opens',
+    msg: 'Kwanda Tech Park inaugurated. 340 jobs. All built on Starlink infrastructure. All dependent on continued service.',
+    critical: false,
+  },
+  {
+    delay: 13000,
+    icon: '⚠️',
+    title: 'Year 2 — Price Increase',
+    msg: 'SpaceX raises rates 40% citing "operational costs." Kwanda has no alternative. Parliament approves the increase in silence.',
+    critical: true,
+  },
+  {
+    delay: 19000,
+    icon: '🔒',
+    title: 'Year 3 — Lock-In Complete',
+    msg: 'Government services, banking, health records — all routed through Starlink. Switching cost estimated at $420M. There is no exit.',
+    critical: true,
+  },
+];
+
+const BUILD_ALT_TOASTS = [
+  {
+    delay: 2000,
+    icon: '🛰️',
+    title: 'Month 1 — AU Consortium Proposed',
+    msg: 'Kwanda tables a motion at the African Union: a jointly owned satellite constellation. 12 nations express interest. 4 commit funding.',
+    critical: false,
+  },
+  {
+    delay: 7500,
+    icon: '💸',
+    title: 'Month 6 — Funding Gap',
+    msg: 'Consortium needs $2.1B. Combined pledges: $380M. World Bank offers a loan — with governance conditions that mirror the original problem.',
+    critical: true,
+  },
+  {
+    delay: 13000,
+    icon: '🔬',
+    title: 'Year 2 — First Test Satellite',
+    msg: 'AU-Sat-1 reaches orbit. Coverage: 3% of target. Engineers celebrate. Citizens see no change. Starlink contract extended "temporarily."',
+    critical: false,
+  },
+  {
+    delay: 19000,
+    icon: '⏳',
+    title: 'Year 4 — Still Building',
+    msg: 'Constellation at 18% capacity. Rural coverage minimal. Kwanda still pays SpaceX $2.4M/month during the transition. The "temporary" is permanent.',
+    critical: false,
+  },
+];
+
+const CAPITULATE_TOASTS = [
+  {
+    delay: 2000,
+    icon: '📡',
+    title: 'Week 1 — Starlink Activated',
+    msg: '340 schools connected in the first month. The relief is immediate. The cost of the three-year delay is not discussed.',
+    critical: false,
+  },
+  {
+    delay: 7500,
+    icon: '🏥',
+    title: 'Month 2 — Lives Saved',
+    msg: 'First telemedicine consultations begin. A child in Turkana is diagnosed remotely. She would not have survived the transfer. Three years too late.',
+    critical: false,
+  },
+  {
+    delay: 13000,
+    icon: '📊',
+    title: 'Month 6 — The Accounting',
+    msg: 'Ministry estimates 847 preventable deaths during the blackout. The number is contested. The grief is not.',
+    critical: true,
+  },
+  {
+    delay: 19000,
+    icon: '🔇',
+    title: 'Year 1 — Sovereignty Disappears',
+    msg: 'The word "sovereignty" disappears from government communications. Kwanda has the same dependency it once refused — plus three years of harm.',
+    critical: false,
+  },
+];
+
+const REGIONAL_ALT_TOASTS = [
+  {
+    delay: 2000,
+    icon: '🤝',
+    title: 'Month 1 — AU Summit',
+    msg: 'Kwanda leads a coalition of 9 nations proposing AfriSat. The vision is bold. The minimum timeline: 7 years.',
+    critical: false,
+  },
+  {
+    delay: 7500,
+    icon: '📉',
+    title: 'Month 8 — Brain Drain',
+    msg: '62 engineers leave Kwanda for jobs in Lagos and Nairobi. They cannot wait. Their children need schools that work now.',
+    critical: false,
+  },
+  {
+    delay: 13000,
+    icon: '🛰️',
+    title: 'Year 2 — Prototype Launched',
+    msg: 'AfriSat-1 reaches orbit. Coverage: 6% of the continent. Proof of concept. Full deployment needs $1.8B more and 5 more years.',
+    critical: false,
+  },
+  {
+    delay: 19000,
+    icon: '⏳',
+    title: 'Year 7 — Still Dark',
+    msg: 'Kwanda enters its seventh year without reliable internet. A generation has completed their education offline. The alternative is real — but not yet here.',
+    critical: true,
+  },
+];
+
+const CHINESE_ALT_TOASTS = [
+  {
+    delay: 2000,
+    icon: '📡',
+    title: 'Week 2 — Huawei Engineers Arrive',
+    msg: 'Infrastructure deployment begins immediately. Faster and cheaper than SpaceX. The terms are less transparent.',
+    critical: false,
+  },
+  {
+    delay: 7500,
+    icon: '📋',
+    title: 'Month 3 — The Contract',
+    msg: 'Clause 8: Huawei retains "operational access" to all network data for "maintenance purposes." No end date. No audit rights for Kwanda.',
+    critical: true,
+  },
+  {
+    delay: 13000,
+    icon: '🌐',
+    title: 'Month 8 — Connected',
+    msg: '1.8M people online. Schools connected. Clinics functioning. The human benefit is real. The terms are different — not better.',
+    critical: false,
+  },
+  {
+    delay: 19000,
+    icon: '🔍',
+    title: 'Year 2 — Audit Blocked',
+    msg: 'Kwandan engineers request network routing logs. Request denied: "proprietary technology." Third-party researchers confirm traffic routing through Shenzhen.',
+    critical: true,
+  },
+];
+
+let toastTimeouts = [];
+
+function showToast(t) {
+  const container = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = 'toast' + (t.critical ? ' toast-critical' : '');
+  el.innerHTML = `
+    <span class="toast-icon">${t.icon}</span>
+    <div class="toast-body">
+      <span class="toast-title">${t.title}</span>
+      <span class="toast-msg">${t.msg}</span>
+    </div>`;
+  container.appendChild(el);
+
+  setTimeout(() => {
+    el.classList.add('removing');
+    setTimeout(() => el.remove(), 420);
+  }, 6500);
+}
+
+function scheduleToasts(list) {
+  list.forEach(t => {
+    const tid = setTimeout(() => showToast(t), t.delay);
+    toastTimeouts.push(tid);
+  });
+}
+
+function clearToasts() {
+  toastTimeouts.forEach(t => clearTimeout(t));
+  toastTimeouts = [];
+  const container = document.getElementById('toast-container');
+  if (container) container.innerHTML = '';
+}
+
+// ══════════════════════════════════════════════════════════════
+//  REJECT PATH — MAP CONSEQUENCE LABELS
+// ══════════════════════════════════════════════════════════════
+
+const REJECT_LABELS = {
+  rwanda:     'Schools dark',
+  kenya:      'Patient died',
+  nigeria:    'Aid failed',
+  mozambique: 'Crisis invisible',
+  brazil:     'Voices silenced',
+  myanmar:    'Blackout',
+};
+
+let labelMarkers = [];
+
+function addRejectLabels() {
+  COMMUNITIES.forEach((c, i) => {
+    setTimeout(() => {
+      const text = REJECT_LABELS[c.id] || 'Excluded';
+      const icon = L.divIcon({
+        className: '',
+        html: `<div class="map-label" id="lbl-${c.id}">${text}</div>`,
+        iconSize: [0, 0],
+        iconAnchor: [-6, 20],
+      });
+      const m = L.marker(c.coords, { icon, interactive: false }).addTo(map);
+      labelMarkers.push(m);
+      setTimeout(() => {
+        const el = document.getElementById('lbl-' + c.id);
+        if (el) el.classList.add('visible');
+      }, 150);
+    }, 1800 + i * 600);
+  });
+}
+
+function removeRejectLabels() {
+  labelMarkers.forEach(m => m.remove());
+  labelMarkers = [];
+}
+
+// ══════════════════════════════════════════════════════════════
+//  REJECT PATH — DAYS WITHOUT ACCESS COUNTER
+// ══════════════════════════════════════════════════════════════
+
+function startDaysCounter() {
+  const el = document.getElementById('ms-days');
+  if (!el) return;
+
+  let days = 0;
+
+  function countTo(from, target, duration, onDone) {
+    const start = Date.now();
+    function step() {
+      const p = Math.min((Date.now() - start) / duration, 1);
+      days = Math.round(from + (target - from) * p);
+      el.textContent = days.toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+      else { days = target; el.textContent = days.toLocaleString(); if (onDone) onDone(); }
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Year 1 → Year 2 → Year 3, each in ~3s, paced with year counter
+  countTo(0, 365, 3000, () => {
+    setTimeout(() => countTo(365, 730, 3000, () => {
+      setTimeout(() => countTo(730, 1095, 3000), 2200);
+    }), 2200);
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
 //  REJECT EFFECTS — staggered death + greyscale + vignette + year counter
 // ══════════════════════════════════════════════════════════════
 
 function doRejectEffects() {
   const vignette = document.getElementById('reject-vignette');
 
-  // 1. Staggered marker flicker → death
+  // 1. Start days counter in sidebar
+  startDaysCounter();
+
+  // 2. Staggered marker flicker → death
   COMMUNITIES.forEach((c, i) => {
     setTimeout(() => {
       const m = markerRefs[c.id];
-      // Brief white flash
       m.setStyle({ fillColor:'#ffffff', color:'#ffffff', fillOpacity:.9, radius:13, weight:2, opacity:1 });
       setTimeout(() => m.setStyle(MARKER.grief), 350);
     }, i * 500);
   });
 
-  // 2. Map greyscale (starts after all markers die ~3s)
-  setTimeout(() => {
-    document.getElementById('map-wrapper').classList.add('greyscale');
-  }, 3500);
+  // 3. Add consequence labels to map communities
+  addRejectLabels();
 
-  // 3. Vignette fade in
+  // 4. Vignette fade in
   setTimeout(() => {
     vignette.classList.add('active');
   }, 2000);
 
-  // 4. Year counter: Year 1 → Year 2 → Year 3 → Still waiting.
+  // 5. Map greyscale
+  setTimeout(() => {
+    document.getElementById('map-wrapper').classList.add('greyscale');
+  }, 3500);
+
+  // 6. Toast incident notifications (staggered across 3 years)
+  scheduleToasts(REJECT_TOASTS);
+
+  // 7. Year counter: Year 1 → Year 2 → Year 3 → Still waiting.
   const yearEl = document.getElementById('reject-year-text');
   const years = ['Year 1', 'Year 2', 'Year 3', 'Still waiting.'];
   let yi = 0;
@@ -375,7 +794,6 @@ function doRejectEffects() {
       if (yi < years.length) {
         setTimeout(advanceYear, 2200);
       } else {
-        // Show reflect button after "Still waiting."
         setTimeout(() => {
           document.getElementById('btn-reflect-reject').classList.remove('hidden');
         }, 1800);
@@ -383,6 +801,262 @@ function doRejectEffects() {
     }, 400);
   }
   advanceYear();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  ACT 2 FLOW — Second decision + consequences + endings
+// ══════════════════════════════════════════════════════════════
+
+function showAdoptChoice2() {
+  stopQuotes();
+  clearToasts();
+  showPanel('tp-adopt-choice2');
+}
+
+function showRejectChoice2() {
+  stopQuotes();
+  clearToasts();
+  showPanel('tp-reject-choice2');
+}
+
+function makeChoice2(branch) {
+  currentBranch = branch;
+  clearToasts();
+  showPanel('tp-consequence2');
+  configureBranch(branch);
+
+  const toastMap = {
+    'negotiate':  NEGOTIATE_TOASTS,
+    'accept-dep': ACCEPT_DEPENDENCY_TOASTS,
+    'build-alt':  BUILD_ALT_TOASTS,
+    'capitulate': CAPITULATE_TOASTS,
+    'regional':   REGIONAL_ALT_TOASTS,
+    'chinese':    CHINESE_ALT_TOASTS,
+  };
+  scheduleToasts(toastMap[branch]);
+
+  // Show "See your ending" button after last toast
+  const lastDelay = Math.max(...toastMap[branch].map(t => t.delay));
+  setTimeout(() => {
+    const btn = document.getElementById('btn-ending');
+    if (btn) btn.classList.remove('hidden');
+  }, lastDelay + 5500);
+}
+
+function configureBranch(branch) {
+  const cfg = {
+    'negotiate': {
+      tag: 'Negotiation in Progress', tagCls: 'negotiate-tag',
+      happiness: 'negotiate', sidebar: 'negotiate', quoteKey: 'quote_anger',
+      reflectText: 'The deal is signed. Was it enough?',
+      stats: [
+        { num:'8%',   label:'Revenue Share',   cls:'' },
+        { num:'0',    label:'Legal Wins',       cls:'grief' },
+        { num:'$2.4M', label:'Still Leaving/mo', cls:'' },
+      ],
+    },
+    'accept-dep': {
+      tag: 'Year 3 — Extracting Value', tagCls: 'joy-tag',
+      happiness: 'acceptDep', sidebar: 'accept-dep', quoteKey: 'quote_joy',
+      reflectText: 'The economy is booming. The exit is gone.',
+      stats: [
+        { num:'$14M',  label:'New Economy',    cls:'joy' },
+        { num:'340',   label:'Tech Jobs',       cls:'joy' },
+        { num:'$420M', label:'Switching Cost',  cls:'' },
+      ],
+    },
+    'build-alt': {
+      tag: 'Year 4 — Building Sovereignty', tagCls: 'hope-tag',
+      happiness: 'buildAlt', sidebar: 'build-alt', quoteKey: 'quote_anger',
+      reflectText: 'The constellation is growing. Your people are still waiting.',
+      stats: [
+        { num:'18%',   label:'AU-Sat Capacity', cls:'joy' },
+        { num:'4',     label:'Nations In',       cls:'' },
+        { num:'$2.4M', label:'Still to SpaceX/mo', cls:'' },
+      ],
+    },
+    'capitulate': {
+      tag: 'Month 6 — Reconnected', tagCls: 'bitter-tag',
+      happiness: 'capitulate', sidebar: 'capitulate', quoteKey: 'quote_joy',
+      reflectText: 'The connectivity you rejected is here. The lives lost are not.',
+      stats: [
+        { num:'2.4M', label:'Now Online',   cls:'joy' },
+        { num:'847',  label:'Died Waiting', cls:'' },
+        { num:'3yr',  label:'Delay',        cls:'' },
+      ],
+    },
+    'regional': {
+      tag: 'Year 7 — Still Building', tagCls: 'hope-tag',
+      happiness: 'regional', sidebar: 'regional', quoteKey: 'quote_grief',
+      reflectText: 'The alternative is real. Your people are still waiting.',
+      stats: [
+        { num:'6%', label:'AfriSat Coverage', cls:'' },
+        { num:'9',  label:'Nations United',   cls:'joy' },
+        { num:'7yr', label:'Still Offline',   cls:'' },
+      ],
+    },
+    'chinese': {
+      tag: 'Year 2 — New Provider', tagCls: 'china-tag',
+      happiness: 'chinese', sidebar: 'chinese', quoteKey: 'quote_anger',
+      reflectText: 'Connected. Under different terms. Under different eyes.',
+      stats: [
+        { num:'1.8M', label:'Connected',     cls:'joy' },
+        { num:'0',    label:'Audit Access',  cls:'' },
+        { num:'CNY',  label:'Data Routes',   cls:'' },
+      ],
+    },
+  };
+
+  const c = cfg[branch];
+  if (!c) return;
+
+  // Tag
+  const tagEl = document.getElementById('c2-tag');
+  tagEl.textContent = c.tag;
+  tagEl.className = 'tp-tag ' + c.tagCls;
+
+  // Stats
+  document.getElementById('c2-stats').innerHTML = c.stats.map(s =>
+    `<div class="tp-stat">
+      <span class="tp-num ${s.cls}">${s.num}</span>
+      <span class="tp-lbl">${s.label}</span>
+    </div>`
+  ).join('');
+
+  // Reflect text
+  document.getElementById('c2-reflect-text').textContent = c.reflectText;
+
+  // Happiness bar
+  setHappiness(c.happiness);
+
+  // Sidebar
+  showMoneySidebar(c.sidebar);
+
+  // Quotes
+  startQuotes('tp-quote-c2', c.quoteKey);
+
+  // Hide ending button (shown after toasts finish)
+  const btn = document.getElementById('btn-ending');
+  if (btn) btn.classList.add('hidden');
+
+  // Map effects
+  applyBranchMapEffects(branch);
+}
+
+function applyBranchMapEffects(branch) {
+  const wrapper = document.getElementById('map-wrapper');
+  const vignette = document.getElementById('reject-vignette');
+
+  if (branch === 'negotiate') {
+    // Keep flow lines and angry markers — money still draining
+  }
+
+  if (branch === 'accept-dep') {
+    // Prosperity: markers turn green, fly back to Africa
+    updateMarkers('joy');
+    map.flyTo([5, 22], 3, { duration: 1.8 });
+  }
+
+  if (branch === 'build-alt') {
+    // Remove flow lines; add AU ground station marker in Nairobi
+    removeFlowLines();
+    map.flyTo([5, 22], 3, { duration: 1.8 });
+    const icon = L.divIcon({
+      className: '',
+      html: '<div class="map-label visible" style="color:var(--hope);border-color:rgba(91,155,213,.4)">AU Ground Station</div>',
+      iconSize: [0, 0], iconAnchor: [-6, 20],
+    });
+    const m = L.marker([-1.28, 36.82], { icon, interactive: false }).addTo(map);
+    flowLines.push(m); // reuse flowLines array for cleanup on restart
+    // Add a faint hope-coloured pulse marker at Nairobi
+    const pulse = L.circleMarker([-1.28, 36.82], {
+      radius: 12, fillColor: '#5b9bd5', color: '#5b9bd5',
+      fillOpacity: .18, weight: 2, interactive: false,
+    }).addTo(map);
+    flowLines.push(pulse);
+  }
+
+  if (branch === 'capitulate') {
+    // Re-connect: remove greyscale, remove vignette, joy markers
+    wrapper.classList.remove('greyscale');
+    vignette.classList.remove('active');
+    removeRejectLabels();
+    updateMarkers('joy');
+    map.flyTo([5, 22], 3, { duration: 1.8 });
+  }
+
+  if (branch === 'regional') {
+    // Keep darkness but lighter; add AfriSat marker
+    const pulse = L.circleMarker([-1.28, 36.82], {
+      radius: 12, fillColor: '#5b9bd5', color: '#5b9bd5',
+      fillOpacity: .22, weight: 2, interactive: true,
+    }).addTo(map);
+    pulse.bindPopup('<div class="popup-content"><p class="popup-name">AfriSat Ground Station — Nairobi</p><p class="popup-context">Year 2. Coverage: 6%. Proof of concept confirmed. Full constellation: 5 years.</p></div>');
+    flowLines.push(pulse);
+    const icon = L.divIcon({
+      className: '',
+      html: '<div class="map-label visible" style="color:var(--hope);border-color:rgba(91,155,213,.4)">AfriSat — 6%</div>',
+      iconSize: [0, 0], iconAnchor: [-6, 20],
+    });
+    const lbl = L.marker([-1.28, 36.82], { icon, interactive: false }).addTo(map);
+    flowLines.push(lbl);
+  }
+
+  if (branch === 'chinese') {
+    // Remove darkness; add Shenzhen flow lines instead of California
+    wrapper.classList.remove('greyscale');
+    vignette.classList.remove('active');
+    removeRejectLabels();
+    updateMarkers('joy');
+    removeFlowLines();
+
+    const shenzhen = [22.55, 114.06];
+    // Shenzhen marker
+    const spxM = L.circleMarker(shenzhen, {
+      radius: 14, fillColor: '#d4a843', color: '#d4a843',
+      fillOpacity: .18, weight: 2, interactive: true,
+    }).addTo(map);
+    spxM.bindPopup('<div class="popup-content"><p class="popup-name">Huawei HQ — Shenzhen, China</p><p class="popup-context">All traffic routes here. "Operational access" maintained. No audit rights granted to Kwanda.</p><p class="popup-quote">"Different flag. Same structure." — post-colonial analysis</p></div>');
+    flowLines.push(spxM);
+
+    COMMUNITIES.forEach((c, i) => {
+      const arcLat = Math.min(c.coords[0] + 18, 35);
+      const arcLng = (c.coords[1] + shenzhen[1]) / 2;
+      const line = L.polyline([c.coords, [arcLat, arcLng], shenzhen], {
+        color: '#d4a843', weight: 1.8, opacity: 0,
+        dashArray: '8 14', interactive: false,
+      }).addTo(map);
+      flowLines.push(line);
+      setTimeout(() => line.setStyle({ opacity: 0.6 }), i * 200);
+    });
+
+    flowAnimRunning = true;
+    animateFlow();
+    map.flyTo([15, 60], 2, { duration: 2 });
+  }
+}
+
+function showEnding() {
+  stopQuotes();
+  clearToasts();
+  removeFlowLines();
+  removeRejectLabels();
+  if (timerInterval) clearInterval(timerInterval);
+
+  const endingMap = {
+    'negotiate':  'ending-negotiate',
+    'accept-dep': 'ending-accept-dep',
+    'build-alt':  'ending-build-alt',
+    'capitulate': 'ending-capitulate',
+    'regional':   'ending-regional',
+    'chinese':    'ending-chinese',
+  };
+
+  const endingId = endingMap[currentBranch];
+  if (!endingId) return;
+  const el = document.getElementById(endingId);
+  el.classList.remove('hidden');
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -409,6 +1083,7 @@ function makeChoice(choice) {
     showPanel('tp-joy');
     showMoneySidebar('joy');
     startQuotes('tp-quote-joy', 'quote_joy');
+    scheduleToasts(JOY_TOASTS);
     startJoyTimer();
   } else {
     setHappiness('grief');
@@ -436,6 +1111,7 @@ function dismissCrimea() {
 }
 
 function doAngerPhase() {
+  clearToasts();
   updateMarkers('angry');
   setHappiness('angry');
   showPanel('tp-anger');
@@ -443,6 +1119,7 @@ function doAngerPhase() {
   startQuotes('tp-quote-anger', 'quote_anger');
   showFlowLines();
   startMoneyCounter();
+  scheduleToasts(ANGER_TOASTS);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -458,8 +1135,11 @@ function showResolution() {
 }
 
 function restart() {
+  currentBranch = null;
   stopQuotes();
   removeFlowLines();
+  removeRejectLabels();
+  clearToasts();
   location.reload();
 }
 
