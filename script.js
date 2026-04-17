@@ -89,38 +89,47 @@ const MARKER = {
 //  TIMER / INTERVAL REFS
 // ══════════════════════════════════════════════════════════════
 
-let timerInterval  = null;
-let timerSeconds   = 15;
-let quoteInterval  = null;
-let quoteIndex     = 0;
-let crimeaAutoTimer = null;
+let timerInterval           = null;
+let timerSeconds            = 15;
+let quoteInterval           = null;
+let quoteIndex              = 0;
+let crimeaAutoTimer         = null;
+let cumulativeTickInterval  = null;
+let purchasingPowerInterval = null;
+let vignetteTimer           = null;
+let angerPhaseStarted       = false;
 
 // ══════════════════════════════════════════════════════════════
 //  HAPPINESS METER
 // ══════════════════════════════════════════════════════════════
 
-const HAPPINESS = {
-  neutral:    { value:50, icon:'○', label:'Awaiting your decision',   cls:'neutral', state:'' },
-  joy:        { value:85, icon:'◉', label:'Citizens are hopeful',     cls:'joy',     state:'HAPPY' },
-  angry:      { value:14, icon:'◎', label:'Citizens are angry',       cls:'angry',   state:'ANGRY' },
-  grief:      { value:10, icon:'●', label:'Communities in darkness',  cls:'grief',   state:'EXCLUDED' },
-  negotiate:  { value:38, icon:'◎', label:'Negotiating terms',        cls:'angry',   state:'NEGOTIATING' },
-  acceptDep:  { value:68, icon:'◉', label:'Prosperous but dependent', cls:'joy',     state:'DEPENDENT' },
-  buildAlt:   { value:28, icon:'○', label:'Patience tested',          cls:'neutral', state:'BUILDING' },
-  capitulate: { value:52, icon:'◉', label:'Relief and regret',        cls:'grief',   state:'BITTERSWEET' },
-  regional:   { value:18, icon:'○', label:'Still waiting',            cls:'grief',   state:'WAITING' },
-  chinese:    { value:45, icon:'◎', label:'New dependency, new fear', cls:'angry',   state:'WARY' },
+const IMPACT = {
+  neutral:    { welfare:50, econ:50,  sov:50,  infra:50  },
+  joy:        { welfare:85, econ:70,  sov:20,  infra:15  },
+  angry:      { welfare:55, econ:65,  sov:15,  infra:10  },
+  grief:      { welfare:10, econ:5,   sov:90,  infra:85  },
+  negotiate:  { welfare:55, econ:55,  sov:30,  infra:20  },
+  acceptDep:  { welfare:75, econ:85,  sov:10,  infra:5   },
+  buildAlt:   { welfare:20, econ:25,  sov:80,  infra:65  },
+  capitulate: { welfare:70, econ:60,  sov:10,  infra:10  },
+  regional:   { welfare:15, econ:10,  sov:85,  infra:70  },
+  chinese:    { welfare:65, econ:70,  sov:15,  infra:10  },
 };
 
 function setHappiness(key) {
-  const s = HAPPINESS[key];
-  document.getElementById('h-fill').style.width  = s.value + '%';
-  document.getElementById('h-fill').className    = 'h-fill ' + s.cls;
-  document.getElementById('h-text').textContent  = s.label;
-  document.getElementById('h-icon').textContent  = s.icon;
-  const st = document.getElementById('h-state');
-  st.textContent = s.state;
-  st.style.color = s.cls==='joy' ? 'var(--joy)' : s.cls==='angry' ? 'var(--angry)' : 'var(--grief)';
+  const s = IMPACT[key];
+  if (!s) return;
+  [
+    { bar:'bar-welfare', pct:'pct-welfare', val:s.welfare },
+    { bar:'bar-econ',    pct:'pct-econ',    val:s.econ    },
+    { bar:'bar-sov',     pct:'pct-sov',     val:s.sov     },
+    { bar:'bar-infra',   pct:'pct-infra',   val:s.infra   },
+  ].forEach(d => {
+    const barEl = document.getElementById(d.bar);
+    const pctEl = document.getElementById(d.pct);
+    if (barEl) barEl.style.width = d.val + '%';
+    if (pctEl) pctEl.textContent = d.val + '%';
+  });
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -254,9 +263,50 @@ function showMoneySidebar(state) {
   document.getElementById('ms-' + state).classList.add('active');
 
   if (state === 'anger') startCumulativeCounter();
+  startPurchasingPower();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  PURCHASING POWER EQUIVALENTS
+// ══════════════════════════════════════════════════════════════
+
+const MONTHLY_EQUIVALENTS = [
+  '≈ 1,200 nurse salaries / year',
+  '≈ 18 rural clinics',
+  '≈ 48,000 student laptops',
+];
+
+function startPurchasingPower() {
+  stopPurchasingPower();
+  let idx = 0;
+  const targets = ['equiv-joy', 'equiv-anger'];
+
+  function update() {
+    const text = MONTHLY_EQUIVALENTS[idx % MONTHLY_EQUIVALENTS.length];
+    targets.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('fading');
+      setTimeout(() => {
+        el.textContent = text;
+        el.classList.remove('fading');
+      }, 400);
+    });
+    idx++;
+  }
+  update();
+  purchasingPowerInterval = setInterval(update, 4000);
+}
+
+function stopPurchasingPower() {
+  if (purchasingPowerInterval) {
+    clearInterval(purchasingPowerInterval);
+    purchasingPowerInterval = null;
+  }
 }
 
 function startCumulativeCounter() {
+  if (cumulativeTickInterval) { clearInterval(cumulativeTickInterval); cumulativeTickInterval = null; }
   const el = document.getElementById('ms-cumulative');
   if (!el) return;
 
@@ -277,9 +327,11 @@ function startCumulativeCounter() {
     } else {
       // Keep ticking: $2.4M/month = ~$0.0016M per second (real drain rate)
       // Slightly dramatised to be visible
-      setInterval(() => {
+      cumulativeTickInterval = setInterval(() => {
         val += 0.003;
         el.textContent = val.toFixed(1);
+        const equivEl = document.getElementById('equiv-cumulative');
+        if (equivEl) equivEl.textContent = '≈ ' + Math.round(val / 0.002).toLocaleString() + ' nurse salaries';
       }, 500);
     }
   }
@@ -780,6 +832,12 @@ function doRejectEffects() {
   // 6. Toast incident notifications (staggered across 3 years)
   scheduleToasts(REJECT_TOASTS);
 
+  // 7a. Historical mirror — context panel
+  setTimeout(() => {
+    const hm = document.getElementById('hist-reject');
+    if (hm) hm.classList.add('visible');
+  }, 5000);
+
   // 7. Year counter: Year 1 → Year 2 → Year 3 → Still waiting.
   const yearEl = document.getElementById('reject-year-text');
   const years = ['Year 1', 'Year 2', 'Year 3', 'Still waiting.'];
@@ -835,12 +893,25 @@ function makeChoice2(branch) {
   };
   scheduleToasts(toastMap[branch]);
 
-  // Show "See your ending" button after last toast
+  // Show "See your ending" button after last toast, with animated progress bar
   const lastDelay = Math.max(...toastMap[branch].map(t => t.delay));
+  const totalWait = lastDelay + 5500;
+  const progressWrap = document.getElementById('c2-progress-wrap');
+  const progressFill = document.getElementById('c2-progress-fill');
+  if (progressWrap && progressFill) {
+    progressWrap.classList.remove('hidden');
+    progressFill.style.transition = 'none';
+    progressFill.style.width = '0%';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      progressFill.style.transition = `width ${totalWait}ms linear`;
+      progressFill.style.width = '100%';
+    }));
+  }
   setTimeout(() => {
     const btn = document.getElementById('btn-ending');
     if (btn) btn.classList.remove('hidden');
-  }, lastDelay + 5500);
+    if (progressWrap) progressWrap.classList.add('hidden');
+  }, totalWait);
 }
 
 function configureBranch(branch) {
@@ -935,9 +1006,27 @@ function configureBranch(branch) {
   // Quotes
   startQuotes('tp-quote-c2', c.quoteKey);
 
-  // Hide ending button (shown after toasts finish)
+  // Hide ending button + reset progress bar
   const btn = document.getElementById('btn-ending');
   if (btn) btn.classList.add('hidden');
+  const progressWrap = document.getElementById('c2-progress-wrap');
+  const progressFill = document.getElementById('c2-progress-fill');
+  if (progressWrap) progressWrap.classList.add('hidden');
+  if (progressFill) { progressFill.style.transition = 'none'; progressFill.style.width = '0%'; }
+
+  // Reset lock-in panel for all branches; show only for accept-dep
+  const lockinPanel  = document.getElementById('lockin-panel');
+  const lockinBtn    = document.getElementById('btn-cancel-starlink');
+  const lockinDenial = document.getElementById('lockin-denial');
+  if (lockinPanel)  lockinPanel.classList.add('hidden');
+  if (lockinBtn)    { lockinBtn.disabled = false; lockinBtn.textContent = 'Cancel Starlink Service'; }
+  if (lockinDenial) lockinDenial.classList.add('hidden');
+  if (branch === 'accept-dep') {
+    const lockinTimeout = setTimeout(() => {
+      if (lockinPanel) lockinPanel.classList.remove('hidden');
+    }, 15000);
+    toastTimeouts.push(lockinTimeout);
+  }
 
   // Map effects
   applyBranchMapEffects(branch);
@@ -1060,6 +1149,25 @@ function showEnding() {
 }
 
 // ══════════════════════════════════════════════════════════════
+//  LOCK-IN INTERACTION
+// ══════════════════════════════════════════════════════════════
+
+function attemptCancel() {
+  const btn    = document.getElementById('btn-cancel-starlink');
+  const denial = document.getElementById('lockin-denial');
+  if (!btn) return;
+  btn.disabled = true;
+  btn.textContent = 'Request Submitted…';
+  setTimeout(() => {
+    btn.textContent = 'Request Denied';
+    if (denial) {
+      denial.classList.remove('hidden');
+      denial.textContent = 'Clause 14.2: Termination requires 12 months notice and full infrastructure transfer payment of $420M. Request denied.';
+    }
+  }, 1200);
+}
+
+// ══════════════════════════════════════════════════════════════
 //  MAIN FLOW
 // ══════════════════════════════════════════════════════════════
 
@@ -1073,7 +1181,34 @@ function startExperience() {
   }
 
   setHappiness('neutral');
-  showPanel('tp-choice');
+  showPanel('tp-vignettes');
+  startVignettes();
+}
+
+function startVignettes() {
+  if (vignetteTimer) { clearInterval(vignetteTimer); vignetteTimer = null; }
+  const slideIds = ['vig-1', 'vig-2', 'vig-3', 'vig-cta'];
+  const dots     = document.querySelectorAll('.vig-dot');
+  let current    = 0;
+
+  function showSlide(idx) {
+    document.querySelectorAll('.vignette-slide').forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    const s = document.getElementById(slideIds[idx]);
+    if (s) s.classList.add('active');
+    if (idx < dots.length) dots[idx].classList.add('active');
+  }
+
+  showSlide(0);
+  vignetteTimer = setInterval(() => {
+    current++;
+    if (current >= slideIds.length) {
+      clearInterval(vignetteTimer);
+      vignetteTimer = null;
+      return;
+    }
+    showSlide(current);
+  }, 5000);
 }
 
 function makeChoice(choice) {
@@ -1111,6 +1246,8 @@ function dismissCrimea() {
 }
 
 function doAngerPhase() {
+  if (angerPhaseStarted) return;
+  angerPhaseStarted = true;
   clearToasts();
   updateMarkers('angry');
   setHappiness('angry');
@@ -1120,33 +1257,24 @@ function doAngerPhase() {
   showFlowLines();
   startMoneyCounter();
   scheduleToasts(ANGER_TOASTS);
-}
-
-// ══════════════════════════════════════════════════════════════
-//  RESOLUTION
-// ══════════════════════════════════════════════════════════════
-
-function showResolution() {
-  stopQuotes();
-  if (timerInterval) clearInterval(timerInterval);
-  const res = document.getElementById('resolution');
-  res.classList.remove('hidden');
-  res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => {
+    const hm = document.getElementById('hist-anger');
+    if (hm) hm.classList.add('visible');
+  }, 3000);
 }
 
 function restart() {
-  currentBranch = null;
+  currentBranch     = null;
+  angerPhaseStarted = false;
+  if (cumulativeTickInterval)  { clearInterval(cumulativeTickInterval);  cumulativeTickInterval  = null; }
+  if (purchasingPowerInterval) { clearInterval(purchasingPowerInterval); purchasingPowerInterval = null; }
+  if (vignetteTimer)           { clearInterval(vignetteTimer);           vignetteTimer           = null; }
+  stopPurchasingPower();
   stopQuotes();
   removeFlowLines();
   removeRejectLabels();
   clearToasts();
+  document.querySelectorAll('.hist-mirror').forEach(el => el.classList.remove('visible'));
   location.reload();
 }
 
-// ══════════════════════════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════════════════════════
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('crimea-flash').addEventListener('click', dismissCrimea);
-});

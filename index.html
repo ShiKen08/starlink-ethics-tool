@@ -34,16 +34,28 @@
   ══════════════════════════════════════ -->
   <div id="screen-main" class="hidden">
 
-    <!-- ── Happiness bar ── -->
-    <div id="happiness-bar">
-      <div class="h-label">
-        <span id="h-icon">○</span>
-        <span id="h-text">Awaiting your decision</span>
+    <!-- ── Impact bars ── -->
+    <div id="impact-bars">
+      <div class="impact-row">
+        <span class="impact-label">Human Welfare</span>
+        <div class="impact-track"><div class="impact-fill" id="bar-welfare" style="width:50%"></div></div>
+        <span class="impact-pct" id="pct-welfare">50%</span>
       </div>
-      <div class="h-track">
-        <div id="h-fill" class="h-fill neutral" style="width:50%"></div>
+      <div class="impact-row">
+        <span class="impact-label">Economic Growth</span>
+        <div class="impact-track"><div class="impact-fill bar-econ" id="bar-econ" style="width:50%"></div></div>
+        <span class="impact-pct" id="pct-econ">50%</span>
       </div>
-      <span id="h-state"></span>
+      <div class="impact-row">
+        <span class="impact-label">Sovereignty</span>
+        <div class="impact-track"><div class="impact-fill bar-sov" id="bar-sov" style="width:50%"></div></div>
+        <span class="impact-pct" id="pct-sov">50%</span>
+      </div>
+      <div class="impact-row">
+        <span class="impact-label">Infrastructure</span>
+        <div class="impact-track"><div class="impact-fill bar-infra" id="bar-infra" style="width:50%"></div></div>
+        <span class="impact-pct" id="pct-infra">50%</span>
+      </div>
     </div>
 
     <!-- ══════════════════════════════════════
@@ -51,8 +63,32 @@
     ══════════════════════════════════════ -->
     <div id="top-panel">
 
+      <!-- STATE: Pre-choice vignettes -->
+      <div id="tp-vignettes" class="tp-state">
+        <div class="vignette-container">
+          <div class="vignette-slide" id="vig-1">
+            <p class="vignette-text">A nurse in Turkana needed a specialist for a critical patient. The nearest connection was 280km away. By the time the transfer arrived, it was too late.</p>
+          </div>
+          <div class="vignette-slide" id="vig-2">
+            <p class="vignette-text">Amara walked four hours each way to find a signal to submit her university assignment. She passed. Her younger sister didn't have the same resolve.</p>
+          </div>
+          <div class="vignette-slide" id="vig-3">
+            <p class="vignette-text">In Shan State, a journalist watched an atrocity unfold. She had no uplink. The story was never told. The perpetrators were never named.</p>
+          </div>
+          <div class="vignette-slide" id="vig-cta">
+            <p class="vignette-cta-text">These are your people. Now choose.</p>
+            <button class="btn-vignette-proceed" onclick="showPanel('tp-choice')">Make Your Choice &rarr;</button>
+          </div>
+          <div class="vignette-dots">
+            <span class="vig-dot" data-vig="0"></span>
+            <span class="vig-dot" data-vig="1"></span>
+            <span class="vig-dot" data-vig="2"></span>
+          </div>
+        </div>
+      </div>
+
       <!-- STATE: Choice (default) -->
-      <div id="tp-choice" class="tp-state active">
+      <div id="tp-choice" class="tp-state">
         <div class="tp-choice-inner">
           <div class="tp-choice-text">
             <h2>Your nation. Your decision.</h2>
@@ -128,6 +164,7 @@
         <div class="tp-col tp-mid">
           <p class="tp-quote-label">Citizens say:</p>
           <p class="tp-quote" id="tp-quote-anger"></p>
+          <div class="hist-mirror" id="hist-anger"><p>"In 1885, European railways built across Africa moved resources out, not people around. Kwanda's $2.4M/month follows the same direction."</p></div>
         </div>
         <div class="tp-col tp-right">
           <p class="tp-reflect-prompt">Follow the lines on the map. That is where your nation's money goes.</p>
@@ -157,6 +194,7 @@
         <div class="tp-col tp-mid">
           <p class="tp-quote-label">Citizens say:</p>
           <p class="tp-quote" id="tp-quote-reject"></p>
+          <div class="hist-mirror" id="hist-reject"><p>"The cables that first connected Africa to the internet were laid by European firms, routed through European hubs. The topology of exclusion was built in."</p></div>
         </div>
         <div class="tp-col tp-right tp-right-reject">
           <div class="year-counter">
@@ -244,6 +282,16 @@
         </div>
         <div class="tp-col tp-right">
           <p class="tp-reflect-prompt" id="c2-reflect-text"></p>
+          <div id="c2-progress-wrap" class="hidden">
+            <div class="c2-progress-track">
+              <div id="c2-progress-fill" class="c2-progress-fill"></div>
+            </div>
+            <p class="c2-progress-label">Your story is unfolding…</p>
+          </div>
+          <div id="lockin-panel" class="hidden">
+            <button id="btn-cancel-starlink" class="btn-cancel-starlink" onclick="attemptCancel()">Cancel Starlink Service</button>
+            <p id="lockin-denial" class="lockin-denial hidden"></p>
+          </div>
           <button class="btn-reflect hidden" id="btn-ending" onclick="showEnding()">See your ending →</button>
         </div>
       </div>
@@ -261,6 +309,7 @@
           <p class="ms-header">Monthly Cost</p>
           <p class="ms-big joy-col">$2.4M</p>
           <p class="ms-sub">per month to SpaceX</p>
+          <p class="ms-equiv" id="equiv-joy"></p>
           <div class="ms-divider"></div>
           <p class="ms-header">Year 1 Total</p>
           <p class="ms-big joy-col">$28.8M</p>
@@ -277,10 +326,12 @@
           <p class="ms-header">Monthly Drain</p>
           <p class="ms-big angry-col">$2.4M</p>
           <p class="ms-sub">→ California every month</p>
+          <p class="ms-equiv" id="equiv-anger"></p>
           <div class="ms-divider"></div>
           <p class="ms-header">Total Extracted</p>
           <p class="ms-big angry-col">$<span id="ms-cumulative">0.0</span>M</p>
           <p class="ms-sub ms-tick">↑ counting now</p>
+          <p class="ms-equiv" id="equiv-cumulative"></p>
           <div class="ms-divider"></div>
           <p class="ms-header">Also leaving:</p>
           <div class="ms-item ms-bad">✗ Your data</div>
@@ -403,6 +454,7 @@
   ══════════════════════════════════════ -->
   <div id="ending-negotiate" class="ending-section hidden">
     <div class="res-inner">
+      <p class="hist-mirror-line">"The 1884 Berlin Conference also involved negotiation. African nations were not at the table."</p>
       <h2 class="res-title">You won a battle. Not the war.</h2>
       <p class="res-sub">The 8% deal is real. So is the power imbalance that made 8% feel like a victory.</p>
       <div class="analysis-box analysis-negotiate">
@@ -426,6 +478,7 @@
   ══════════════════════════════════════ -->
   <div id="ending-accept-dep" class="ending-section hidden">
     <div class="res-inner">
+      <p class="hist-mirror-line">"Belgian Congo's rubber economy grew GDP for a century. Its people did not benefit."</p>
       <h2 class="res-title">Prosperity built on someone else's foundation.</h2>
       <p class="res-sub">The economy grew. The dependency deepened. When SpaceX raised prices, Kwanda paid.</p>
       <div class="analysis-box analysis-accept-dep">
@@ -449,6 +502,7 @@
   ══════════════════════════════════════ -->
   <div id="ending-build-alt" class="ending-section hidden">
     <div class="res-inner">
+      <p class="hist-mirror-line">"Ghana built its own infrastructure after independence. It took decades. It worked."</p>
       <h2 class="res-title">The right idea. The wrong timeline.</h2>
       <p class="res-sub">A sovereign constellation is being built. But sovereignty does not feed children today.</p>
       <div class="analysis-box analysis-build-alt">
@@ -472,6 +526,7 @@
   ══════════════════════════════════════ -->
   <div id="ending-capitulate" class="ending-section hidden">
     <div class="res-inner">
+      <p class="hist-mirror-line">"Every nation that resisted and then capitulated remembers when they had a choice."</p>
       <h2 class="res-title">The same choice. Three years later. 847 lives too late.</h2>
       <p class="res-sub">The connectivity you rejected arrived. The people you lost did not come back.</p>
       <div class="analysis-box analysis-capitulate">
@@ -495,6 +550,7 @@
   ══════════════════════════════════════ -->
   <div id="ending-regional" class="ending-section hidden">
     <div class="res-inner">
+      <p class="hist-mirror-line">"Pan-African unity was Nkrumah's answer in 1963. The timeline was also brutal then."</p>
       <h2 class="res-title">Seven years. And counting.</h2>
       <p class="res-sub">The sovereign alternative is being built. A generation is being lost while you wait.</p>
       <div class="analysis-box analysis-regional">
@@ -518,6 +574,7 @@
   ══════════════════════════════════════ -->
   <div id="ending-chinese" class="ending-section hidden">
     <div class="res-inner">
+      <p class="hist-mirror-line">"The terms changed. The structure didn't."</p>
       <h2 class="res-title">You changed the flag. Not the structure.</h2>
       <p class="res-sub">Different provider. Different language. Same dependency.</p>
       <div class="analysis-box analysis-chinese">
