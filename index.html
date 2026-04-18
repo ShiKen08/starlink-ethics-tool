@@ -63,30 +63,6 @@
     ══════════════════════════════════════ -->
     <div id="top-panel">
 
-      <!-- STATE: Pre-choice vignettes -->
-      <div id="tp-vignettes" class="tp-state">
-        <div class="vignette-container">
-          <div class="vignette-slide" id="vig-1">
-            <p class="vignette-text">A nurse in Turkana needed a specialist for a critical patient. The nearest connection was 280km away. By the time the transfer arrived, it was too late.</p>
-          </div>
-          <div class="vignette-slide" id="vig-2">
-            <p class="vignette-text">Amara walked four hours each way to find a signal to submit her university assignment. She passed. Her younger sister didn't have the same resolve.</p>
-          </div>
-          <div class="vignette-slide" id="vig-3">
-            <p class="vignette-text">In Shan State, a journalist watched an atrocity unfold. She had no uplink. The story was never told. The perpetrators were never named.</p>
-          </div>
-          <div class="vignette-slide" id="vig-cta">
-            <p class="vignette-cta-text">These are your people. Now choose.</p>
-            <button class="btn-vignette-proceed" onclick="showPanel('tp-choice')">Make Your Choice &rarr;</button>
-          </div>
-          <div class="vignette-dots">
-            <span class="vig-dot" data-vig="0"></span>
-            <span class="vig-dot" data-vig="1"></span>
-            <span class="vig-dot" data-vig="2"></span>
-          </div>
-        </div>
-      </div>
-
       <!-- STATE: Choice (default) -->
       <div id="tp-choice" class="tp-state">
         <div class="tp-choice-inner">
@@ -95,7 +71,7 @@
             <p>The dots on the map are your people — communities without internet access. Click any to learn about them. Then choose.</p>
           </div>
           <div class="choice-buttons">
-            <button class="btn-adopt" onclick="makeChoice('adopt')">
+            <button class="btn-adopt" onclick="showContract()">
               <span class="btn-icon joy-col">◎</span>
               <div>
                 <span class="btn-title">Adopt Starlink</span>
@@ -142,6 +118,7 @@
           <div class="tp-timer-track">
             <div id="timer-fill" class="tp-timer-fill"></div>
           </div>
+          <p class="tp-map-hint">Click the glowing dots on the map to hear from citizens</p>
         </div>
       </div>
 
@@ -589,6 +566,60 @@
       <div class="res-cta">
         <a href="about.html" class="btn-about">About &amp; Sources →</a>
         <button class="btn-restart" onclick="restart()">Try a different path</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Starlink contract overlay -->
+  <div id="contract-overlay" class="hidden">
+    <div class="contract-modal">
+      <div class="contract-header-band">
+        <span class="contract-party">Kwanda Republic</span>
+        <span class="contract-x">✕</span>
+        <span class="contract-party">SpaceX Inc.</span>
+      </div>
+      <div class="contract-body">
+        <h2 class="contract-doc-title">Government Connectivity Partnership Agreement</h2>
+        <p class="contract-doc-sub">Effective upon signature · Governed by US Law</p>
+        <hr class="contract-rule" />
+
+        <div class="contract-clause">
+          <div class="clause-header">
+            <span class="clause-num">§ 1</span>
+            <span class="clause-title">Jurisdiction &amp; Data Law</span>
+          </div>
+          <p class="clause-body">All data transmitted through the Starlink network — including government communications, healthcare records, and educational data — is subject to the laws of the United States of America. Data may be accessed by US federal authorities under the Clarifying Lawful Overseas Use of Data (CLOUD) Act <strong>without requiring the prior approval of Kwandan courts</strong> or the Kwandan government.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="clause-header">
+            <span class="clause-num">§ 2</span>
+            <span class="clause-title">Service Continuity</span>
+          </div>
+          <p class="clause-body">SpaceX reserves the right to suspend, modify, or terminate service in any geographic region <strong>"at its operational discretion"</strong> with thirty (30) days written notice. The Government of Kwanda acknowledges that no arbitration, appeal, or binding dispute resolution mechanism is available in the event of service termination. SpaceX accepts no liability for resulting disruption to government services, healthcare systems, or critical infrastructure.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="clause-header">
+            <span class="clause-num">§ 3</span>
+            <span class="clause-title">Pricing &amp; Rate Modifications</span>
+          </div>
+          <p class="clause-body">Monthly service fees are established at signing and may be modified by SpaceX with sixty (60) days notice. The Government of Kwanda acknowledges that <strong>no alternative satellite service provides equivalent coverage</strong> for the territory defined in Schedule A, and therefore accepts pricing modifications as a condition of continued service.</p>
+        </div>
+
+        <div class="contract-clause">
+          <div class="clause-header">
+            <span class="clause-num">§ 4</span>
+            <span class="clause-title">Data Sovereignty Requests</span>
+          </div>
+          <p class="clause-body">Requests for local data residency, network routing modifications, or independent audit access are subject to review by SpaceX at its sole discretion. <strong>No timeline for review or binding commitment</strong> to accommodate such requests is made by this Agreement. SpaceX makes no representation regarding the data sovereignty status of any future iteration of its services.</p>
+        </div>
+
+        <div class="contract-sign-section">
+          <p class="contract-sign-text">By signing, the Government of Kwanda acknowledges that the nation's digital infrastructure will be operated by <strong>a private American corporation, under US law</strong>, with no guaranteed continuity, no local data sovereignty, and no exit rights.</p>
+          <button class="btn-contract-sign" onclick="signContract()">I accept these terms and sign on behalf of Kwanda &rarr;</button>
+          <button class="btn-contract-back" onclick="document.getElementById('contract-overlay').classList.add('hidden')">← Back</button>
+        </div>
       </div>
     </div>
   </div>

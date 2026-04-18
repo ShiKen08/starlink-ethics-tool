@@ -1181,8 +1181,16 @@ function startExperience() {
   }
 
   setHappiness('neutral');
-  showPanel('tp-vignettes');
-  startVignettes();
+  showPanel('tp-choice');
+}
+
+function showContract() {
+  document.getElementById('contract-overlay').classList.remove('hidden');
+}
+
+function signContract() {
+  document.getElementById('contract-overlay').classList.add('hidden');
+  makeChoice('adopt');
 }
 
 function startVignettes() {

@@ -648,6 +648,203 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 }
 
 /* ══════════════════════════════════════
+   MAP HINT (joy phase)
+══════════════════════════════════════ */
+.tp-map-hint {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.22);
+  margin-top: 0.9rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* ══════════════════════════════════════
+   CONTRACT OVERLAY
+══════════════════════════════════════ */
+#contract-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(6px);
+}
+
+.contract-modal {
+  background: #0a0a12;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-top: 2px solid rgba(255,255,255,0.35);
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 3px;
+}
+
+.contract-header-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2rem 0;
+}
+
+.contract-party {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(233,229,221,0.55);
+}
+
+.contract-x {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.18);
+}
+
+.contract-body {
+  padding: 0 2rem 2rem;
+}
+
+.contract-doc-title {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  color: var(--text);
+  text-align: center;
+  margin: 1.5rem 0 0.4rem;
+  line-height: 1.3;
+}
+
+.contract-doc-sub {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.contract-rule {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  margin: 0 0 1.75rem;
+}
+
+.contract-clause {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.contract-clause:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.clause-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  margin-bottom: 0.55rem;
+}
+
+.clause-num {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: rgba(232,160,74,0.65);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.clause-title {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  font-weight: 600;
+}
+
+.clause-body {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.78;
+  color: rgba(233,229,221,0.6);
+}
+
+.clause-body strong {
+  color: rgba(233,229,221,0.88);
+  font-weight: 600;
+}
+
+.contract-sign-section {
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.contract-sign-text {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(233,229,221,0.6);
+  text-align: center;
+}
+
+.contract-sign-text strong {
+  color: var(--text);
+}
+
+.btn-contract-sign {
+  display: block;
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(232,160,74,0.45);
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-contract-sign:hover {
+  background: rgba(232,160,74,0.08);
+  border-color: rgba(232,160,74,0.75);
+}
+
+.btn-contract-back {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.22);
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  padding: 0.3rem;
+  transition: color 0.2s;
+}
+
+.btn-contract-back:hover {
+  color: rgba(255,255,255,0.45);
+}
+
+/* ══════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════ */
 @media (max-width:768px) {

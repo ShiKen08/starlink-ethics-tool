@@ -14,6 +14,7 @@
       --text:   #e9e5dd;
       --muted:  #7a7884;
       --accent: #e8a04a;
+      --angry:  #e84040;
       --border: rgba(255,255,255,0.07);
       --serif:  'Crimson Text', Georgia, serif;
       --sans:   'Inter', -apple-system, sans-serif;
@@ -29,45 +30,82 @@
     .container {
       max-width: 740px;
       margin: 0 auto;
-      padding: 4rem 2rem 6rem;
+      padding: 4rem 2rem 8rem;
     }
 
-    /* Back link */
+    /* ── Navigation ── */
     .back-link {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
       color: var(--accent);
       text-decoration: none;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 3.5rem;
+      margin-bottom: 4rem;
       transition: opacity 0.2s;
     }
-    .back-link:hover { opacity: 0.75; }
+    .back-link:hover { opacity: 0.72; }
 
-    /* Header */
+    /* ── Opening moment ── */
+    .opening-moment {
+      border-left: 3px solid var(--angry);
+      padding: 1.75rem 0 1.75rem 2rem;
+      margin-bottom: 4rem;
+      background: rgba(232,64,64,0.025);
+    }
+
+    .moment-date {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--angry);
+      margin-bottom: 0.8rem;
+    }
+
+    .moment-headline {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 1.1rem;
+    }
+
+    .moment-body {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .moment-body:last-child { margin-bottom: 0; }
+    .moment-body em { color: var(--text); font-style: italic; }
+    .moment-body strong { color: var(--text); font-weight: 600; }
+
+    /* ── Page header ── */
     h1 {
       font-family: var(--serif);
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
       margin-bottom: 0.4rem;
       line-height: 1.1;
     }
 
     .page-subtitle {
       color: var(--muted);
-      font-size: 0.875rem;
+      font-size: 0.82rem;
       letter-spacing: 0.1em;
       margin-bottom: 3rem;
     }
 
-    /* Meta grid */
+    /* ── Meta grid ── */
     .meta-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.75rem;
-      margin-bottom: 3.5rem;
+      margin-bottom: 4rem;
     }
 
     .meta-item {
@@ -78,7 +116,7 @@
     }
 
     .meta-label {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
@@ -86,73 +124,161 @@
     }
 
     .meta-value {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text);
       font-weight: 500;
     }
 
-    /* Section headings */
+    /* ── Section headings ── */
     h2 {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--accent);
-      margin: 3rem 0 1rem;
+      margin: 3.5rem 0 1.25rem;
     }
 
-    /* Body text */
+    /* ── Body prose ── */
     p {
       font-family: var(--serif);
       font-size: 1.1rem;
-      line-height: 1.8;
+      line-height: 1.82;
       color: var(--muted);
       margin-bottom: 1.1rem;
     }
 
+    p:last-child { margin-bottom: 0; }
     p strong { color: var(--text); font-weight: 600; }
     p em     { color: var(--text); font-style: italic; }
 
-    /* Divider */
+    /* ── Pull quote ── */
+    .pull-quote {
+      border-left: 2px solid rgba(232,160,74,0.4);
+      padding: 0.5rem 0 0.5rem 1.75rem;
+      margin: 2rem 0;
+    }
+
+    .pull-quote p {
+      font-size: 1.25rem;
+      line-height: 1.65;
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 0;
+    }
+
+    /* ── Divider ── */
     hr {
       border: none;
       border-top: 1px solid var(--border);
-      margin: 3rem 0;
+      margin: 4rem 0;
     }
 
-    /* Source entries */
-    .source {
+    /* ── Timeline ── */
+    .timeline {
+      margin: 0.25rem 0;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 2.75rem 1fr;
+      gap: 0 1.5rem;
+      margin-bottom: 0;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline-item:first-child { border-top: 1px solid var(--border); }
+
+    .tl-year {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      padding-top: 0.28rem;
+      flex-shrink: 0;
+    }
+
+    .tl-event {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+
+    .tl-event strong { color: var(--text); font-weight: 600; }
+
+    .timeline-item.tl-critical .tl-year  { color: var(--angry); }
+    .timeline-item.tl-critical .tl-event { color: var(--text); }
+
+    .timeline-item.tl-future .tl-year  { color: rgba(255,255,255,0.22); }
+    .timeline-item.tl-future .tl-event { color: rgba(122,120,132,0.6); font-style: italic; }
+
+    /* ── Sources (collapsible) ── */
+    .sources-intro {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    details.source-detail {
       background: var(--bg-2);
       border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 6px 6px 0;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 1.25rem;
+      border-left: 3px solid rgba(232,160,74,0.5);
+      border-radius: 0 5px 5px 0;
+      margin-bottom: 0.85rem;
     }
 
-    .source-ref {
+    summary.source-summary {
+      padding: 1rem 1.25rem;
+      cursor: pointer;
       font-family: var(--sans);
       font-size: 0.82rem;
       font-weight: 500;
       color: var(--text);
       line-height: 1.5;
-      margin-bottom: 0.75rem;
+      list-style: none;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      user-select: none;
     }
 
-    .source-ref em {
-      font-style: italic;
-      color: var(--text);
+    summary.source-summary::-webkit-details-marker { display: none; }
+
+    summary.source-summary::before {
+      content: '+';
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: -0.05rem;
+      transition: transform 0.2s;
+      display: inline-block;
     }
+
+    details[open] summary.source-summary::before {
+      content: '−';
+    }
+
+    .source-summary em { font-style: italic; color: var(--text); }
 
     .source-annotation {
+      padding: 0 1.25rem 1.25rem 2.75rem;
       font-family: var(--serif);
-      font-size: 1rem;
-      line-height: 1.72;
+      font-size: 0.98rem;
+      line-height: 1.78;
       color: var(--muted);
       margin: 0;
+      border-top: 1px solid var(--border);
+      padding-top: 0.9rem;
     }
 
     @media (max-width: 520px) {
       .meta-grid { grid-template-columns: 1fr; }
+      .opening-moment { padding-left: 1.25rem; }
     }
   </style>
 </head>
@@ -160,6 +286,14 @@
   <div class="container">
 
     <a href="index.html" class="back-link">← Return to The Choice</a>
+
+    <!-- ── Opening moment ── -->
+    <div class="opening-moment">
+      <p class="moment-date">September 17, 2022</p>
+      <p class="moment-headline">Elon Musk personally ordered Starlink switched off over Crimea.</p>
+      <p class="moment-body">Not a government. Not a court. Not a UN resolution. <em>One person</em> determined the outcome of a military conflict. The Ukrainian military had planned a drone strike on the Russian Black Sea Fleet using Starlink as the navigation backbone. Musk decided it shouldn't happen. He withdrew the satellite coverage. The drones went dark.</p>
+      <p class="moment-body">This was not a failure of Starlink. It was <strong>Starlink working exactly as designed</strong> — a single private infrastructure that a single private individual controls.</p>
+    </div>
 
     <h1>About This Tool</h1>
     <p class="page-subtitle">Starlink &amp; Digital Sovereignty — CME Ethics Tool · 2026</p>
@@ -183,137 +317,182 @@
       </div>
     </div>
 
-    <h2>The Ethical Dilemma</h2>
+    <!-- ── Ch1: The Promise ── -->
+    <h2>The Promise</h2>
+
     <p>
-      <strong>When a developing nation chooses Starlink to connect its most excluded citizens, is it promoting
-      human development — or merely colonial dependency under a new name?</strong>
-    </p>
-    <p>
-      Starlink, operated by SpaceX, has brought high-speed satellite internet to communities across sub-Saharan
-      Africa, Latin America, and Southeast Asia that have never had reliable connectivity. The benefits are
-      concrete: rural schools can access online curricula, isolated clinics can consult specialists, displaced
-      communities can contact relatives. By early 2025, Starlink operated in over 100 countries and had
-      deployed more than 6,000 satellites — the largest constellation in human history.
-    </p>
-    <p>
-      But Starlink is owned entirely by a single private American company, controlled by a single individual,
-      operating under US law with no meaningful accountability to the nations it serves. In September 2022,
-      Elon Musk personally ordered Starlink switched off over Crimea to prevent a Ukrainian drone attack —
-      demonstrating that the same infrastructure that delivers connectivity also delivers control. One private
-      individual determined the outcome of a military conflict with no democratic mandate.
-    </p>
-    <p>
-      Nations in the Global South face a structurally coerced choice: accept Starlink's dependency or accept
-      digital exclusion. This is not a free choice — it is the product of capital inequalities that colonialism
-      itself created. Nations in Africa and Latin America did not choose to lack sovereign satellite
-      infrastructure; they were structurally prevented from building it.
+      Starlink works. That is what makes it hard. Communities across sub-Saharan Africa, Southeast Asia, and Latin America that had never had reliable internet access became connected in <em>weeks</em>. Rural hospitals reached specialists in capitals. Schools accessed curricula they could never afford in print. Displaced families in conflict zones reconnected with relatives.
     </p>
 
-    <h2>Why This Dilemma Is Relevant to You</h2>
     <p>
-      By 2030, low-earth orbit satellite constellations will be the dominant mode of internet access for an
-      estimated one billion people in underserved regions. The terms under which that connectivity arrives —
-      who owns the infrastructure, under whose law it operates, who can revoke it — will shape geopolitics and
-      sovereignty for decades.
+      By 2025, Starlink operates in over 100 countries, with more than 7,000 satellites — the largest constellation in human history. For an estimated 600 million people in sub-Saharan Africa alone who still lack reliable connectivity, satellite internet is not a luxury. <strong>It is access to healthcare, education, economic participation, and safety.</strong>
     </p>
+
     <p>
-      This tool is designed for anyone who uses the internet without ever having to think about where it comes
-      from, or who controls it. The goal is not to provide an answer but to make the ethical weight of the
-      question impossible to ignore.
+      For many communities, Starlink is not a choice between providers. It is the only option that exists. This matters for how you think about the dilemma. This is not a free market. The absence of alternatives was not an accident.
+    </p>
+
+    <!-- ── Ch2: The Structure ── -->
+    <h2>The Structure</h2>
+
+    <p>
+      The technology works. The <em>terms</em> are the problem.
+    </p>
+
+    <p>
+      When a country subscribes to Starlink, its national data passes through infrastructure owned by a private American company, stored under US law, accessible to US federal authorities under the CLOUD Act without local court approval. Service can be suspended at SpaceX's "operational discretion" with thirty days notice. There is no arbitration clause. There is no exit mechanism that a small nation can realistically exercise. When rates increase — and they have — governments pay or go dark.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Infrastructure is politics." — Laura DeNardis, <em>The Global War for Internet Governance</em> (2014)</p>
+    </div>
+
+    <p>
+      These terms are not unusual for a private tech company. They are standard practice. That is the point. The infrastructure connecting the Global South to the internet was not built under terms negotiated by the people it serves. It was built under terms set by those who built it.
+    </p>
+
+    <!-- ── Ch3: Why "Colonial" ── -->
+    <h2>Why "Colonial" Is the Right Word</h2>
+
+    <p>
+      Colonialism was not only about conquest. It was about who built the infrastructure, who it served, and where the resources flowed.
+    </p>
+
+    <p>
+      The railways that crossed colonial Africa did not connect African communities to each other. They connected mines to ports — extraction infrastructure dressed as development. The human benefit to local populations was real and entirely incidental. Kwame Nkrumah identified this pattern in 1965: formal independence had arrived, but economic and infrastructural dependency kept the colonial relationship intact under a different name. <em>Neo-colonialism</em> — control without conquest.
+    </p>
+
+    <p>
+      Satellite internet follows a different trajectory. The human benefit is genuine and intended, not incidental. But the structural questions are identical: <strong>Who owns the infrastructure? Under whose law does it operate? Who can revoke it?</strong> When the infrastructure that connects a community is owned entirely by external actors, that community's ability to govern its own data, communications, and connectivity — its digital sovereignty — is compromised regardless of intent.
+    </p>
+
+    <p>
+      Couldry and Mejias (2019) call this "data colonialism": the same logic of appropriation and extraction as historical colonialism, now applied to human data and attention. The colony pays. The metropole accumulates. The relationship is maintained not by force but by dependency — and dependency, once deep enough, looks indistinguishable from choice.
+    </p>
+
+    <!-- ── Ch4: The Tool ── -->
+    <h2>What This Tool Asks</h2>
+
+    <p>
+      Kwanda is a fictional country. The dilemma it faces is not.
+    </p>
+
+    <p>
+      The tool places you in the role of a decision-maker who has no good options. Adopt Starlink and your people are connected; your sovereignty is mortgaged to a private American corporation. Reject it and your sovereignty is intact; your people remain excluded from the global economy, the healthcare network, and the information commons that the rest of the world takes for granted.
+    </p>
+
+    <p>
+      Neither path is clean. The experience is designed to make that impossible to ignore. <strong>There is no correct ending.</strong> Every path ends with a cost that the people who made the decision will not personally pay. That asymmetry — who decides, who bears the consequence — is what post-colonial ethics is designed to examine.
+    </p>
+
+    <p>
+      The goal is not to tell you what to think about Starlink. The goal is to make the weight of the question feel impossible to ignore.
     </p>
 
     <hr />
 
+    <!-- ── Timeline ── -->
+    <h2>A Timeline</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <span class="tl-year">2015</span>
+        <span class="tl-event">SpaceX announces the Starlink project: a constellation of 12,000 satellites providing global broadband coverage. The largest infrastructure project ever proposed by a private company.</span>
+      </div>
+
+      <div class="timeline-item">
+        <span class="tl-year">2020</span>
+        <span class="tl-event">First commercial Starlink beta launches in North America and parts of Europe. Latency and speeds surpass existing satellite providers by a significant margin.</span>
+      </div>
+
+      <div class="timeline-item">
+        <span class="tl-year">2021</span>
+        <span class="tl-event"><strong>Rwanda becomes the first African country to deploy Starlink commercially.</strong> Within months, Kenya, Nigeria, and Mozambique follow. Communities that had never had reliable internet are connected in weeks.</span>
+      </div>
+
+      <div class="timeline-item tl-critical">
+        <span class="tl-year">2022</span>
+        <span class="tl-event"><strong>Elon Musk personally orders Starlink switched off over Crimea.</strong> A private individual has determined the outcome of a military conflict. No vote. No court. No appeal. The same infrastructure that delivers connectivity delivers control.</span>
+      </div>
+
+      <div class="timeline-item">
+        <span class="tl-year">2023</span>
+        <span class="tl-event">Starlink reaches 100+ countries, including 35+ in Africa. Monthly costs — $50–120 per user — represent weeks of income in many subscriber regions. Governments begin subsidising access at the national level.</span>
+      </div>
+
+      <div class="timeline-item">
+        <span class="tl-year">2025</span>
+        <span class="tl-event">7,000+ Starlink satellites in orbit. No sovereign African low-earth-orbit constellation exists at comparable scale. The African Union satellite consortium has a funding gap of $1.7 billion.</span>
+      </div>
+
+      <div class="timeline-item tl-future">
+        <span class="tl-year">2030</span>
+        <span class="tl-event">Low-earth orbit constellations projected to be the primary internet access for an estimated one billion people in underserved regions. The terms of that access are being set now.</span>
+      </div>
+
+    </div>
+
+    <hr />
+
+    <!-- ── Sources ── -->
     <h2>Annotated Sources</h2>
 
-    <div class="source">
-      <p class="source-ref">
-        Couldry, N., &amp; Mejias, U. A. (2019).
-        <em>The Costs of Connection: How Data Is Colonizing Human Life and Appropriating It for Capitalism.</em>
-        Stanford University Press.
-      </p>
-      <p class="source-annotation">
-        The primary theoretical framework for this tool. Couldry and Mejias argue that "data colonialism" is
-        a structural continuation of historical colonialism — the same logic of appropriation and extraction,
-        now applied to human data and digital connectivity. Their concept of "data relations" as a mode of
-        dispossession directly informs the dependency phase: the moment the user realises that connectivity
-        and extraction are inseparable in the Starlink model.
-      </p>
-    </div>
+    <p class="sources-intro">Click any entry to read the annotation and see how it connects to the tool's design.</p>
 
-    <div class="source">
-      <p class="source-ref">
-        Nkrumah, K. (1965).
-        <em>Neo-Colonialism: The Last Stage of Imperialism.</em>
-        Thomas Nelson &amp; Sons.
-      </p>
+    <details class="source-detail">
+      <summary class="source-summary">
+        Couldry, N., &amp; Mejias, U. A. (2019). <em>The Costs of Connection: How Data Is Colonizing Human Life and Appropriating It for Capitalism.</em> Stanford University Press.
+      </summary>
       <p class="source-annotation">
-        Nkrumah argued that formal decolonisation created a new mode of colonial control — dependency
-        maintained through economic and infrastructural means rather than direct rule. His observation that
-        neo-colonial infrastructure presents itself as development while serving the interests of the
-        controlling power maps precisely onto Starlink's expansion model. The colonial railway metaphor in
-        this tool draws directly from his analysis of infrastructure as extraction.
+        The primary theoretical framework for this tool. Couldry and Mejias argue that "data colonialism" is a structural continuation of historical colonialism — the same logic of appropriation and extraction, now applied to human data and digital connectivity. Their concept of "data relations" as a mode of dispossession directly informs the dependency phase: the moment the viewer realises that connectivity and extraction are inseparable in the Starlink model.
       </p>
-    </div>
+    </details>
 
-    <div class="source">
-      <p class="source-ref">
-        Fanon, F. (1963).
-        <em>The Wretched of the Earth.</em>
-        Grove Press.
-      </p>
+    <details class="source-detail">
+      <summary class="source-summary">
+        Nkrumah, K. (1965). <em>Neo-Colonialism: The Last Stage of Imperialism.</em> Thomas Nelson &amp; Sons.
+      </summary>
       <p class="source-annotation">
-        Fanon's analysis of colonial dependency — particularly how dependency structures the agency and
-        self-determination of colonised peoples — provides the ethical ground for why substantive sovereignty
-        matters beyond formal independence. His critique of post-colonial elites who reproduce colonial
-        structures informs the tool's refusal to frame rejection as a clean victory: rejecting Starlink in
-        the name of sovereignty is also a choice made by elites who already have connectivity.
+        Nkrumah argued that formal decolonisation created a new mode of colonial control — dependency maintained through economic and infrastructural means rather than direct rule. His observation that neo-colonial infrastructure presents itself as development while serving the interests of the controlling power maps precisely onto Starlink's expansion model. The colonial railway metaphor in this tool draws directly from his analysis of infrastructure as extraction.
       </p>
-    </div>
+    </details>
 
-    <div class="source">
-      <p class="source-ref">
-        DeNardis, L. (2014).
-        <em>The Global War for Internet Governance.</em>
-        Yale University Press.
-      </p>
+    <details class="source-detail">
+      <summary class="source-summary">
+        Fanon, F. (1963). <em>The Wretched of the Earth.</em> Grove Press.
+      </summary>
       <p class="source-annotation">
-        DeNardis demonstrates that control over internet infrastructure constitutes political governance
-        power. Her central argument — "infrastructure is politics" — grounds the claim that Starlink's
-        private ownership is not merely a commercial question but a question of who governs global
-        connectivity. Her framework explains why a developing nation's dependency on SpaceX represents
-        a governance deficit, not simply a market dependency.
+        Fanon's analysis of colonial dependency — particularly how dependency structures the agency and self-determination of colonised peoples — provides the ethical ground for why substantive sovereignty matters beyond formal independence. His critique of post-colonial elites who reproduce colonial structures informs the tool's refusal to frame rejection as a clean victory: rejecting Starlink in the name of sovereignty is also a choice made by elites who already have connectivity.
       </p>
-    </div>
+    </details>
 
-    <div class="source">
-      <p class="source-ref">
-        Kwet, M. (2019). Digital colonialism: US empire and the new imperialism in the Global South.
-        <em>Race &amp; Class, 60</em>(4), 3–26. https://doi.org/10.1177/0306396818823172
-      </p>
+    <details class="source-detail">
+      <summary class="source-summary">
+        DeNardis, L. (2014). <em>The Global War for Internet Governance.</em> Yale University Press.
+      </summary>
       <p class="source-annotation">
-        Kwet argues that US technology corporations are enacting a new form of imperialism in the Global
-        South through control over software, hardware, and network infrastructure, using South Africa as a
-        case study. His analysis of how technical standards, licensing regimes, and platform dependencies
-        reproduce colonial economic relationships maps directly onto SpaceX's position in the satellite
-        internet market.
+        DeNardis demonstrates that control over internet infrastructure constitutes political governance power. Her central argument — "infrastructure is politics" — grounds the claim that Starlink's private ownership is not merely a commercial question but a question of who governs global connectivity. Her framework explains why a developing nation's dependency on SpaceX represents a governance deficit, not simply a market dependency.
       </p>
-    </div>
+    </details>
 
-    <div class="source">
-      <p class="source-ref">
-        Parks, L., &amp; Starosielski, N. (Eds.). (2015).
-        <em>Signal Traffic: Critical Studies of Media Infrastructures.</em>
-        University of Illinois Press.
-      </p>
+    <details class="source-detail">
+      <summary class="source-summary">
+        Kwet, M. (2019). Digital colonialism: US empire and the new imperialism in the Global South. <em>Race &amp; Class, 60</em>(4), 3–26.
+      </summary>
       <p class="source-annotation">
-        This volume examines how communication infrastructures — cables, satellites, towers — embed social
-        and political power relations that are typically rendered invisible to their users. Several chapters
-        address satellite infrastructure specifically, arguing that the apparent universality of satellite
-        coverage conceals deeply situated political and economic interests. This provides the bridge between
-        post-colonial theory and the material specificity of Starlink as a physical infrastructure.
+        Kwet argues that US technology corporations are enacting a new form of imperialism in the Global South through control over software, hardware, and network infrastructure. His analysis of how technical standards, licensing regimes, and platform dependencies reproduce colonial economic relationships maps directly onto SpaceX's position in the satellite internet market.
       </p>
-    </div>
+    </details>
+
+    <details class="source-detail">
+      <summary class="source-summary">
+        Parks, L., &amp; Starosielski, N. (Eds.). (2015). <em>Signal Traffic: Critical Studies of Media Infrastructures.</em> University of Illinois Press.
+      </summary>
+      <p class="source-annotation">
+        This volume examines how communication infrastructures — cables, satellites, towers — embed social and political power relations that are typically rendered invisible to their users. Several chapters address satellite infrastructure specifically, arguing that the apparent universality of satellite coverage conceals deeply situated political and economic interests. This provides the bridge between post-colonial theory and the material specificity of Starlink as a physical infrastructure.
+      </p>
+    </details>
 
   </div>
 </body>
