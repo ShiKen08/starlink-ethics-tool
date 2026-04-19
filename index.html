@@ -16,101 +16,16 @@
   <div id="screen-intro">
     <div class="intro-bg"></div>
     <div class="intro-content">
-      <p class="intro-eyebrow">2024 · East Africa</p>
+      <p class="intro-eyebrow">2020 · United Nations</p>
       <h1>The Choice</h1>
       <p class="intro-sub">Starlink &amp; Digital Sovereignty</p>
       <div class="intro-scenario">
-        <p>You are the <strong>Minister of Digital Infrastructure</strong> of Kwanda — a small nation in East Africa.</p>
-        <p><strong>40% of your citizens</strong> have no internet access. Rural hospitals are cut off. Schools are dark.</p>
-        <p>SpaceX is offering you <strong>Starlink</strong> — high-speed satellite internet, operational within weeks.</p>
-        <p>There is no viable alternative. There has never been one.</p>
+        <p>You are a <strong>UN Special Rapporteur on Digital Rights</strong>.</p>
+        <p>Three countries have already adopted Starlink — Ukraine, the Philippines, and Brazil. <strong>Their stories are unfolding.</strong></p>
+        <p>Six more nations are seeking your assessment. You will advise <strong>3 to 6</strong> of them.</p>
+        <p>The dilemma is not new. But the scale is.</p>
       </div>
       <button class="btn-primary" onclick="startExperience()">Begin →</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════
-       PRE-PHASE — Why there is no choice
-  ══════════════════════════════════════ -->
-  <div id="screen-prephase" class="hidden">
-    <div class="pp-progress">
-      <span class="pp-dot active" id="ppd-1"></span>
-      <span class="pp-dot" id="ppd-2"></span>
-      <span class="pp-dot" id="ppd-3"></span>
-      <span class="pp-dot" id="ppd-4"></span>
-    </div>
-
-    <div id="pp-1" class="pp-scene active">
-      <div class="pp-inner">
-        <p class="pp-eyebrow">3 months ago · World Bank</p>
-        <div class="pp-card pp-card-letter">
-          <p class="pp-letter-ref">Application #KW-2024-0047 — Digital Infrastructure Fund</p>
-          <p class="pp-letter-body">Your application for $200M in undersea cable infrastructure funding has been reviewed. Given the current allocation of the Digital Infrastructure Cycle, <strong>your application has been noted for the next review period.</strong></p>
-          <p class="pp-letter-verdict">Expected review timeline: <strong>18–24 months.</strong></p>
-        </div>
-        <button class="btn-pp-continue" onclick="advancePrePhase(2)">Continue →</button>
-      </div>
-    </div>
-
-    <div id="pp-2" class="pp-scene">
-      <div class="pp-inner">
-        <p class="pp-eyebrow">6 weeks ago · Regional Telecom</p>
-        <div class="pp-card">
-          <p class="pp-card-title">Safaricom Coverage Extension — Internal Pricing Model</p>
-          <div class="pp-comparison">
-            <div class="pp-cmp-row">
-              <span class="pp-cmp-label">Market rate per user / month</span>
-              <span class="pp-cmp-val pp-val-bad">$14.00</span>
-            </div>
-            <div class="pp-cmp-row">
-              <span class="pp-cmp-label">Average rural monthly income, Kwanda</span>
-              <span class="pp-cmp-val pp-val-bad">$4.60</span>
-            </div>
-            <div class="pp-cmp-divider"></div>
-            <div class="pp-cmp-row pp-cmp-conclusion">
-              <span>At market rates, rural connectivity costs <strong>3× what your citizens earn.</strong> No viable pricing model exists. Negotiation was attempted. The math hasn't changed in fifteen years.</span>
-            </div>
-          </div>
-        </div>
-        <button class="btn-pp-continue" onclick="advancePrePhase(3)">Continue →</button>
-      </div>
-    </div>
-
-    <div id="pp-3" class="pp-scene">
-      <div class="pp-inner">
-        <p class="pp-eyebrow">Last week · African Union</p>
-        <div class="pp-card">
-          <p class="pp-card-title">AfriSat Consortium — Status &amp; Projected Timeline</p>
-          <div class="pp-timeline-list">
-            <div class="pp-tl-row pp-tl-past">2024 — Feasibility study launched</div>
-            <div class="pp-tl-row pp-tl-now">2026 — <strong>You are here.</strong> Study still ongoing.</div>
-            <div class="pp-tl-row pp-tl-future">2029 — First satellite launch (projected)</div>
-            <div class="pp-tl-row pp-tl-future">2031 — Partial coverage, 6 nations</div>
-            <div class="pp-tl-row pp-tl-future">2035 — Full constellation (estimated)</div>
-          </div>
-        </div>
-        <div class="pp-notification" id="pp-router-offer">
-          <p class="pp-notif-label">Inbox — Huawei Technologies</p>
-          <p class="pp-notif-body">We wish to donate <strong>500 routers</strong> to rural Kwandan schools. No financial cost. No stated conditions.</p>
-          <div class="pp-notif-btns">
-            <button class="btn-pp-accept" onclick="respondRouters(true)">Accept donation</button>
-            <button class="btn-pp-decline" onclick="respondRouters(false)">Decline</button>
-          </div>
-        </div>
-        <button class="btn-pp-continue hidden" id="btn-pp-3-next" onclick="advancePrePhase(4)">Continue →</button>
-      </div>
-    </div>
-
-    <div id="pp-4" class="pp-scene">
-      <div class="pp-inner pp-inner-final">
-        <p class="pp-eyebrow">Today</p>
-        <p class="pp-final-intro">Then SpaceX called.</p>
-        <div class="pp-final-offer">
-          <p>Nationwide satellite internet. <strong>Operational in six weeks.</strong> No infrastructure investment required from Kwanda.</p>
-          <p style="margin-top:.75rem;color:rgba(233,229,221,0.5);font-style:italic;">There is no viable alternative. There has never been one.</p>
-        </div>
-        <button class="btn-primary" onclick="enterMainExperience()">Make your choice →</button>
-      </div>
     </div>
   </div>
 
@@ -144,39 +59,38 @@
     </div>
 
     <!-- ══════════════════════════════════════
-         TOP INFO PANEL (full width, readable)
+         TOP INFO PANEL
     ══════════════════════════════════════ -->
     <div id="top-panel">
 
-      <!-- STATE: Choice (default) -->
-      <div id="tp-choice" class="tp-state">
-        <div class="tp-choice-inner">
-          <div class="tp-choice-text">
-            <h2>Your nation. Your decision.</h2>
-            <p>The dots on the map are your people — communities without internet access. Click any to hear their story. Then choose.</p>
-            <div id="visit-gate" class="visit-gate">
-              <span class="visit-dots">
-                <span class="vd" id="vd-0"></span>
-                <span class="vd" id="vd-1"></span>
-                <span class="vd" id="vd-2"></span>
-              </span>
-              <span id="visit-status" class="visit-status">0 of 3 visited</span>
-            </div>
+      <!-- STATE: Selection -->
+      <div id="tp-select" class="tp-state">
+        <div class="tp-sel-inner">
+          <div class="tp-sel-text">
+            <h2>Which countries will you advise?</h2>
+            <p>The <span class="obs-label-inline">blue</span> dots are observer countries — already inside the system. Watch them. The <span class="sel-label-inline">gray</span> dots are the countries seeking your assessment. Select <strong>3 to 6</strong> to advise.</p>
           </div>
-          <div class="choice-buttons">
-            <button class="btn-adopt" onclick="showContract()" disabled>
-              <span class="btn-icon joy-col">◎</span>
-              <div>
-                <span class="btn-title">Adopt Starlink</span>
-                <span class="btn-desc">Connect your people now</span>
-              </div>
+          <div class="tp-sel-status">
+            <span class="sel-count-display" id="sel-count">0 selected</span>
+            <span class="sel-min-note" id="sel-min-note">Select 3 more</span>
+            <button class="btn-adopt" id="btn-confirm-sel" onclick="confirmSelections()" disabled>
+              Confirm selection →
             </button>
-            <button class="btn-reject-choice" onclick="makeChoice('reject')" disabled>
-              <span class="btn-icon grief-col">◯</span>
-              <div>
-                <span class="btn-title">Reject Starlink</span>
-                <span class="btn-desc">Protect your sovereignty</span>
-              </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATE: Briefings -->
+      <div id="tp-briefings" class="tp-state">
+        <div class="tp-briefings-inner">
+          <div class="tp-briefings-text">
+            <h2>Read each briefing. Make your recommendation.</h2>
+            <p>Click a selected country on the map to open its three-panel briefing. Each briefing ends with your adoption recommendation. The observers are already inside the system — their stories update as you work.</p>
+          </div>
+          <div class="tp-briefings-status">
+            <span class="brief-progress"><span id="brief-done">0</span> / <span id="brief-total">0</span> assessments complete</span>
+            <button class="btn-adopt hidden" id="btn-proceed-joy" onclick="proceedToContract()">
+              Submit recommendations →
             </button>
           </div>
         </div>
@@ -185,19 +99,15 @@
       <!-- STATE: Joy -->
       <div id="tp-joy" class="tp-state">
         <div class="tp-col tp-left">
-          <span class="tp-tag joy-tag">Months 1–6 · Citizens Online</span>
+          <span class="tp-tag joy-tag">Months 1–6 · Countries Online</span>
           <div class="tp-stats">
             <div class="tp-stat">
-              <span class="tp-num joy">847</span>
-              <span class="tp-lbl">Schools Connected</span>
-            </div>
-            <div class="tp-stat">
-              <span class="tp-num joy">312</span>
-              <span class="tp-lbl">Rural Clinics Online</span>
-            </div>
-            <div class="tp-stat">
-              <span class="tp-num joy">2.4M</span>
+              <span class="tp-num joy" id="ms-joy-people">—</span>
               <span class="tp-lbl">People Connected</span>
+            </div>
+            <div class="tp-stat">
+              <span class="tp-num joy" id="ms-joy-cost">—</span>
+              <span class="tp-lbl">Monthly to SpaceX</span>
             </div>
           </div>
         </div>
@@ -211,7 +121,7 @@
           <div class="tp-timer-track">
             <div id="timer-fill" class="tp-timer-fill"></div>
           </div>
-          <p class="tp-map-hint">Click the glowing dots on the map to hear from citizens</p>
+          <p class="tp-map-hint">Click the glowing dots to hear from citizens</p>
         </div>
       </div>
 
@@ -221,10 +131,10 @@
           <span class="tp-tag anger-tag">Year 3 · The Extraction Is Visible</span>
           <div class="money-big">
             <span class="money-num">$<span id="money-value">0.0</span>M</span>
-            <span class="money-sub">per month leaving Kwanda</span>
+            <span class="money-sub">per month leaving your countries</span>
           </div>
           <div class="dep-chain">
-            <span class="dep-node nation-node">Kwanda</span>
+            <span class="dep-node nation-node">Your countries</span>
             <span class="dep-arr">→</span>
             <span class="dep-node server-node">SpaceX Servers</span>
             <span class="dep-arr">→</span>
@@ -234,135 +144,29 @@
         <div class="tp-col tp-mid">
           <p class="tp-quote-label">Citizens say:</p>
           <p class="tp-quote" id="tp-quote-anger"></p>
-          <div class="hist-mirror" id="hist-anger"><p>"In 1885, European railways built across Africa moved resources out, not people around. Kwanda's $2.4M/month follows the same direction."</p></div>
+          <div class="hist-mirror" id="hist-anger"><p>"In 1885, European railways built across Africa moved resources out, not people around. This month's figure follows the same direction."</p></div>
         </div>
         <div class="tp-col tp-right">
-          <p class="tp-reflect-prompt">Follow the lines on the map. That is where your nation's money goes.</p>
-          <button class="btn-reflect" onclick="showAdoptChoice2()">What does Kwanda do now? →</button>
+          <p class="tp-reflect-prompt">Follow the lines on the map. That is where your nations' money goes.</p>
+          <button class="btn-reflect hidden" id="btn-to-act2" onclick="startAct2Queue()">What do the countries do now? →</button>
         </div>
       </div>
 
-      <!-- STATE: Reject -->
-      <div id="tp-reject" class="tp-state">
-        <div class="tp-col tp-left">
-          <span class="tp-tag reject-tag">Sovereignty Protected</span>
-          <div class="tp-stats">
-            <div class="tp-stat">
-              <span class="tp-num grief">0</span>
-              <span class="tp-lbl">Schools Connected</span>
-            </div>
-            <div class="tp-stat">
-              <span class="tp-num grief">78%</span>
-              <span class="tp-lbl">Clinics Still Offline</span>
-            </div>
-            <div class="tp-stat">
-              <span class="tp-num grief">2.4M</span>
-              <span class="tp-lbl">Still Excluded</span>
-            </div>
+      <!-- STATE: Act 2 (per-country queue) -->
+      <div id="tp-act2" class="tp-state">
+        <div class="tp-act2-inner">
+          <div class="tp-act2-header">
+            <span class="tp-tag anger-tag">Act 2 · Consequence</span>
+            <span class="act2-country-badge" id="act2-country-name"></span>
           </div>
-        </div>
-        <div class="tp-col tp-mid">
-          <p class="tp-quote-label">Citizens say:</p>
-          <p class="tp-quote" id="tp-quote-reject"></p>
-          <div class="hist-mirror" id="hist-reject"><p>"The cables that first connected Africa to the internet were laid by European firms, routed through European hubs. The topology of exclusion was built in."</p></div>
-        </div>
-        <div class="tp-col tp-right tp-right-reject">
-          <div class="year-counter">
-            <span id="reject-year-text">Year 1</span>
+          <div class="tp-act2-body">
+            <p class="act2-prompt" id="act2-prompt"></p>
+            <p class="act2-context" id="act2-context"></p>
+            <div class="choice-buttons-3" id="act2-options"></div>
           </div>
-          <button class="btn-reflect grief-btn hidden" id="btn-reflect-reject" onclick="showRejectChoice2()">Three years have passed →</button>
-        </div>
-      </div>
-
-      <!-- STATE: Adopt Choice 2 (Act 2 — after anger) -->
-      <div id="tp-adopt-choice2" class="tp-state">
-        <div class="tp-choice2-inner">
-          <div class="tp-choice2-text">
-            <h2>The dependency is real. What does Kwanda do now?</h2>
-            <p>$86.4M sent to California. Your data under US law. Service can be cut at any time. But 2.4 million people are connected.</p>
+          <div class="tp-act2-footer">
+            <button class="btn-reflect hidden" id="btn-act2-next" onclick="advanceAct2Queue()">Next country →</button>
           </div>
-          <div class="choice-buttons-3">
-            <button class="btn-choice2" onclick="makeChoice2('negotiate')">
-              <span class="btn-icon">⚖️</span>
-              <div>
-                <span class="btn-title">Negotiate Terms</span>
-                <span class="btn-desc">Demand data sovereignty from SpaceX</span>
-              </div>
-            </button>
-            <button class="btn-choice2" onclick="makeChoice2('accept-dep')">
-              <span class="btn-icon">📈</span>
-              <div>
-                <span class="btn-title">Accept &amp; Extract Value</span>
-                <span class="btn-desc">Normalise the dependency, build on it</span>
-              </div>
-            </button>
-            <button class="btn-choice2" onclick="makeChoice2('build-alt')">
-              <span class="btn-icon">🛰️</span>
-              <div>
-                <span class="btn-title">Build an Alternative</span>
-                <span class="btn-desc">Invest in AU satellite consortium</span>
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- STATE: Reject Choice 2 (Act 2 — after 3 years dark) -->
-      <div id="tp-reject-choice2" class="tp-state">
-        <div class="tp-choice2-inner">
-          <div class="tp-choice2-text">
-            <h2>Three years of darkness. The cost is counted in lives. What now?</h2>
-            <p>847 preventable deaths. A generation educated offline. Your sovereignty is intact. Your people are not.</p>
-          </div>
-          <div class="choice-buttons-3">
-            <button class="btn-choice2" onclick="makeChoice2('capitulate')">
-              <span class="btn-icon">📡</span>
-              <div>
-                <span class="btn-title">Accept Starlink Now</span>
-                <span class="btn-desc">Capitulate after seeing the human cost</span>
-              </div>
-            </button>
-            <button class="btn-choice2" onclick="makeChoice2('regional')">
-              <span class="btn-icon">🌍</span>
-              <div>
-                <span class="btn-title">Regional Alternative</span>
-                <span class="btn-desc">Join the African Union satellite consortium</span>
-              </div>
-            </button>
-            <button class="btn-choice2" onclick="makeChoice2('chinese')">
-              <span class="btn-icon">🔗</span>
-              <div>
-                <span class="btn-title">Chinese Alternative</span>
-                <span class="btn-desc">Accept connectivity from Huawei / CTTC</span>
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- STATE: Act 2 Consequence (shared — populated by JS per branch) -->
-      <div id="tp-consequence2" class="tp-state">
-        <div class="tp-col tp-left">
-          <span class="tp-tag" id="c2-tag">Consequence Phase</span>
-          <div class="tp-stats" id="c2-stats"></div>
-        </div>
-        <div class="tp-col tp-mid">
-          <p class="tp-quote-label">Citizens say:</p>
-          <p class="tp-quote" id="tp-quote-c2"></p>
-        </div>
-        <div class="tp-col tp-right">
-          <p class="tp-reflect-prompt" id="c2-reflect-text"></p>
-          <div id="c2-progress-wrap" class="hidden">
-            <div class="c2-progress-track">
-              <div id="c2-progress-fill" class="c2-progress-fill"></div>
-            </div>
-            <p class="c2-progress-label">Your story is unfolding…</p>
-          </div>
-          <div id="lockin-panel" class="hidden">
-            <button id="btn-cancel-starlink" class="btn-cancel-starlink" onclick="attemptCancel()">Cancel Starlink Service</button>
-            <p id="lockin-denial" class="lockin-denial hidden"></p>
-          </div>
-          <button class="btn-reflect hidden" id="btn-ending" onclick="showEnding()">See your ending →</button>
         </div>
       </div>
 
@@ -374,28 +178,28 @@
       <!-- LEFT MONEY COLUMN -->
       <div id="money-sidebar">
 
-        <!-- Joy: what it bought -->
+        <!-- Joy: aggregate connectivity -->
         <div id="ms-joy" class="ms-state">
           <p class="ms-header">Monthly Cost</p>
-          <p class="ms-big joy-col">$2.4M</p>
+          <p class="ms-big joy-col">$<span id="ms-joy-mo">—</span>M</p>
           <p class="ms-sub">per month to SpaceX</p>
           <p class="ms-equiv" id="equiv-joy"></p>
           <div class="ms-divider"></div>
-          <p class="ms-header">Year 1 Total</p>
-          <p class="ms-big joy-col">$28.8M</p>
-          <p class="ms-sub">invested in connectivity</p>
+          <p class="ms-header">People Connected</p>
+          <p class="ms-big joy-col"><span id="ms-joy-ppl">—</span>M</p>
+          <p class="ms-sub">across your countries</p>
           <div class="ms-divider"></div>
           <p class="ms-header">What it bought:</p>
-          <div class="ms-item ms-good">✓ 847 schools online</div>
-          <div class="ms-item ms-good">✓ 312 clinics connected</div>
-          <div class="ms-item ms-good">✓ 2.4M people online</div>
+          <div class="ms-item ms-good">✓ Schools &amp; clinics online</div>
+          <div class="ms-item ms-good">✓ Disaster response upgraded</div>
+          <div class="ms-item ms-good">✓ Rural markets linked</div>
         </div>
 
         <!-- Anger: extraction counter -->
         <div id="ms-anger" class="ms-state">
           <p class="ms-header">Monthly Drain</p>
-          <p class="ms-big angry-col">$2.4M</p>
-          <p class="ms-sub">→ California every month</p>
+          <p class="ms-big angry-col">$<span id="ms-anger-mo">—</span>M</p>
+          <p class="ms-sub">→ California / month</p>
           <p class="ms-equiv" id="equiv-anger"></p>
           <div class="ms-divider"></div>
           <p class="ms-header">Total Extracted</p>
@@ -404,104 +208,9 @@
           <p class="ms-equiv" id="equiv-cumulative"></p>
           <div class="ms-divider"></div>
           <p class="ms-header">Also leaving:</p>
-          <div class="ms-item ms-bad">✗ Your data</div>
+          <div class="ms-item ms-bad">✗ Patient &amp; user data</div>
           <div class="ms-item ms-bad">✗ Legal jurisdiction</div>
           <div class="ms-item ms-bad">✗ Infrastructure control</div>
-        </div>
-
-        <!-- Reject: opportunity cost -->
-        <div id="ms-reject" class="ms-state">
-          <p class="ms-header">Days Without Access</p>
-          <p class="ms-big grief-col"><span id="ms-days">0</span></p>
-          <p class="ms-sub ms-tick">and counting</p>
-          <div class="ms-divider"></div>
-          <p class="ms-header">Still Offline</p>
-          <p class="ms-big grief-col">2.4M</p>
-          <p class="ms-sub">people excluded</p>
-          <div class="ms-divider"></div>
-          <p class="ms-header">Still dark:</p>
-          <div class="ms-item ms-bad">✗ 847 schools</div>
-          <div class="ms-item ms-bad">✗ 312 clinics</div>
-          <div class="ms-item ms-bad">✗ 0 telemedicine visits</div>
-          <div class="ms-item ms-bad">✗ 0 jobs created</div>
-        </div>
-
-        <!-- Negotiate: partial terms secured -->
-        <div id="ms-negotiate" class="ms-state">
-          <p class="ms-header">Revenue Share</p>
-          <p class="ms-big" style="color:var(--accent)">8%</p>
-          <p class="ms-sub">secured from SpaceX</p>
-          <div class="ms-divider"></div>
-          <p class="ms-header">What was won:</p>
-          <div class="ms-item ms-good">✓ Data cache (read-only)</div>
-          <div class="ms-item ms-good">✓ Precedent set for AU</div>
-          <div class="ms-item ms-bad">✗ No legal jurisdiction</div>
-          <div class="ms-item ms-bad">✗ No exit clause</div>
-        </div>
-
-        <!-- Accept dependency: economic growth -->
-        <div id="ms-accept-dep" class="ms-state">
-          <p class="ms-header">New Economy</p>
-          <p class="ms-big joy-col">$14M</p>
-          <p class="ms-sub">transactions in 60 days</p>
-          <div class="ms-divider"></div>
-          <p class="ms-header">The cost of growth:</p>
-          <div class="ms-item ms-good">✓ 340 tech jobs created</div>
-          <div class="ms-item ms-good">✓ Digital economy live</div>
-          <div class="ms-item ms-bad">✗ Switching cost: $420M</div>
-          <div class="ms-item ms-bad">✗ Rates up 40% — no choice</div>
-        </div>
-
-        <!-- Build alternative: AU constellation -->
-        <div id="ms-build-alt" class="ms-state">
-          <p class="ms-header">AU-Sat Capacity</p>
-          <p class="ms-big hope-col">18%</p>
-          <p class="ms-sub">of target coverage</p>
-          <div class="ms-divider"></div>
-          <p class="ms-header">Progress so far:</p>
-          <div class="ms-item ms-good">✓ Sovereign design</div>
-          <div class="ms-item ms-good">✓ 4 nations committed</div>
-          <div class="ms-item ms-bad">✗ 5–7 yrs to full coverage</div>
-          <div class="ms-item ms-bad">✗ Still paying SpaceX $2.4M/mo</div>
-        </div>
-
-        <!-- Capitulate: reconnected but at cost -->
-        <div id="ms-capitulate" class="ms-state">
-          <p class="ms-header">Now Online</p>
-          <p class="ms-big joy-col">2.4M</p>
-          <p class="ms-sub">people reconnected</p>
-          <div class="ms-divider"></div>
-          <p class="ms-header">The accounting:</p>
-          <div class="ms-item ms-good">✓ Schools back online</div>
-          <div class="ms-item ms-good">✓ Clinics functioning</div>
-          <div class="ms-item ms-bad">✗ 847 preventable deaths</div>
-          <div class="ms-item ms-bad">✗ Same dependency accepted</div>
-        </div>
-
-        <!-- Regional alternative: AfriSat -->
-        <div id="ms-regional" class="ms-state">
-          <p class="ms-header">AfriSat Coverage</p>
-          <p class="ms-big hope-col">6%</p>
-          <p class="ms-sub">of continent reached</p>
-          <div class="ms-divider"></div>
-          <p class="ms-header">The long road:</p>
-          <div class="ms-item ms-good">✓ Sovereign ownership</div>
-          <div class="ms-item ms-good">✓ 9 nations committed</div>
-          <div class="ms-item ms-bad">✗ Year 7 — still dark</div>
-          <div class="ms-item ms-bad">✗ A generation lost</div>
-        </div>
-
-        <!-- Chinese alternative: Huawei -->
-        <div id="ms-chinese" class="ms-state">
-          <p class="ms-header">People Connected</p>
-          <p class="ms-big china-col">1.8M</p>
-          <p class="ms-sub">via Huawei network</p>
-          <div class="ms-divider"></div>
-          <p class="ms-header">The terms:</p>
-          <div class="ms-item ms-good">✓ Fast deployment</div>
-          <div class="ms-item ms-good">✓ 40% cheaper than Starlink</div>
-          <div class="ms-item ms-bad">✗ Data routed via Shenzhen</div>
-          <div class="ms-item ms-bad">✗ No audit rights</div>
         </div>
 
       </div><!-- /money-sidebar -->
@@ -531,172 +240,45 @@
   </div><!-- /screen-main -->
 
   <!-- ══════════════════════════════════════
-       ENDING: NEGOTIATE
+       COUNTRY BRIEFING MODAL
   ══════════════════════════════════════ -->
-  <div id="ending-negotiate" class="ending-section hidden">
-    <div class="res-inner">
-      <p class="hist-mirror-line">"The 1884 Berlin Conference also involved negotiation. African nations were not at the table."</p>
-      <h2 class="res-title">You won a battle. Not the war.</h2>
-      <p class="res-sub">The 8% deal is real. So is the power imbalance that made 8% feel like a victory.</p>
-      <div class="analysis-box analysis-negotiate">
-        <h4>What Happened</h4>
-        <p>Kwanda secured the first data sovereignty concession from SpaceX in Africa: an 8% revenue share and a read-only data cache. No legal jurisdiction. No exit clause. Other nations followed — using Kwanda's deal as the template. SpaceX learned something too: <em>the ceiling is low.</em></p>
+  <div id="country-modal" class="hidden">
+    <div class="cmod-backdrop" onclick="closeCountryModal()"></div>
+    <div class="cmod-card">
+      <div class="cmod-header">
+        <div class="cmod-title-group">
+          <span class="cmod-flag" id="cmod-flag"></span>
+          <span class="cmod-tension" id="cmod-tension"></span>
+        </div>
+        <button class="cmod-close" onclick="closeCountryModal()">✕</button>
       </div>
-      <div class="framework-box">
-        <h4>Post-Colonial Ethics Analysis</h4>
-        <p>Fanon (1961) described this as the "negotiating table trap": the colonised nation celebrates access to the table, while the coloniser sets the menu. The structural power — who owns the satellites, who writes the code, who stores the data — remained unchanged.</p>
-        <p>Negotiation without alternatives is not sovereignty. It is the best deal available to a party with no leverage.</p>
+      <div class="cmod-step-bar">
+        <span class="cmod-step-label" id="cmod-step-label">1 / 3</span>
       </div>
-      <div class="ending-question">
-        <p class="eq-text">You won concessions. But you're still negotiating from inside their system. Is reform possible from within a structure designed to extract?</p>
-      </div>
-      <div class="res-cta res-cta-delayed">
-        <a href="about.html" class="btn-about">About &amp; Sources →</a>
-        <button class="btn-restart" onclick="restart()">Try a different path</button>
+      <div class="cmod-body" id="cmod-body"></div>
+      <div class="cmod-nav">
+        <button class="btn-cmod-nav hidden" id="cmod-prev" onclick="advanceModal(-1)">← Back</button>
+        <button class="btn-cmod-nav" id="cmod-next" onclick="advanceModal(1)">Next →</button>
       </div>
     </div>
   </div>
 
   <!-- ══════════════════════════════════════
-       ENDING: ACCEPT DEPENDENCY
+       COMPOSITE ENDING
   ══════════════════════════════════════ -->
-  <div id="ending-accept-dep" class="ending-section hidden">
+  <div id="ending-composite" class="ending-section hidden">
     <div class="res-inner">
-      <p class="hist-mirror-line">"Belgian Congo's rubber economy grew GDP for a century. Its people did not benefit."</p>
-      <h2 class="res-title">Prosperity built on someone else's foundation.</h2>
-      <p class="res-sub">The economy grew. The dependency deepened. When SpaceX raised prices, Kwanda paid.</p>
-      <div class="analysis-box analysis-accept-dep">
-        <h4>What Happened</h4>
-        <p>Kwanda's digital economy boomed: $14M in new transactions, 340 tech jobs, a thriving startup scene. Then SpaceX raised rates 40%. Government services became dependent on Starlink infrastructure. Switching cost: $420M. The prosperity is real. <em>The freedom to walk away is not.</em></p>
-      </div>
-      <div class="framework-box">
-        <h4>Post-Colonial Ethics Analysis</h4>
-        <p>Rodney (1972) in <em>How Europe Underdeveloped Africa</em> described this pattern: economic growth that deepens structural dependency. The colony grows richer in absolute terms while becoming more bound to the metropole.</p>
-        <p>Kwanda's GDP rose. Its sovereignty fell. Modernisation theory calls this development. Dependency theory calls it extraction with extra steps.</p>
-      </div>
-      <div class="ending-question">
-        <p class="eq-text">Kwanda's people are connected, educated, and alive. The price is permanent dependency. Would you make the same choice for your own country?</p>
-      </div>
-      <div class="res-cta res-cta-delayed">
-        <a href="about.html" class="btn-about">About &amp; Sources →</a>
-        <button class="btn-restart" onclick="restart()">Try a different path</button>
-      </div>
+      <div id="ending-content"></div>
     </div>
   </div>
 
   <!-- ══════════════════════════════════════
-       ENDING: BUILD ALTERNATIVE
+       STARLINK CONTRACT OVERLAY
   ══════════════════════════════════════ -->
-  <div id="ending-build-alt" class="ending-section hidden">
-    <div class="res-inner">
-      <p class="hist-mirror-line">"Ghana built its own infrastructure after independence. It took decades. It worked."</p>
-      <h2 class="res-title">The right idea. The wrong timeline.</h2>
-      <p class="res-sub">A sovereign constellation is being built. But sovereignty does not feed children today.</p>
-      <div class="analysis-box analysis-build-alt">
-        <h4>What Happened</h4>
-        <p>The AU consortium is real. AU-Sat-1 is in orbit. Four nations are committed. But full coverage is 5–7 years away, and Kwanda is still paying SpaceX $2.4M per month during the transition. The "temporary" Starlink dependency has become the foundation.</p>
-      </div>
-      <div class="framework-box">
-        <h4>Post-Colonial Ethics Analysis</h4>
-        <p>Nkrumah (1963) argued that African unity was the only path to true independence. The consortium proves him right — and reveals the cost. Building sovereign infrastructure requires time that marginalised communities do not have.</p>
-        <p>The tension between long-term sovereignty and immediate human need is not a failure of vision. <em>It is the condition that colonialism created.</em></p>
-      </div>
-      <div class="ending-question">
-        <p class="eq-text">You chose long-term sovereignty over short-term welfare. How many years of suffering is sovereignty worth? Is there a number?</p>
-      </div>
-      <div class="res-cta res-cta-delayed">
-        <a href="about.html" class="btn-about">About &amp; Sources →</a>
-        <button class="btn-restart" onclick="restart()">Try a different path</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════
-       ENDING: CAPITULATE
-  ══════════════════════════════════════ -->
-  <div id="ending-capitulate" class="ending-section hidden">
-    <div class="res-inner">
-      <p class="hist-mirror-line">"Every nation that resisted and then capitulated remembers when they had a choice."</p>
-      <h2 class="res-title">The same choice. Three years later. 847 lives too late.</h2>
-      <p class="res-sub">The connectivity you rejected arrived. The people you lost did not come back.</p>
-      <div class="analysis-box analysis-capitulate">
-        <h4>What Happened</h4>
-        <p>Starlink was activated. Schools connected within weeks. Telemedicine saved its first life within a month. Everything the technology promised, it delivered — exactly as it would have three years ago. The Ministry quietly stopped using the word "sovereignty." <em>The 847 preventable deaths became a footnote.</em></p>
-      </div>
-      <div class="framework-box">
-        <h4>Post-Colonial Ethics Analysis</h4>
-        <p>Sen (1999) argued that development is freedom — the freedom to live a life one has reason to value. Three years of principled refusal meant three years of unfreedom for 2.4 million people.</p>
-        <p>The sovereignty that was protected was the sovereignty of the state — not of the citizens who bore the cost. When sovereignty and human capability conflict, <em>whose freedom are we choosing?</em></p>
-      </div>
-      <div class="ending-question">
-        <p class="eq-text">You held out for three years. 847 people died. You adopted anyway. Was the delay principled or was it pride?</p>
-      </div>
-      <div class="res-cta res-cta-delayed">
-        <a href="about.html" class="btn-about">About &amp; Sources →</a>
-        <button class="btn-restart" onclick="restart()">Try a different path</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════
-       ENDING: REGIONAL ALTERNATIVE
-  ══════════════════════════════════════ -->
-  <div id="ending-regional" class="ending-section hidden">
-    <div class="res-inner">
-      <p class="hist-mirror-line">"Pan-African unity was Nkrumah's answer in 1963. The timeline was also brutal then."</p>
-      <h2 class="res-title">Seven years. And counting.</h2>
-      <p class="res-sub">The sovereign alternative is being built. A generation is being lost while you wait.</p>
-      <div class="analysis-box analysis-regional">
-        <h4>What Happened</h4>
-        <p>AfriSat is real. The proof of concept works. Nine nations are committed. But coverage is 6% of the continent after four years. Kwanda's students have completed their education offline. Engineers have emigrated. The vision is correct. <em>The timeline is brutal.</em></p>
-      </div>
-      <div class="framework-box">
-        <h4>Post-Colonial Ethics Analysis</h4>
-        <p>Cabral (1973) wrote that liberation is not a gift — it requires building the capacity that colonial structures deliberately prevented. AfriSat proves this: the technology gap is not natural. It was engineered over centuries of extraction.</p>
-        <p>The question is whether the current generation should bear that cost, or whether the demand for immediate sovereignty is itself a sacrifice imposed on the powerless by those who will not feel it.</p>
-      </div>
-      <div class="ending-question">
-        <p class="eq-text">Seven years to build what SpaceX offered in six weeks. Is patience a luxury that only the connected can afford?</p>
-      </div>
-      <div class="res-cta res-cta-delayed">
-        <a href="about.html" class="btn-about">About &amp; Sources →</a>
-        <button class="btn-restart" onclick="restart()">Try a different path</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════
-       ENDING: CHINESE ALTERNATIVE
-  ══════════════════════════════════════ -->
-  <div id="ending-chinese" class="ending-section hidden">
-    <div class="res-inner">
-      <p class="hist-mirror-line">"The terms changed. The structure didn't."</p>
-      <h2 class="res-title">You changed the flag. Not the structure.</h2>
-      <p class="res-sub">Different provider. Different language. Same dependency.</p>
-      <div class="analysis-box analysis-chinese">
-        <h4>What Happened</h4>
-        <p>1.8 million people are connected. Schools function. Clinics are online. Huawei deployed in weeks, at half the cost of Starlink. The contract gives Huawei "operational access" to all network data. Traffic routes through Shenzhen. Audit requests have been denied. <em>The dependency rejected from California was accepted from Beijing.</em></p>
-      </div>
-      <div class="framework-box">
-        <h4>Post-Colonial Ethics Analysis</h4>
-        <p>Moyo (2012) warned that the narrative of "South-South cooperation" can mask new forms of extraction. China's infrastructure model in Africa — build, finance, maintain, control — mirrors colonial patterns with updated language.</p>
-        <p>The question is not which empire is kinder. The question is whether any nation in the Global South can achieve genuine digital sovereignty when every available path was paved by someone else.</p>
-      </div>
-      <div class="ending-question">
-        <p class="eq-text">You rejected American dependency and chose Chinese dependency. Is the ability to choose your colonizer a form of sovereignty?</p>
-      </div>
-      <div class="res-cta res-cta-delayed">
-        <a href="about.html" class="btn-about">About &amp; Sources →</a>
-        <button class="btn-restart" onclick="restart()">Try a different path</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Starlink contract overlay -->
   <div id="contract-overlay" class="hidden">
     <div class="contract-modal">
       <div class="contract-header-band">
-        <span class="contract-party">Kwanda Republic</span>
+        <span class="contract-party">Countries You Advise</span>
         <span class="contract-x">✕</span>
         <span class="contract-party">SpaceX Inc.</span>
       </div>
@@ -710,7 +292,7 @@
             <span class="clause-num">§ 1</span>
             <span class="clause-title">Jurisdiction &amp; Data Law</span>
           </div>
-          <p class="clause-body">All data transmitted through the Starlink network — including government communications, healthcare records, and educational data — is subject to the laws of the United States of America. Data may be accessed by US federal authorities under the Clarifying Lawful Overseas Use of Data (CLOUD) Act <strong>without requiring the prior approval of Kwandan courts</strong> or the Kwandan government.</p>
+          <p class="clause-body">All data transmitted through the Starlink network — including government communications, healthcare records, and educational data — is subject to the laws of the United States of America. Data may be accessed by US federal authorities under the Clarifying Lawful Overseas Use of Data (CLOUD) Act <strong>without requiring the prior approval of the signatory nation's courts</strong> or government.</p>
         </div>
 
         <div class="contract-clause">
@@ -718,7 +300,7 @@
             <span class="clause-num">§ 2</span>
             <span class="clause-title">Service Continuity</span>
           </div>
-          <p class="clause-body">SpaceX reserves the right to suspend, modify, or terminate service in any geographic region <strong>"at its operational discretion"</strong> with thirty (30) days written notice. The Government of Kwanda acknowledges that no arbitration, appeal, or binding dispute resolution mechanism is available in the event of service termination. SpaceX accepts no liability for resulting disruption to government services, healthcare systems, or critical infrastructure.</p>
+          <p class="clause-body">SpaceX reserves the right to suspend, modify, or terminate service in any geographic region <strong>"at its operational discretion"</strong> with thirty (30) days written notice. The signatory government acknowledges that no arbitration, appeal, or binding dispute resolution mechanism is available in the event of service termination. SpaceX accepts no liability for resulting disruption to government services, healthcare systems, or critical infrastructure.</p>
         </div>
 
         <div class="contract-clause">
@@ -726,7 +308,7 @@
             <span class="clause-num">§ 3</span>
             <span class="clause-title">Pricing &amp; Rate Modifications</span>
           </div>
-          <p class="clause-body">Monthly service fees are established at signing and may be modified by SpaceX with sixty (60) days notice. The Government of Kwanda acknowledges that <strong>no alternative satellite service provides equivalent coverage</strong> for the territory defined in Schedule A, and therefore accepts pricing modifications as a condition of continued service.</p>
+          <p class="clause-body">Monthly service fees are established at signing and may be modified by SpaceX with sixty (60) days notice. The signatory government acknowledges that <strong>no alternative satellite service provides equivalent coverage</strong> for its territory, and therefore accepts pricing modifications as a condition of continued service.</p>
         </div>
 
         <div class="contract-clause">
@@ -734,26 +316,28 @@
             <span class="clause-num">§ 4</span>
             <span class="clause-title">Data Sovereignty Requests</span>
           </div>
-          <p class="clause-body">Requests for local data residency, network routing modifications, or independent audit access are subject to review by SpaceX at its sole discretion. <strong>No timeline for review or binding commitment</strong> to accommodate such requests is made by this Agreement. SpaceX makes no representation regarding the data sovereignty status of any future iteration of its services.</p>
+          <p class="clause-body">Requests for local data residency, network routing modifications, or independent audit access are subject to review by SpaceX at its sole discretion. <strong>No timeline for review or binding commitment</strong> to accommodate such requests is made by this Agreement.</p>
         </div>
 
         <div class="contract-sign-section">
-          <p class="contract-sign-text">By signing, the Government of Kwanda acknowledges that the nation's digital infrastructure will be operated by <strong>a private American corporation, under US law</strong>, with no guaranteed continuity, no local data sovereignty, and no exit rights.</p>
-          <button class="btn-contract-sign" onclick="signContract()">I accept these terms and sign on behalf of Kwanda &rarr;</button>
+          <p class="contract-sign-text">You are recommending that sovereign nations sign this contract — that their digital infrastructure be operated by <strong>a private American corporation, under US law</strong>, with no guaranteed continuity, no local data sovereignty, and no exit rights.</p>
+          <button class="btn-contract-sign" onclick="signContract()">I confirm these adoption recommendations &rarr;</button>
           <button class="btn-contract-back" onclick="document.getElementById('contract-overlay').classList.add('hidden')">← Back</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Crimea flash overlay -->
+  <!-- ══════════════════════════════════════
+       CRIMEA FLASH OVERLAY
+  ══════════════════════════════════════ -->
   <div id="crimea-flash" onclick="dismissCrimea()">
     <div class="cf-content">
       <p class="cf-date">Breaking — September 2022</p>
       <h3>Elon Musk personally orders Starlink switched off over Crimea.</h3>
       <p>A private individual just determined the outcome of a military conflict.</p>
       <p>No vote. No court. No appeal.</p>
-      <p class="cf-question">Your nation is not at war. <em>Yet.</em></p>
+      <p class="cf-question">The countries you advised are not at war. <em>Yet.</em></p>
       <p class="cf-hint">Click anywhere to continue</p>
     </div>
   </div>
