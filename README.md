@@ -18,7 +18,7 @@ The target audience is someone with no prior knowledge of postcolonialism or dig
 
 If you **adopt**, your people connect. You also cede legal jurisdiction over their data, accept a contract you cannot exit, and become dependent on infrastructure controlled by one private American company.
 
-If you **reject**, your sovereignty stays intact. Your people remain offline. Schools stay dark. A preventable death in a rural clinic is a real possibility before the story ends.
+If you **reject**, your sovereignty stays intact. Your people remain offline. Schools stay dark. Kwanda tries — AU lobbying, a mesh pilot, EU applications — but the alternatives take years. The human cost accumulates while the work continues.
 
 Neither path is clean. That is deliberate.
 
@@ -29,24 +29,31 @@ Neither path is clean. That is deliberate.
 ```
 [Intro Screen]
       ↓
-[Choice Panel] — adopt or reject?
-      ↓                    ↓
-[Contract Overlay]    [Reject Phase]
-      ↓                    ↓
-[Joy Phase]          [3-year counter + toasts]
-      ↓                    ↓
-[Crimea Flash]       [Reject Act 2 Choice]
-      ↓                    ↓
-[Anger Phase]        [Act 2 Consequence]
-      ↓                    ↓
-[Adopt Act 2 Choice] [Ending]
+[Pre-Phase] — World Bank rejection · Safaricom pricing · AU 2035 timeline · Huawei offer
+      ↓
+[Choice Panel] — visit gate: explore 3 communities before choosing
+      ↓                         ↓
+[Contract Overlay]         [Reject Phase — Three Beats]
+      ↓                         Year 1: The Hustle
+[Joy Phase]                     Year 2: The Cracks (Grace Nyamwasa)
+  + map stat labels              Year 3: The Weight (847 stated plainly)
+  + phone messages               ↓
+      ↓                    [Reject Act 2 Choice]
+[Crimea Flash]                   ↓
+      ↓                    [Act 2 Consequence]
+[Anger Phase]                    ↓
+  + flow lines             [Ending + Question]
+  + news ticker
+  + phone messages
+      ↓
+[Adopt Act 2 Choice]
       ↓
 [Act 2 Consequence]
       ↓
-[Ending]
+[Ending + Question]
 ```
 
-Every path ends at one of **six endings**, each followed by a post-colonial ethics analysis of what the player's choices structurally represent.
+Every path ends at one of **six endings**, each followed by a post-colonial ethics analysis and a question that holds for 5 seconds before the restart button appears.
 
 ---
 
@@ -55,110 +62,207 @@ Every path ends at one of **six endings**, each followed by a post-colonial ethi
 ### Intro Screen
 **File:** `index.html` — `#screen-intro`
 
-Sets the scenario. User learns they are the Minister of Digital Infrastructure of Kwanda, a small East African nation with 40% of citizens offline. The framing establishes stakes before any choice is made.
+Sets the scenario. User learns they are the Minister of Digital Infrastructure of Kwanda, a small East African nation with 40% of citizens offline.
 
-Leads to the main experience via **"Make Your Choice →"**.
+Leads to the **Pre-Phase** via **"Begin →"**.
+
+---
+
+### Pre-Phase — Why There Is No Real Choice
+**File:** `index.html` — `#screen-prephase` | `script.js` — `startExperience()`, `advancePrePhase()`, `respondRouters()`, `enterMainExperience()`
+
+Four scenes the user steps through before the choice panel appears. Each scene establishes why Starlink is not a free choice but a constrained one:
+
+1. **World Bank rejection** — Application #KW-2024-0047 denied. Expected review: 18–24 months.
+2. **Safaricom pricing** — $14/user/month vs. $4.60 average rural income. The math has never worked.
+3. **AU AfriSat timeline** — First satellite projected 2031. Full constellation 2035. You are here in 2026. Also: Huawei offers 500 routers to rural schools, no stated conditions — the user decides whether to accept. This choice is stored silently (`acceptedRouters`).
+4. **SpaceX offer** — "Operational in six weeks." Then the choice panel loads.
+
+**Why it exists:** The user should arrive at "Adopt or Reject?" already feeling the walls close in. The choice is structurally constrained before it is framed as a decision.
 
 ---
 
 ### Impact Bars
 **File:** `index.html` — `#impact-bars` | `script.js` — `setHappiness()`
 
-Four thin bars at the top of the screen: Human Welfare, Economic Growth, Sovereignty, Infrastructure. They update at each stage to reflect the state of the nation. They are deliberately in tension — welfare and sovereignty rarely go up together.
-
-Values are defined in `script.js` in the `IMPACT` object and animate smoothly on change.
+Four thin bars at the top: Human Welfare, Economic Growth, Sovereignty, Infrastructure. Update at each narrative stage. Deliberately in tension — welfare and sovereignty rarely move together.
 
 ---
 
 ### Choice Panel
 **File:** `index.html` — `#tp-choice`
 
-The first real decision: **Adopt Starlink** or **Reject Starlink**. Map markers show the communities without access; each is clickable for individual context.
+**Adopt Starlink** or **Reject Starlink**. Map markers show the six communities without access.
 
-Clicking "Adopt Starlink" does not immediately proceed — it triggers the **Contract Overlay** first.
+**Visit gate:** The choice buttons are disabled until the user has opened at least three community popups. Three dot indicators track progress. Once unlocked, the gate fades. This ensures the decision follows contact with the people it affects.
+
+Clicking "Adopt Starlink" triggers the **Contract Overlay** — the user must actively sign before proceeding.
 
 ---
 
 ### Contract Overlay
-**File:** `index.html` — `#contract-overlay` | `script.js` — `showContract()`, `signContract()` | `style.css` — `.contract-modal`
+**File:** `index.html` — `#contract-overlay` | `script.js` — `showContract()`, `signContract()`
 
-A scrollable legal document appears: *Kwanda Republic × SpaceX Inc. — Government Connectivity Partnership Agreement*. Four clauses:
+A scrollable legal document: *Kwanda Republic × SpaceX Inc. — Government Connectivity Partnership Agreement*. Four clauses:
 
 - **§ 1 Jurisdiction & Data Law** — data subject to US law and the CLOUD Act
-- **§ 2 Service Continuity** — SpaceX can suspend service at will, no arbitration
+- **§ 2 Service Continuity** — SpaceX can suspend at will, no arbitration
 - **§ 3 Pricing & Rate Modifications** — rates can be raised; Kwanda has no leverage
 - **§ 4 Data Sovereignty Requests** — requests subject to SpaceX discretion, no commitment
 
-The user must scroll through all four clauses and click **"I accept these terms and sign on behalf of Kwanda"** to continue. A "← Back" button lets them return to the choice.
+The user must click **"I accept these terms and sign on behalf of Kwanda"** to continue. A "← Back" button lets them return.
 
-**Why it exists:** Adoption without the contract feels passive. Signing the contract makes the user an active participant in their own dependency — and when the anger phase arrives and those same clauses become consequences, the user remembers agreeing to them.
+**Why it exists:** When the anger phase arrives and those clauses become consequences, the user remembers agreeing to them.
+
+---
+
+### Map — Community Markers
+**File:** `script.js` — `initMap()`, `buildPopup()`, `updateMarkers()`, `makeMarkerIcon()`
+
+Six communities across East Africa, the Amazon Basin, and Southeast Asia. Each has a four-phase story arc:
+
+| Community | Location | Population | Story thread |
+|-----------|----------|------------|--------------|
+| Laketown | Lake Victoria | 12,000 | Fishing cooperative, catch data sold to US broker |
+| Mweru District | Zambia–DRC border | 84,000 | Rural clinics, patient records subpoenaed under CLOUD Act |
+| Ondiri Valley | Kenya Highlands | 31,000 | School district, pricing tier expires, five schools cut off |
+| Porto Velho | Amazon Basin | 2,400 | Indigenous oral history, GPS coordinates leaked to mining company |
+| Kampong Speu | Cambodia | 56,000 | Rice farmers, yield data feeds Chicago algorithm, price crash |
+| Timbuktu | Mali | 35,000 | Manuscript archive, curators locked out of their own heritage |
+
+Markers are CSS-animated `L.divIcon` elements. Style changes per phase:
+
+| Phase | Marker behaviour |
+|-------|-----------------|
+| Excluded | Amber slow pulse — living communities waiting |
+| Joy | Green outward ripple — connectivity spreading |
+| Angry | Red inward drain — extraction, not expansion |
+| Grief | Grey fade — almost invisible against the dark basemap |
+
+Popups show a **stat badge** (e.g. `Drug stockouts down 60%`) plus a full narrative paragraph that changes with each phase.
+
+---
+
+### Extraction Chains
+**File:** `script.js` — `EXTRACTION_CHAINS`, `showExtractionChain()`
+
+During the anger phase, flow lines from each community to SpaceX HQ in California are **clickable**. Clicking any line opens a popup tracing the full extraction path:
+
+> *Laketown → SpaceX relay servers → US agricultural data broker → Chinese trawler fleet*
+
+Line thickness is proportional to each community's `extractionWeight` — Mweru's patient records are "worth" more to the data market than Ondiri's exam scores. The visual makes that structural inequality legible.
 
 ---
 
 ### Joy Phase
-**File:** `index.html` — `#tp-joy` | `script.js` — `startJoyTimer()`, `JOY_TOASTS`
+**File:** `index.html` — `#tp-joy` | `script.js` — `startJoyTimer()`, `JOY_TOASTS`, `addJoyLabels()`
 
-After signing, connectivity arrives. Stats show 847 schools connected, 312 clinics online, 2.4 million people online. Citizen quotes rotate in the centre column. Toast notifications pop up with specific stories from each community (first telemedicine diagnosis, student who passed exams, indigenous language documentation, etc.).
+After signing, connectivity arrives. Stats show 847 schools connected, 312 clinics online, 2.4 million people online. Citizen quotes rotate in the centre column. Toast notifications tell specific community stories.
 
-An 8-second countdown in the right column reads *"Three years pass —"*. The sidebar shows monthly cost ($2.4M to SpaceX) alongside what that money is equivalent to in local terms.
+**Floating stat labels** appear on the map ~2 seconds after adoption — each community marker gets a small label showing its key metric (`+22% exam pass rate`, `340 hrs language archived`, etc.). They are removed when the anger phase begins.
 
-The map markers pulse green. Users can click any marker to read community-specific quotes.
+An 8-second countdown reads *"Three years pass —"*. When the timer hits zero: the Crimea flash interrupts.
 
-When the timer hits zero: the Crimea flash interrupts.
+---
+
+### Phone Notifications
+**File:** `script.js` — `PHONE_MESSAGES`, `showPhoneMsg()`, `schedulePhoneMsgs()`
+
+A second emotional channel alongside toasts — personal messages styled like phone notifications (top-right, distinct from the bottom-right toast system). Sent by named characters at scripted moments:
+
+| Phase | Sender | Message |
+|-------|--------|---------|
+| Choice screen | Health Minister | Drug stockouts this week. We need connectivity. |
+| Joy | Your daughter | Papa, we have internet at school!! 😊 |
+| Joy | US Ambassador | Congratulations on the Starlink partnership. |
+| Crimea flash | Health Minister | Are you seeing the news? Can they do that to us? |
+| Anger | Unknown Number | A US court has subpoenaed Mweru clinic records. We were not consulted. |
+| Anger | Your daughter | Starlink went down at school again. Third time this month. |
+| Reject Year 2 | Health Minister | The patient in Mweru didn't make it. Her name was Grace Nyamwasa. She was 34. |
+| Reject Year 3 | AU Liaison | The consortium timeline has been revised. First satellite now 2033. I'm sorry. |
 
 ---
 
 ### Crimea Flash
 **File:** `index.html` — `#crimea-flash` | `script.js` — `triggerCrimea()`, `dismissCrimea()`
 
-A full-screen overlay cuts in:
+A full-screen overlay cuts in mid-joy:
 
 > *Breaking — September 2022*
 > **Elon Musk personally orders Starlink switched off over Crimea.**
-> A private individual just determined the outcome of a military conflict.
 > No vote. No court. No appeal.
-> *Your nation is not at war. Yet.*
 
-The user must click to dismiss it. It auto-dismisses after 6 seconds if they don't.
-
-**Why it exists:** The Crimea incident is real. It is the clearest single demonstration that Starlink connectivity and Starlink control are the same thing. Interrupting the joy phase with it creates the maximum contrast — the user is in the middle of celebrating before being reminded of the terms they signed.
+Auto-dismisses after 6 seconds. Triggers the Health Minister phone message simultaneously.
 
 ---
 
 ### Anger Phase
 **File:** `index.html` — `#tp-anger` | `script.js` — `doAngerPhase()`, `ANGER_TOASTS`
 
-The experience shifts. Map flow lines now show money draining from each African/Latin American community to SpaceX HQ in California. A live counter shows the cumulative extraction ($86.4M over three years, still ticking). The left column shows the dependency chain: Kwanda → SpaceX Servers → US Law.
+Map flow lines appear from each community toward SpaceX HQ — variable thickness, animated drain, clickable for extraction chains. A live counter shows cumulative extraction ($86.4M, still ticking). The dependency chain is shown: Kwanda → SpaceX Servers → US Law.
 
-Anger toast notifications reveal the structural problems over time:
-- Year 1: $28.8M transferred, no local infrastructure built
-- Year 2: Kwanda's request for local data storage is denied
-- Year 2: All traffic subject to the US CLOUD Act
-- Year 3: Contract clause 14.2 — service can be terminated with 30 days notice
+Four toast notifications reveal structural problems across three years. A historical parallel fades in: *"In 1885, European railways built across Africa moved resources out, not people around."*
 
-A historical parallel appears: *"In 1885, European railways built across Africa moved resources out, not people around. Kwanda's $2.4M/month follows the same direction."*
+The **news ticker** (bottom bar) activates 3.5 seconds into the anger phase.
 
-The user then proceeds to Act 2.
+---
+
+### News Ticker
+**File:** `index.html` — `#news-ticker` | `script.js` — `startNewsTicker()`, `NEWS_TICKER_ITEMS`
+
+A scrolling bar at the bottom of the screen during the anger phase. Five real-world internet shutdown incidents scroll continuously:
+
+- 2019 — India, Kashmir, 18 months, 7 million offline
+- 2021 — Myanmar coup blackout
+- 2022 — Iran, Mahsa Amini protests, 5+ days
+- 2022 — **Musk orders Starlink off over Crimea** (highlighted in red — connects to the full-screen flash)
+- 2023 — Ethiopia, 2-year Tigray blackout
+
+The ticker contextualises Crimea as a structural pattern, not an anomaly.
+
+---
+
+### Reject Phase — Three Beats
+**File:** `index.html` — `#tp-reject` | `script.js` — `doRejectEffects()`, `REJECT_TOASTS`
+
+The reject path is structured as principled struggle, not punishment. Three named years:
+
+**Year 1 — The Hustle**
+- AU summit in Addis Ababa: 11 nations, 3 commit to feasibility study
+- Ondiri Valley mesh pilot: 14 schools, 31,000 students, 1/50th of Starlink bandwidth — but it works
+- EU Development Fund: €140M application submitted, decision in 14 months
+
+**Year 2 — The Cracks**
+- EU funding approved — disbursement begins in 14 months
+- Mesh pilot reaches its limits: cannot scale, 816 schools still dark
+- *Grace Nyamwasa. 34 years old. Treatable diagnosis. Road transfer: six hours. She didn't make it. She had a name.*
+
+**Year 3 — The Weight**
+- AU consortium revises timeline: first satellite now 2033
+- Ondiri mesh hardware failing — three routers dead, seven schools dark again
+- *847 people in Kwanda's unconnected communities died of treatable conditions over three years of sovereignty. Each of them had a name.*
+
+The year counter, days counter, map greyscale, and phone messages all pace with these three beats. The user arrives at Act 2 having watched Kwanda genuinely try and fall short — not having passively watched a death counter increment.
 
 ---
 
 ### Act 2 Choices (Adopt Branch)
 **File:** `index.html` — `#tp-adopt-choice2`
 
-Having adopted Starlink and seen three years of extraction, Kwanda faces a second decision:
+Having signed, benefited, and seen three years of extraction, Kwanda faces a second decision:
 
 | Option | Description |
 |--------|-------------|
 | **Negotiate Terms** | Demand data sovereignty from SpaceX |
 | **Accept & Extract Value** | Normalise the dependency, build on it |
-| **Build an Alternative** | Invest in an AU satellite consortium |
+| **Build an Alternative** | Invest in the AU satellite consortium |
 
 ---
 
 ### Act 2 Choices (Reject Branch)
 **File:** `index.html` — `#tp-reject-choice2`
 
-Having rejected Starlink, three years pass in darkness. 847 preventable deaths. The user faces:
+Having rejected Starlink and watched three years of principled struggle fall short:
 
 | Option | Description |
 |--------|-------------|
@@ -171,15 +275,15 @@ Having rejected Starlink, three years pass in darkness. 847 preventable deaths. 
 ### Act 2 Consequence Phase
 **File:** `index.html` — `#tp-consequence2` | `script.js` — `configureBranch()`, `makeChoice2()`
 
-Each of the six branches gets a dedicated consequence phase: stats, rotating citizen quotes, a money sidebar panel, and a series of toast notifications showing how the story unfolds over 1–4 years.
+Each of the six branches gets a dedicated consequence phase: stats, rotating citizen quotes, a money sidebar panel, and toast notifications showing how the story unfolds over 1–4 years.
 
-The **accept-dep** branch (accept and extract value) includes a **lock-in interaction**: after 15 seconds, a "Cancel Starlink Service" button appears. When clicked, it submits a request — which is denied after 1.2 seconds with *Clause 14.2: Termination requires 12 months notice and full infrastructure transfer payment of $420M. Request denied.*
+The **accept-dep** branch includes a lock-in interaction: after 15 seconds, a "Cancel Starlink Service" button appears. When clicked, it submits a request — denied after 1.2 seconds: *Clause 14.2: Termination requires 12 months notice and full infrastructure transfer payment of $420M. Request denied.*
 
-A progress bar fills as the toasts play out. When complete, **"See your ending →"** appears.
+A progress bar fills as toasts play out. When complete, **"See your ending →"** appears.
 
 ---
 
-### Six Endings
+### Six Endings + Closing Questions
 **File:** `index.html` — `#ending-[name]`
 
 | ID | Path | Verdict |
@@ -194,33 +298,39 @@ A progress bar fills as the toasts play out. When complete, **"See your ending �
 Each ending includes:
 - A **historical mirror line** contextualising the outcome in colonial history
 - A **What Happened** section summarising the narrative consequence
-- A **Post-Colonial Ethics Analysis** section applying the relevant framework (Fanon, Nkrumah, Rodney, Sen, Cabral, Moyo)
-- Links to the About page and a restart button
+- A **Post-Colonial Ethics Analysis** applying the relevant framework (Fanon, Nkrumah, Rodney, Sen, Cabral, Moyo)
+- A **closing question** — one unanswerable question that sits on screen for 5 seconds before the restart button appears
+
+The questions are not verdicts. They are the tool's actual argument:
+
+> *"You held out for three years. 847 people died. You adopted anyway. Was the delay principled or was it pride?"*
+
+> *"You rejected American dependency and chose Chinese dependency. Is the ability to choose your colonizer a form of sovereignty?"*
 
 ---
 
 ### About Page
 **File:** `about.html`
 
-A standalone narrative page that provides the full context for users who want to go deeper. Structured as four short chapters:
+A standalone narrative page for users who want to go deeper. Structured as four short chapters:
 
 1. **The Promise** — Starlink's genuine human benefit; why alternatives don't exist
 2. **The Structure** — the terms, the CLOUD Act, the no-exit dependency
-3. **Why "Colonial" Is the Right Word** — the structural parallel explained without jargon; data colonialism as a framework
+3. **Why "Colonial" Is the Right Word** — the structural parallel without jargon
 4. **What This Tool Asks** — the design rationale; why there's no correct answer
 
-Followed by a **2015–2030 timeline** of real events, and six **collapsible annotated sources** (Couldry & Mejias, Nkrumah, Fanon, DeNardis, Kwet, Parks & Starosielski).
+Followed by a **2015–2030 timeline** of real events, and six **collapsible annotated sources**.
 
-Opens with the Crimea incident rendered as narrative, not citation — the hook for anyone arriving at the page without prior context.
+Opens with the Crimea incident rendered as narrative, not citation.
 
 ---
 
 ## Map
 **Library:** Leaflet.js (`leaflet@1.9.4`)
 
-Six community markers across East Africa, Amazon Basin, and Southeast Asia — each with a popup showing community context, population, and a quote that changes based on the current story phase (excluded / joy / anger / grief).
+Six `L.marker` + `L.divIcon` community markers. Popups show four-phase story arcs per community (excluded / joy / angry / grief), each with a stat badge and narrative paragraph.
 
-In the anger phase, animated polylines appear from each community toward SpaceX HQ in California, showing the direction of financial and data extraction. In the Chinese alternative ending, the same lines point toward Shenzhen instead.
+In the anger phase, animated polylines appear from each community toward SpaceX HQ — variable thickness (proportional to `extractionWeight`), clickable for full extraction chain popups. In the Chinese alternative, the same lines point toward Shenzhen.
 
 ---
 
@@ -229,7 +339,7 @@ In the anger phase, animated polylines appear from each community toward SpaceX 
 | Layer | Technology |
 |-------|-----------|
 | Markup | Vanilla HTML5 |
-| Style | Vanilla CSS3 (custom properties, CSS transitions) |
+| Style | Vanilla CSS3 (custom properties, CSS animations) |
 | Logic | Vanilla JavaScript (ES6+) |
 | Map | Leaflet.js 1.9.4 |
 | Fonts | Google Fonts — Crimson Text (serif), Inter (sans-serif) |
