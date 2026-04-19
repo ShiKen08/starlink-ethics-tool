@@ -4,68 +4,185 @@
 
 const COMMUNITIES = [
   {
-    id: 'rwanda',
-    name: 'Bugesera District, Rwanda',
-    coords: [-2.15, 30.14],
-    population: '350,000 people',
-    context: 'Farming community. One clinic, twelve schools. 8% internet access.',
-    quote_joy:   '"My daughter passed her exams using resources she never had before." — Uwase, teacher',
-    quote_anger: '"We traded one master for another. At least the colonialists built roads we still use." — Community elder',
-    quote_grief: '"The clinic is still dark. A mother died in transfer last month." — Health worker',
+    id: 'laketown',
+    name: 'Laketown, Lake Victoria',
+    coords: [-1.0, 31.8],
+    population: '12,000 people',
+    extractionWeight: 1.5,
+    phases: {
+      excluded: {
+        stat: null,
+        text: 'Fishermen coordinate across the lake using hand signals. The nearest hospital is 4 hours by boat. Last year, two children drowned because weather warnings did not reach the northern shore.',
+      },
+      joy: {
+        stat: '+100% cooperative yield',
+        text: 'GPS-tracked catch data helps the cooperative double its yield. A telemedicine call saves a premature baby — the first ever delivered safely in this district. The cooperative starts exporting directly, cutting out the middleman in Nairobi.',
+      },
+      angry: {
+        stat: 'Catch data sold to US broker',
+        text: 'The catch data is aggregated and sold via a US-based agricultural data broker. A Chinese commercial trawler fleet appears in the lake\'s international waters — using the same GPS patterns. Kwanda files a data access request. SpaceX responds: "Clause 1.3 — data processed on US servers is subject to US commercial law. No action required."',
+      },
+      grief: {
+        stat: null,
+        text: 'The cooperative still uses hand signals. The premature baby story happened again. This time, the baby did not survive. The middleman in Nairobi is still there. Nothing changed.',
+      },
+    },
+    quote_joy:   '"GPS-tracked catch data doubled our yield. A telemedicine call saved the first premature baby born in this district." — Cooperative leader',
+    quote_anger: '"Our GPS patterns were sold to a data broker. A Chinese trawler fleet appeared using our data. SpaceX said: no action required." — Fisherman',
+    quote_grief: '"The cooperative still uses hand signals. The premature baby happened again. This time, the baby didn\'t survive." — Village elder',
   },
   {
-    id: 'kenya',
-    name: 'Turkana County, Kenya',
-    coords: [3.12, 35.59],
-    population: '926,000 people',
-    context: 'Remote nomadic communities. Lowest internet penetration in Kenya.',
-    quote_joy:   '"For the first time, our children learn from teachers in the capital without leaving home." — School principal',
-    quote_anger: '"Who governs our connection? Not our parliament. Not our courts. One man, in California." — Journalist',
-    quote_grief: '"Another election. Another connectivity promise. Another year of nothing." — Community elder',
+    id: 'mweru',
+    name: 'Mweru District, Zambia–DRC Border',
+    coords: [-8.8, 28.7],
+    population: '84,000 people',
+    extractionWeight: 2.5,
+    phases: {
+      excluded: {
+        stat: null,
+        text: 'Three clinics, one doctor who rotates weekly by bus. Malaria diagnoses are made by symptom checklist — no imaging, no lab connectivity. Drug supply orders are sent by road.',
+      },
+      joy: {
+        stat: 'Drug stockouts down 60%',
+        text: 'Telemedicine link to Nairobi specialist hospital. First remote ultrasound performed. Drug supply chain digitised — stockouts drop 60%. A nurse says: "I used to guess. Now I know."',
+      },
+      angry: {
+        stat: 'Patient records subpoenaed, US law',
+        text: 'Patient records stored on SpaceX relay servers fall under US CLOUD Act jurisdiction. A US federal investigation into a Kwandan diaspora member triggers a subpoena for Mweru clinic records. Kwanda\'s health ministry is not notified. The nurse: "They told me the records were safe."',
+      },
+      grief: {
+        stat: null,
+        text: 'The doctor still rotates by bus. A patient with a treatable tumour is diagnosed four months late. The drug stockout problem remains. The popup does not moralize — it just shows the timeline of what did not happen.',
+      },
+    },
+    quote_joy:   '"I used to guess. Now I know. Telemedicine changed what it means to be a nurse in Mweru." — District nurse',
+    quote_anger: '"They told me the records were safe. A US federal subpoena pulled our patient files. Nobody told us." — District nurse',
+    quote_grief: '"The doctor still rotates by bus. A patient with a treatable tumour was diagnosed four months late." — Clinic coordinator',
   },
   {
-    id: 'nigeria',
-    name: 'Borno State, Nigeria',
-    coords: [11.85, 13.15],
-    population: '5.8 million people',
-    context: 'Conflict-affected. Displacement camps. 14% internet access.',
-    quote_joy:   '"Displaced families can contact relatives. This is not internet — it is hope." — UNHCR field worker',
-    quote_anger: '"Our most vulnerable people\'s data is on US servers under US law. No one told them." — Researcher',
-    quote_grief: '"We protected our sovereignty. The displaced families are still cut off from the world." — NGO director',
+    id: 'ondiri',
+    name: 'Ondiri Valley, Kenya Highlands',
+    coords: [0.3, 37.1],
+    population: '31,000 people',
+    extractionWeight: 1.0,
+    phases: {
+      excluded: {
+        stat: null,
+        text: '14 schools, one with a computer lab (six machines, no internet). Students preparing for national exams study from textbooks printed in 2011. The nearest library is in the capital.',
+      },
+      joy: {
+        stat: 'Exam pass rate +22%',
+        text: 'Khan Academy, Wikipedia, exam prep tools. Pass rates jump 22% in the first cohort. A student named Amara gets a scholarship to a Nairobi university — she credits the online maths courses. Teachers start a WhatsApp group to share lesson plans across the district.',
+      },
+      angry: {
+        stat: '5 schools dropped — pricing tripled',
+        text: 'Starlink\'s education pricing tier expires after year two (Clause 3.1 — promotional rates are non-binding). The monthly cost per school triples. Five schools drop the service. Amara\'s younger sister is in one of those five schools. The teacher WhatsApp group is now organising a petition.',
+      },
+      grief: {
+        stat: null,
+        text: 'The textbooks are still from 2011. Amara\'s story does not happen. The exam pass rate: flat, unchanged, three years running.',
+      },
+    },
+    quote_joy:   '"Pass rates jumped 22%. Amara got a scholarship to Nairobi. She credits the online maths courses." — Teacher',
+    quote_anger: '"Promotional pricing expired. Cost tripled. Five schools dropped the service. Amara\'s younger sister is in one of those five schools." — Teacher',
+    quote_grief: '"The textbooks are still from 2011. The exam pass rate is flat. Three years running." — Headteacher',
   },
   {
-    id: 'mozambique',
-    name: 'Cabo Delgado, Mozambique',
-    coords: [-12.33, 40.56],
-    population: '2.3 million people',
-    context: 'Insurgency-affected. Humanitarian crisis. Almost no telecommunications infrastructure.',
-    quote_joy:   '"Aid workers can coordinate in real time. Lives are being saved this week that were not last year." — Aid coordinator',
-    quote_anger: '"SpaceX can disconnect this province whenever they decide. They owe us no explanation." — Communications minister',
-    quote_grief: '"Aid coordination collapsed without connectivity. We could not track the crisis." — Field coordinator',
+    id: 'portovelho',
+    name: 'Porto Velho, Amazon Basin',
+    coords: [-8.76, -63.9],
+    population: '2,400 people',
+    extractionWeight: 2.0,
+    phases: {
+      excluded: {
+        stat: null,
+        text: 'A Yanomami-adjacent community documenting oral histories. Illegal logging encroaches from the south. Without real-time reporting, by the time word reaches the environmental agency, the trucks are gone.',
+      },
+      joy: {
+        stat: '340 hours of language archived',
+        text: 'Satellite-connected cameras catch loggers in real time. Three prosecutions in the first year. An elder begins recording stories in the Yanomami language — 340 hours archived online. A linguist in São Paulo calls it "the most important indigenous language project in a decade."',
+      },
+      angry: {
+        stat: 'GPS coordinates sold to mining co.',
+        text: 'The archived recordings are hosted on SpaceX-routed servers. Metadata reveals the exact GPS coordinates of the community — protected under Brazilian indigenous land law. A mining survey company acquires the metadata through a US data market. The elder: "We put our voices in their machine. Now the machine tells strangers where we sleep."',
+      },
+      grief: {
+        stat: null,
+        text: 'The logging continues. Two more hectares lost this quarter. The oral histories are being recorded on a cassette player with limited tapes. The elder is 78.',
+      },
+    },
+    quote_joy:   '"We caught three illegal logging operations in real time. 340 hours of our language, archived." — Community elder',
+    quote_anger: '"We put our voices in their machine. Now the machine tells strangers where we sleep." — Community elder',
+    quote_grief: '"The logging continues. The oral histories are on cassette. The elder is 78." — Rights coordinator',
   },
   {
-    id: 'brazil',
-    name: 'Amazon Basin, Brazil',
-    coords: [-3.47, -62.21],
-    population: '1.1 million indigenous people',
-    context: 'Remote indigenous communities. Historically excluded from all digital infrastructure.',
-    quote_joy:   '"Our elders\' languages are being documented for the first time. We are visible to the world." — Indigenous leader',
-    quote_anger: '"Our knowledge — our maps, our languages — now flows through a private American corporation." — Rights lawyer',
-    quote_grief: '"The government refused foreign control. Our communities remained invisible." — Activist',
+    id: 'kampongspeu',
+    name: 'Kampong Speu, Cambodia',
+    coords: [11.45, 104.52],
+    population: '56,000 people',
+    extractionWeight: 1.8,
+    phases: {
+      excluded: {
+        stat: null,
+        text: 'Rice farmers rely on seasonal guesswork. Crop insurance does not exist because there is no yield data. Young people leave for Phnom Penh — the village population has halved in 15 years.',
+      },
+      joy: {
+        stat: '3 people returned from Phnom Penh',
+        text: 'Precision agriculture tools. Yield predictions. A micro-insurance product launches based on satellite weather data. Three young people return from Phnom Penh to run the cooperative\'s new digital platform.',
+      },
+      angry: {
+        stat: 'Rice price down 14% — algorithm',
+        text: 'The yield data feeds into a US commodity trading algorithm. Rice futures in Chicago now price in Kampong Speu\'s harvest — before the farmers know their own numbers. When the algorithm shorts Cambodian rice, the local price drops 14%. The micro-insurance product collapses.',
+      },
+      grief: {
+        stat: null,
+        text: 'The young people are still in Phnom Penh. The population counter ticks down. No insurance, no data, no prediction. The rain came late this year.',
+      },
+    },
+    quote_joy:   '"Yield predictions. Micro-insurance. Three people came back from Phnom Penh to run our digital platform." — Cooperative chair',
+    quote_anger: '"Chicago traders shorted Cambodian rice before we knew our own harvest numbers. The micro-insurance collapsed." — Farmer',
+    quote_grief: '"The young people are still in Phnom Penh. No insurance, no data, no prediction. The rain came late." — Village head',
   },
   {
-    id: 'myanmar',
-    name: 'Shan State, Myanmar',
-    coords: [21.14, 97.04],
-    population: '5.8 million people',
-    context: 'Active conflict zone. Military internet blackouts common.',
-    quote_joy:   '"We could communicate without the military monitoring every word. It changed everything." — Journalist',
-    quote_anger: '"Musk cut Starlink in Ukraine when it suited him. If he disagrees with us, he can cut us too." — Activist',
-    quote_grief: '"At least Starlink was harder for the military to switch off. Our choice gave them that power back." — Reporter',
+    id: 'timbuktu',
+    name: 'Timbuktu, Mali',
+    coords: [16.77, -3.0],
+    population: '35,000 people',
+    extractionWeight: 1.2,
+    phases: {
+      excluded: {
+        stat: null,
+        text: 'Thousands of ancient manuscripts at risk of deterioration. Digitisation project stalled for five years — no bandwidth to upload high-resolution scans. Tourism collapsed after regional instability.',
+      },
+      joy: {
+        stat: '12,000 manuscripts digitised',
+        text: '12,000 manuscripts digitised and uploaded in the first year. International researchers access the archive. A virtual tourism platform launches — revenue trickles in. A curator says: "The world can finally see what we have been protecting."',
+      },
+      angry: {
+        stat: 'Curators locked out of own archive',
+        text: 'The digitised manuscripts are now hosted on US servers. When a US museum claims prior digitisation rights based on a 2009 grant, SpaceX complies with a US court order to freeze access to the disputed files. Timbuktu\'s own curators are locked out of their own heritage. The curator: "We digitised them to save them. Now we need permission to see them."',
+      },
+      grief: {
+        stat: null,
+        text: 'The manuscripts continue to deteriorate. Three were damaged by humidity this year. The digitisation equipment sits in a room with no upload capability. The curator is still protecting them — by hand, in the dark.',
+      },
+    },
+    quote_joy:   '"12,000 manuscripts digitised in one year. The world can finally see what we have been protecting." — Curator',
+    quote_anger: '"We digitised them to save them. Now we need permission to see them." — Curator',
+    quote_grief: '"Three manuscripts damaged by humidity this year. The curator is protecting them by hand, in the dark." — Archive director',
   },
 ];
 
 const SPACEX = [34.05, -118.25]; // SpaceX HQ, California
+
+const EXTRACTION_CHAINS = {
+  laketown:    { label: 'Catch data', path: 'Lake Victoria cooperative → SpaceX relay servers → US agricultural data broker → Chinese trawler fleet' },
+  mweru:       { label: 'Patient records', path: 'Mweru clinic → SpaceX relay → US federal subpoena (CLOUD Act) → No notification to Kwanda' },
+  ondiri:      { label: 'Student data', path: 'Ondiri schools → Starlink network → US pricing algorithm → Promotional rate expired → 3× cost increase' },
+  portovelho:  { label: 'GPS metadata', path: 'Amazon community location data → SpaceX storage → US data market → Mining survey company' },
+  kampongspeu: { label: 'Yield data', path: 'Kampong Speu harvest data → SpaceX route → Chicago commodity algorithm → Rice futures shorted → 14% price drop' },
+  timbuktu:    { label: 'Heritage files', path: 'Timbuktu manuscripts → US-hosted servers → US museum dispute → US court order → Curators locked out' },
+};
 
 // ══════════════════════════════════════════════════════════════
 //  MAP STATE
@@ -78,12 +195,19 @@ let flowAnimRunning = false;
 let flowDashOffset  = 0;
 let currentBranch   = null;
 
-const MARKER = {
-  excluded: { fillColor:'#e8a04a', color:'#c8843a', fillOpacity:.55, radius:9,  weight:2, opacity:.9 },
-  joy:      { fillColor:'#34d27b', color:'#27ae60', fillOpacity:.75, radius:11, weight:2, opacity:1  },
-  angry:    { fillColor:'#e84040', color:'#c0392b', fillOpacity:.75, radius:11, weight:2, opacity:1  },
-  grief:    { fillColor:'#6b7280', color:'#555d6b', fillOpacity:.40, radius:8,  weight:1, opacity:.7 },
-};
+const visitedMarkers = new Set();
+const MIN_VISITS = 3;
+let joyLabelMarkers = [];
+
+function makeMarkerIcon(phase) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="lm lm-${phase}"></div>`,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+    popupAnchor: [0, -14],
+  });
+}
 
 // ══════════════════════════════════════════════════════════════
 //  TIMER / INTERVAL REFS
@@ -98,6 +222,8 @@ let cumulativeTickInterval  = null;
 let purchasingPowerInterval = null;
 let vignetteTimer           = null;
 let angerPhaseStarted       = false;
+let acceptedRouters         = false;
+let newsTickerInterval      = null;
 
 // ══════════════════════════════════════════════════════════════
 //  HAPPINESS METER
@@ -157,25 +283,27 @@ function initMap() {
   }).addTo(map);
 
   COMMUNITIES.forEach(c => {
-    const m = L.circleMarker(c.coords, MARKER.excluded).addTo(map);
-    m.bindPopup(buildPopup(c, 'excluded'), { maxWidth: 280 });
+    const m = L.marker(c.coords, { icon: makeMarkerIcon('excluded') }).addTo(map);
+    m.bindPopup(buildPopup(c, 'excluded'), { maxWidth: 300 });
+    m.on('popupopen', () => handleMarkerVisit(c.id));
     markerRefs[c.id] = m;
   });
 }
 
 function buildPopup(c, state) {
-  const quote = c['quote_' + state] || c.context;
+  const phase = (c.phases && c.phases[state]) || {};
+  const stat = phase.stat ? `<p class="popup-stat">${phase.stat}</p>` : '';
   return `<div class="popup-content">
     <p class="popup-name">${c.name}</p>
-    <p class="popup-context">${c.context}</p>
     <p class="popup-pop">${c.population}</p>
-    <p class="popup-quote">${quote}</p>
+    ${stat}
+    <p class="popup-story">${phase.text || ''}</p>
   </div>`;
 }
 
 function updateMarkers(state) {
   COMMUNITIES.forEach(c => {
-    markerRefs[c.id].setStyle(MARKER[state]);
+    markerRefs[c.id].setIcon(makeMarkerIcon(state));
     markerRefs[c.id].setPopupContent(buildPopup(c, state));
   });
 }
@@ -192,21 +320,23 @@ function showFlowLines() {
   }).addTo(map);
   spxM.bindPopup(`<div class="popup-content">
     <p class="popup-name">SpaceX HQ — California, USA</p>
-    <p class="popup-context">All revenue, data, and decision-making authority flows here. Under US law. Accountable to US shareholders only.</p>
-    <p class="popup-quote">"No vote. No court. No exit." — post-colonial analysis</p>
-  </div>`, { maxWidth:260 });
+    <p class="popup-story">All revenue, data, and decision-making authority flows here. Under US law. Accountable to US shareholders only.</p>
+    <p class="popup-story" style="margin-top:.45rem;font-family:var(--serif);font-style:italic;color:var(--angry)">"No vote. No court. No exit."</p>
+  </div>`, { maxWidth:280 });
   flowLines.push(spxM);
 
-  // Animated drain lines
+  // Animated drain lines — variable weight from extractionWeight, click to trace chain
   COMMUNITIES.forEach((c, i) => {
     const arcLat = Math.max(c.coords[0] + 22, 38);
     const arcLng = (c.coords[1] + SPACEX[1]) / 2;
+    const weight = 1 + (c.extractionWeight || 1.5) * 0.7;
 
     const line = L.polyline([c.coords, [arcLat, arcLng], SPACEX], {
-      color:'#e84040', weight:1.8, opacity:0,
-      dashArray:'8 14', interactive:false,
+      color:'#e84040', weight, opacity:0,
+      dashArray:'8 14', interactive:true,
     }).addTo(map);
 
+    line.on('click', () => showExtractionChain(c));
     flowLines.push(line);
     setTimeout(() => line.setStyle({ opacity: 0.65 }), i * 200);
   });
@@ -217,6 +347,19 @@ function showFlowLines() {
   // Shared dash-offset animation
   flowAnimRunning = true;
   animateFlow();
+}
+
+function showExtractionChain(c) {
+  const chain = EXTRACTION_CHAINS[c.id];
+  if (!chain) return;
+  L.popup({ maxWidth: 340 })
+    .setLatLng(c.coords)
+    .setContent(`<div class="popup-content">
+      <p class="popup-name">${c.name}</p>
+      <p class="chain-label">${chain.label} extraction path:</p>
+      <p class="chain-path">${chain.path}</p>
+    </div>`)
+    .openOn(map);
 }
 
 function animateFlow() {
@@ -466,39 +609,70 @@ const ANGER_TOASTS = [
 ];
 
 const REJECT_TOASTS = [
+  // Year 1 — The Hustle
   {
-    delay: 4500,
-    icon: '🏥',
-    title: 'Turkana County — No Telemedicine',
-    msg: 'Patient needed urgent specialist. Transferred 280km by road. Died en route. No remote consultation possible.',
+    delay: 2000,
+    icon: '🤝',
+    title: 'Year 1 — AU Summit, Addis Ababa',
+    msg: 'Kwanda tables a motion for joint African satellite infrastructure. Eleven nations attend. Three commit to the feasibility study. Progress is real. Slow.',
+    critical: false,
+  },
+  {
+    delay: 5500,
+    icon: '📡',
+    title: 'Year 1 — Ondiri Valley Mesh Pilot',
+    msg: 'Engineers wire 14 schools in Ondiri Valley with a low-frequency mesh network. 31,000 students get limited connectivity — 1/50th of Starlink bandwidth. But it works.',
+    critical: false,
+  },
+  {
+    delay: 9000,
+    icon: '🏛️',
+    title: 'Year 1 — EU Development Fund',
+    msg: 'Kwanda submits a €140M application for digital infrastructure. Reviewers note "strong strategic rationale." Decision expected in 14 months.',
+    critical: false,
+  },
+  // Year 2 — The Cracks
+  {
+    delay: 13000,
+    icon: '✅',
+    title: 'Year 2 — EU Funding: Approved',
+    msg: 'The €140M is confirmed. Disbursement begins in 14 months. Hardware arrives Year 3. The waiting continues. 816 schools remain dark.',
+    critical: false,
+  },
+  {
+    delay: 16500,
+    icon: '📶',
+    title: 'Year 2 — Mesh Pilot: Limits Reached',
+    msg: 'Ondiri mesh serves 31,000 students in 14 schools. Bandwidth: 1/50th of Starlink. Cannot scale without new hardware. 816 schools still have nothing.',
+    critical: false,
+  },
+  {
+    delay: 19500,
+    icon: '🕯️',
+    title: 'Year 2 — Mweru District',
+    msg: 'Grace Nyamwasa. 34 years old. Treatable diagnosis. Road transfer from Mweru to Nairobi: six hours. She didn\'t make it. She had a name.',
+    critical: true,
+  },
+  // Year 3 — The Weight
+  {
+    delay: 23000,
+    icon: '🛰️',
+    title: 'Year 3 — AU Timeline Revised',
+    msg: 'The AfriSat consortium has revised its launch schedule. First satellite: 2033. The feasibility study took longer than expected.',
     critical: true,
   },
   {
-    delay: 8000,
-    icon: '📦',
-    title: 'Borno State — Supplies Failed',
-    msg: 'Aid convoy dispatched to wrong coordinates. No real-time comms to correct it. 3,000 families received nothing.',
+    delay: 26500,
+    icon: '🔧',
+    title: 'Year 3 — Ondiri Mesh Failing',
+    msg: 'Three of fourteen mesh routers have stopped responding. EU hardware hasn\'t arrived. Engineers are using spare parts. Seven schools are dark again.',
     critical: false,
   },
   {
-    delay: 11500,
-    icon: '📰',
-    title: 'Shan State — World Never Knew',
-    msg: 'Military crackdown on civilians. No satellite uplink. Atrocities undocumented for 11 days. Perpetrators faced no scrutiny.',
-    critical: false,
-  },
-  {
-    delay: 14500,
-    icon: '🌿',
-    title: 'Amazon Basin — Invisible Destruction',
-    msg: 'Illegal clearing undetected for 19 days. Satellite imagery delayed. 1,200 hectares gone before anyone knew.',
-    critical: false,
-  },
-  {
-    delay: 18000,
-    icon: '🚨',
-    title: 'Cabo Delgado — Cyclone Warning Failed',
-    msg: 'Early warning could not reach 40,000 coastal residents. No local network. Emergency response delayed 72 hours.',
+    delay: 29500,
+    icon: '—',
+    title: 'Year 3 — The Count',
+    msg: '847 people in Kwanda\'s unconnected communities died of treatable conditions over three years of sovereignty. Each of them had a name.',
     critical: true,
   },
 ];
@@ -732,12 +906,12 @@ function clearToasts() {
 // ══════════════════════════════════════════════════════════════
 
 const REJECT_LABELS = {
-  rwanda:     'Schools dark',
-  kenya:      'Patient died',
-  nigeria:    'Aid failed',
-  mozambique: 'Crisis invisible',
-  brazil:     'Voices silenced',
-  myanmar:    'Blackout',
+  laketown:    'Clinic offline',
+  mweru:       'Doctor delayed',
+  ondiri:      'Schools dark',
+  portovelho:  'Logging unchecked',
+  kampongspeu: 'No insurance',
+  timbuktu:    'Archive lost',
 };
 
 let labelMarkers = [];
@@ -789,11 +963,11 @@ function startDaysCounter() {
     requestAnimationFrame(step);
   }
 
-  // Year 1 → Year 2 → Year 3, each in ~3s, paced with year counter
-  countTo(0, 365, 3000, () => {
-    setTimeout(() => countTo(365, 730, 3000, () => {
-      setTimeout(() => countTo(730, 1095, 3000), 2200);
-    }), 2200);
+  // Count across 3 years, paced to match the three-beat toast timing
+  countTo(0, 365, 10000, () => {
+    setTimeout(() => countTo(365, 730, 10000, () => {
+      setTimeout(() => countTo(730, 1095, 10000), 1000);
+    }), 1000);
   });
 }
 
@@ -811,8 +985,8 @@ function doRejectEffects() {
   COMMUNITIES.forEach((c, i) => {
     setTimeout(() => {
       const m = markerRefs[c.id];
-      m.setStyle({ fillColor:'#ffffff', color:'#ffffff', fillOpacity:.9, radius:13, weight:2, opacity:1 });
-      setTimeout(() => m.setStyle(MARKER.grief), 350);
+      m.setIcon(makeMarkerIcon('joy')); // brief brightness flash
+      setTimeout(() => m.setIcon(makeMarkerIcon('grief')), 350);
     }, i * 500);
   });
 
@@ -838,27 +1012,25 @@ function doRejectEffects() {
     if (hm) hm.classList.add('visible');
   }, 5000);
 
-  // 7. Year counter: Year 1 → Year 2 → Year 3 → Still waiting.
-  const yearEl = document.getElementById('reject-year-text');
-  const years = ['Year 1', 'Year 2', 'Year 3', 'Still waiting.'];
-  let yi = 0;
-
-  function advanceYear() {
-    yearEl.style.opacity = '0';
-    setTimeout(() => {
-      yearEl.textContent = years[yi];
-      yearEl.style.opacity = '1';
-      yi++;
-      if (yi < years.length) {
-        setTimeout(advanceYear, 2200);
-      } else {
-        setTimeout(() => {
-          document.getElementById('btn-reflect-reject').classList.remove('hidden');
-        }, 1800);
-      }
-    }, 400);
+  // 7. Three-beat year counter: Hustle → Cracks → Weight
+  function setRejectYear(text) {
+    const el = document.getElementById('reject-year-text');
+    if (!el) return;
+    el.style.opacity = '0';
+    setTimeout(() => { el.textContent = text; el.style.opacity = '1'; }, 400);
   }
-  advanceYear();
+  setRejectYear('Year 1 — The Hustle');
+  setTimeout(() => {
+    setRejectYear('Year 2 — The Cracks');
+    schedulePhoneMsgs('reject-y2');
+  }, 11000);
+  setTimeout(() => {
+    setRejectYear('Year 3 — The Weight');
+    schedulePhoneMsgs('reject-y3');
+  }, 22000);
+  setTimeout(() => {
+    document.getElementById('btn-reflect-reject').classList.remove('hidden');
+  }, 33000);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1146,6 +1318,15 @@ function showEnding() {
   const el = document.getElementById(endingId);
   el.classList.remove('hidden');
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Phase 8 — pause before restart buttons (5 seconds to sit with the question)
+  const cta = el.querySelector('.res-cta-delayed');
+  if (cta) {
+    cta.classList.add('cta-waiting');
+    setTimeout(() => cta.classList.remove('cta-waiting'), 5000);
+  }
+
+  stopNewsTicker();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1168,11 +1349,197 @@ function attemptCancel() {
 }
 
 // ══════════════════════════════════════════════════════════════
+//  PHONE NOTIFICATIONS
+// ══════════════════════════════════════════════════════════════
+
+const PHONE_MESSAGES = [
+  { phase:'choice',   delay:3500,  sender:'Health Minister', avatar:'🏥', text:'Three more clinics reported drug stockouts this week. We need connectivity, Minister.' },
+  { phase:'joy',      delay:2500,  sender:'Your daughter',   avatar:'👧', text:'Papa, we have internet at school!! My teacher showed us Khan Academy today 😊' },
+  { phase:'joy',      delay:6000,  sender:'US Ambassador',   avatar:'🇺🇸', text:'Congratulations on the Starlink partnership. The US values Kwanda\'s forward-thinking leadership.' },
+  { phase:'crimea',   delay:500,   sender:'Health Minister', avatar:'🏥', text:'Are you seeing the news? Can they do that to us?' },
+  { phase:'anger',    delay:3000,  sender:'Unknown Number',  avatar:'⚠️', text:'Minister — a US court has subpoenaed patient records from Mweru clinic. We were not consulted.' },
+  { phase:'anger',    delay:9500,  sender:'Your daughter',   avatar:'👧', text:'Papa, Starlink went down at school again today. Teacher says it\'s the third time this month.' },
+  { phase:'reject-y2', delay:500, sender:'Health Minister', avatar:'🏥', text:'The patient in Mweru didn\'t make it. Her name was Grace Nyamwasa. She was 34.' },
+  { phase:'reject-y3', delay:500, sender:'AU Liaison',      avatar:'🌍', text:'The consortium timeline has been revised. First satellite now 2033. I\'m sorry.' },
+];
+
+let phoneTimeouts = [];
+
+function showPhoneMsg(msg) {
+  const container = document.getElementById('phone-notifs');
+  if (!container) return;
+  const el = document.createElement('div');
+  el.className = 'phone-msg';
+  el.innerHTML = `
+    <div class="phone-msg-header">
+      <span class="phone-avatar">${msg.avatar}</span>
+      <span class="phone-sender">${msg.sender}</span>
+    </div>
+    <p class="phone-text">${msg.text}</p>`;
+  container.appendChild(el);
+  setTimeout(() => {
+    el.classList.add('phone-msg-out');
+    setTimeout(() => el.remove(), 500);
+  }, 8500);
+}
+
+function schedulePhoneMsgs(phase) {
+  const msgs = PHONE_MESSAGES.filter(m => m.phase === phase);
+  msgs.forEach(m => {
+    const tid = setTimeout(() => showPhoneMsg(m), m.delay);
+    phoneTimeouts.push(tid);
+  });
+}
+
+function clearPhoneMsgs() {
+  phoneTimeouts.forEach(t => clearTimeout(t));
+  phoneTimeouts = [];
+  const container = document.getElementById('phone-notifs');
+  if (container) container.innerHTML = '';
+}
+
+// ══════════════════════════════════════════════════════════════
+//  NEWS TICKER
+// ══════════════════════════════════════════════════════════════
+
+const NEWS_TICKER_ITEMS = [
+  { text: '2019 — India shuts down internet in Kashmir for 18 months. 7 million people offline.', crimea: false },
+  { text: '2021 — Myanmar junta orders internet blackout during coup. Resistance communication severed.', crimea: false },
+  { text: '2022 — Iran cuts internet during Mahsa Amini protests. Duration: 5+ days.', crimea: false },
+  { text: '2022 — Musk orders Starlink switched off over Crimea. No government consulted.', crimea: true },
+  { text: '2023 — Ethiopia: internet restored after 2-year Tigray blackout. Estimated deaths during blackout: thousands.', crimea: false },
+];
+
+function startNewsTicker() {
+  const ticker = document.getElementById('news-ticker');
+  const inner  = document.getElementById('ticker-inner');
+  if (!ticker || !inner) return;
+
+  const itemsHTML = NEWS_TICKER_ITEMS.map(item =>
+    `<span class="ticker-item${item.crimea ? ' ticker-crimea' : ''}">${item.text}</span><span class="ticker-sep"> · </span>`
+  ).join('');
+  // Duplicate for seamless loop
+  inner.innerHTML = itemsHTML + itemsHTML;
+
+  ticker.classList.remove('hidden');
+
+  let offset = 0;
+  const speed = 0.45;
+  function tick() {
+    if (!newsTickerInterval) return;
+    offset -= speed;
+    const halfWidth = inner.scrollWidth / 2;
+    if (Math.abs(offset) >= halfWidth) offset = 0;
+    inner.style.transform = `translateX(${offset}px)`;
+    newsTickerInterval = requestAnimationFrame(tick);
+  }
+  newsTickerInterval = requestAnimationFrame(tick);
+}
+
+function stopNewsTicker() {
+  if (newsTickerInterval) {
+    cancelAnimationFrame(newsTickerInterval);
+    newsTickerInterval = null;
+  }
+  const ticker = document.getElementById('news-ticker');
+  if (ticker) ticker.classList.add('hidden');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  VISIT GATE
+// ══════════════════════════════════════════════════════════════
+
+function handleMarkerVisit(communityId) {
+  visitedMarkers.add(communityId);
+  updateVisitGate();
+}
+
+function updateVisitGate() {
+  const count = visitedMarkers.size;
+
+  const statusEl = document.getElementById('visit-status');
+  if (statusEl) statusEl.textContent = count + ' of 3 visited';
+
+  for (let i = 0; i < 3; i++) {
+    const dot = document.getElementById('vd-' + i);
+    if (dot) dot.classList.toggle('filled', i < count);
+  }
+
+  const btns = document.querySelectorAll('.btn-adopt, .btn-reject-choice');
+  if (count >= MIN_VISITS) {
+    btns.forEach(b => b.removeAttribute('disabled'));
+    const gate = document.getElementById('visit-gate');
+    if (gate) gate.classList.add('gate-open');
+  } else {
+    btns.forEach(b => b.setAttribute('disabled', ''));
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  JOY PHASE STAT LABELS
+// ══════════════════════════════════════════════════════════════
+
+function addJoyLabels() {
+  COMMUNITIES.forEach((c, i) => {
+    const phase = c.phases && c.phases.joy;
+    if (!phase || !phase.stat) return;
+    setTimeout(() => {
+      const icon = L.divIcon({
+        className: '',
+        html: `<div class="map-label joy-label" id="jlbl-${c.id}">${phase.stat}</div>`,
+        iconSize: [0, 0],
+        iconAnchor: [-6, 24],
+      });
+      const m = L.marker(c.coords, { icon, interactive: false }).addTo(map);
+      joyLabelMarkers.push(m);
+      setTimeout(() => {
+        const el = document.getElementById('jlbl-' + c.id);
+        if (el) el.classList.add('visible');
+      }, 150);
+    }, 2000 + i * 500);
+  });
+}
+
+function removeJoyLabels() {
+  joyLabelMarkers.forEach(m => m.remove());
+  joyLabelMarkers = [];
+}
+
+// ══════════════════════════════════════════════════════════════
 //  MAIN FLOW
 // ══════════════════════════════════════════════════════════════
 
 function startExperience() {
   document.getElementById('screen-intro').classList.add('hidden');
+  document.getElementById('screen-prephase').classList.remove('hidden');
+}
+
+function advancePrePhase(n) {
+  document.querySelectorAll('.pp-scene').forEach(s => s.classList.remove('active'));
+  const next = document.getElementById('pp-' + n);
+  if (next) next.classList.add('active');
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('ppd-' + i);
+    if (dot) dot.classList.toggle('active', i <= n);
+  }
+}
+
+function respondRouters(accepted) {
+  acceptedRouters = accepted;
+  const offer = document.getElementById('pp-router-offer');
+  if (offer) {
+    offer.innerHTML = `<p class="pp-notif-response">${
+      accepted
+        ? 'Donation accepted. 500 Huawei routers en route to rural schools.'
+        : 'Donation declined.'
+    }</p>`;
+  }
+  const nextBtn = document.getElementById('btn-pp-3-next');
+  if (nextBtn) nextBtn.classList.remove('hidden');
+}
+
+function enterMainExperience() {
+  document.getElementById('screen-prephase').classList.add('hidden');
   document.getElementById('screen-main').classList.remove('hidden');
 
   if (!map) {
@@ -1182,6 +1549,8 @@ function startExperience() {
 
   setHappiness('neutral');
   showPanel('tp-choice');
+  updateVisitGate();
+  schedulePhoneMsgs('choice');
 }
 
 function showContract() {
@@ -1227,6 +1596,8 @@ function makeChoice(choice) {
     showMoneySidebar('joy');
     startQuotes('tp-quote-joy', 'quote_joy');
     scheduleToasts(JOY_TOASTS);
+    addJoyLabels();
+    schedulePhoneMsgs('joy');
     startJoyTimer();
   } else {
     setHappiness('grief');
@@ -1245,6 +1616,7 @@ function triggerCrimea() {
   stopQuotes();
   document.getElementById('crimea-flash').classList.add('active');
   crimeaAutoTimer = setTimeout(dismissCrimea, 6000);
+  schedulePhoneMsgs('crimea');
 }
 
 function dismissCrimea() {
@@ -1257,6 +1629,7 @@ function doAngerPhase() {
   if (angerPhaseStarted) return;
   angerPhaseStarted = true;
   clearToasts();
+  removeJoyLabels();
   updateMarkers('angry');
   setHappiness('angry');
   showPanel('tp-anger');
@@ -1265,6 +1638,8 @@ function doAngerPhase() {
   showFlowLines();
   startMoneyCounter();
   scheduleToasts(ANGER_TOASTS);
+  schedulePhoneMsgs('anger');
+  setTimeout(() => startNewsTicker(), 3500);
   setTimeout(() => {
     const hm = document.getElementById('hist-anger');
     if (hm) hm.classList.add('visible');
@@ -1274,13 +1649,18 @@ function doAngerPhase() {
 function restart() {
   currentBranch     = null;
   angerPhaseStarted = false;
+  acceptedRouters   = false;
   if (cumulativeTickInterval)  { clearInterval(cumulativeTickInterval);  cumulativeTickInterval  = null; }
   if (purchasingPowerInterval) { clearInterval(purchasingPowerInterval); purchasingPowerInterval = null; }
   if (vignetteTimer)           { clearInterval(vignetteTimer);           vignetteTimer           = null; }
+  visitedMarkers.clear();
   stopPurchasingPower();
   stopQuotes();
+  stopNewsTicker();
+  clearPhoneMsgs();
   removeFlowLines();
   removeRejectLabels();
+  removeJoyLabels();
   clearToasts();
   document.querySelectorAll('.hist-mirror').forEach(el => el.classList.remove('visible'));
   location.reload();

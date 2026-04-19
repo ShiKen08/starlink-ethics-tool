@@ -25,7 +25,92 @@
         <p>SpaceX is offering you <strong>Starlink</strong> — high-speed satellite internet, operational within weeks.</p>
         <p>There is no viable alternative. There has never been one.</p>
       </div>
-      <button class="btn-primary" onclick="startExperience()">Make Your Choice →</button>
+      <button class="btn-primary" onclick="startExperience()">Begin →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       PRE-PHASE — Why there is no choice
+  ══════════════════════════════════════ -->
+  <div id="screen-prephase" class="hidden">
+    <div class="pp-progress">
+      <span class="pp-dot active" id="ppd-1"></span>
+      <span class="pp-dot" id="ppd-2"></span>
+      <span class="pp-dot" id="ppd-3"></span>
+      <span class="pp-dot" id="ppd-4"></span>
+    </div>
+
+    <div id="pp-1" class="pp-scene active">
+      <div class="pp-inner">
+        <p class="pp-eyebrow">3 months ago · World Bank</p>
+        <div class="pp-card pp-card-letter">
+          <p class="pp-letter-ref">Application #KW-2024-0047 — Digital Infrastructure Fund</p>
+          <p class="pp-letter-body">Your application for $200M in undersea cable infrastructure funding has been reviewed. Given the current allocation of the Digital Infrastructure Cycle, <strong>your application has been noted for the next review period.</strong></p>
+          <p class="pp-letter-verdict">Expected review timeline: <strong>18–24 months.</strong></p>
+        </div>
+        <button class="btn-pp-continue" onclick="advancePrePhase(2)">Continue →</button>
+      </div>
+    </div>
+
+    <div id="pp-2" class="pp-scene">
+      <div class="pp-inner">
+        <p class="pp-eyebrow">6 weeks ago · Regional Telecom</p>
+        <div class="pp-card">
+          <p class="pp-card-title">Safaricom Coverage Extension — Internal Pricing Model</p>
+          <div class="pp-comparison">
+            <div class="pp-cmp-row">
+              <span class="pp-cmp-label">Market rate per user / month</span>
+              <span class="pp-cmp-val pp-val-bad">$14.00</span>
+            </div>
+            <div class="pp-cmp-row">
+              <span class="pp-cmp-label">Average rural monthly income, Kwanda</span>
+              <span class="pp-cmp-val pp-val-bad">$4.60</span>
+            </div>
+            <div class="pp-cmp-divider"></div>
+            <div class="pp-cmp-row pp-cmp-conclusion">
+              <span>At market rates, rural connectivity costs <strong>3× what your citizens earn.</strong> No viable pricing model exists. Negotiation was attempted. The math hasn't changed in fifteen years.</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn-pp-continue" onclick="advancePrePhase(3)">Continue →</button>
+      </div>
+    </div>
+
+    <div id="pp-3" class="pp-scene">
+      <div class="pp-inner">
+        <p class="pp-eyebrow">Last week · African Union</p>
+        <div class="pp-card">
+          <p class="pp-card-title">AfriSat Consortium — Status &amp; Projected Timeline</p>
+          <div class="pp-timeline-list">
+            <div class="pp-tl-row pp-tl-past">2024 — Feasibility study launched</div>
+            <div class="pp-tl-row pp-tl-now">2026 — <strong>You are here.</strong> Study still ongoing.</div>
+            <div class="pp-tl-row pp-tl-future">2029 — First satellite launch (projected)</div>
+            <div class="pp-tl-row pp-tl-future">2031 — Partial coverage, 6 nations</div>
+            <div class="pp-tl-row pp-tl-future">2035 — Full constellation (estimated)</div>
+          </div>
+        </div>
+        <div class="pp-notification" id="pp-router-offer">
+          <p class="pp-notif-label">Inbox — Huawei Technologies</p>
+          <p class="pp-notif-body">We wish to donate <strong>500 routers</strong> to rural Kwandan schools. No financial cost. No stated conditions.</p>
+          <div class="pp-notif-btns">
+            <button class="btn-pp-accept" onclick="respondRouters(true)">Accept donation</button>
+            <button class="btn-pp-decline" onclick="respondRouters(false)">Decline</button>
+          </div>
+        </div>
+        <button class="btn-pp-continue hidden" id="btn-pp-3-next" onclick="advancePrePhase(4)">Continue →</button>
+      </div>
+    </div>
+
+    <div id="pp-4" class="pp-scene">
+      <div class="pp-inner pp-inner-final">
+        <p class="pp-eyebrow">Today</p>
+        <p class="pp-final-intro">Then SpaceX called.</p>
+        <div class="pp-final-offer">
+          <p>Nationwide satellite internet. <strong>Operational in six weeks.</strong> No infrastructure investment required from Kwanda.</p>
+          <p style="margin-top:.75rem;color:rgba(233,229,221,0.5);font-style:italic;">There is no viable alternative. There has never been one.</p>
+        </div>
+        <button class="btn-primary" onclick="enterMainExperience()">Make your choice →</button>
+      </div>
     </div>
   </div>
 
@@ -68,17 +153,25 @@
         <div class="tp-choice-inner">
           <div class="tp-choice-text">
             <h2>Your nation. Your decision.</h2>
-            <p>The dots on the map are your people — communities without internet access. Click any to learn about them. Then choose.</p>
+            <p>The dots on the map are your people — communities without internet access. Click any to hear their story. Then choose.</p>
+            <div id="visit-gate" class="visit-gate">
+              <span class="visit-dots">
+                <span class="vd" id="vd-0"></span>
+                <span class="vd" id="vd-1"></span>
+                <span class="vd" id="vd-2"></span>
+              </span>
+              <span id="visit-status" class="visit-status">0 of 3 visited</span>
+            </div>
           </div>
           <div class="choice-buttons">
-            <button class="btn-adopt" onclick="showContract()">
+            <button class="btn-adopt" onclick="showContract()" disabled>
               <span class="btn-icon joy-col">◎</span>
               <div>
                 <span class="btn-title">Adopt Starlink</span>
                 <span class="btn-desc">Connect your people now</span>
               </div>
             </button>
-            <button class="btn-reject-choice" onclick="makeChoice('reject')">
+            <button class="btn-reject-choice" onclick="makeChoice('reject')" disabled>
               <span class="btn-icon grief-col">◯</span>
               <div>
                 <span class="btn-title">Reject Starlink</span>
@@ -424,6 +517,17 @@
     <!-- Toast notification container -->
     <div id="toast-container"></div>
 
+    <!-- Phone notifications (top-right personal messages) -->
+    <div id="phone-notifs"></div>
+
+    <!-- News ticker (bottom bar, anger phase) -->
+    <div id="news-ticker" class="hidden">
+      <span class="ticker-label">GLOBAL PATTERN</span>
+      <div class="ticker-track">
+        <div id="ticker-inner" class="ticker-inner"></div>
+      </div>
+    </div>
+
   </div><!-- /screen-main -->
 
   <!-- ══════════════════════════════════════
@@ -443,7 +547,10 @@
         <p>Fanon (1961) described this as the "negotiating table trap": the colonised nation celebrates access to the table, while the coloniser sets the menu. The structural power — who owns the satellites, who writes the code, who stores the data — remained unchanged.</p>
         <p>Negotiation without alternatives is not sovereignty. It is the best deal available to a party with no leverage.</p>
       </div>
-      <div class="res-cta">
+      <div class="ending-question">
+        <p class="eq-text">You won concessions. But you're still negotiating from inside their system. Is reform possible from within a structure designed to extract?</p>
+      </div>
+      <div class="res-cta res-cta-delayed">
         <a href="about.html" class="btn-about">About &amp; Sources →</a>
         <button class="btn-restart" onclick="restart()">Try a different path</button>
       </div>
@@ -467,7 +574,10 @@
         <p>Rodney (1972) in <em>How Europe Underdeveloped Africa</em> described this pattern: economic growth that deepens structural dependency. The colony grows richer in absolute terms while becoming more bound to the metropole.</p>
         <p>Kwanda's GDP rose. Its sovereignty fell. Modernisation theory calls this development. Dependency theory calls it extraction with extra steps.</p>
       </div>
-      <div class="res-cta">
+      <div class="ending-question">
+        <p class="eq-text">Kwanda's people are connected, educated, and alive. The price is permanent dependency. Would you make the same choice for your own country?</p>
+      </div>
+      <div class="res-cta res-cta-delayed">
         <a href="about.html" class="btn-about">About &amp; Sources →</a>
         <button class="btn-restart" onclick="restart()">Try a different path</button>
       </div>
@@ -491,7 +601,10 @@
         <p>Nkrumah (1963) argued that African unity was the only path to true independence. The consortium proves him right — and reveals the cost. Building sovereign infrastructure requires time that marginalised communities do not have.</p>
         <p>The tension between long-term sovereignty and immediate human need is not a failure of vision. <em>It is the condition that colonialism created.</em></p>
       </div>
-      <div class="res-cta">
+      <div class="ending-question">
+        <p class="eq-text">You chose long-term sovereignty over short-term welfare. How many years of suffering is sovereignty worth? Is there a number?</p>
+      </div>
+      <div class="res-cta res-cta-delayed">
         <a href="about.html" class="btn-about">About &amp; Sources →</a>
         <button class="btn-restart" onclick="restart()">Try a different path</button>
       </div>
@@ -515,7 +628,10 @@
         <p>Sen (1999) argued that development is freedom — the freedom to live a life one has reason to value. Three years of principled refusal meant three years of unfreedom for 2.4 million people.</p>
         <p>The sovereignty that was protected was the sovereignty of the state — not of the citizens who bore the cost. When sovereignty and human capability conflict, <em>whose freedom are we choosing?</em></p>
       </div>
-      <div class="res-cta">
+      <div class="ending-question">
+        <p class="eq-text">You held out for three years. 847 people died. You adopted anyway. Was the delay principled or was it pride?</p>
+      </div>
+      <div class="res-cta res-cta-delayed">
         <a href="about.html" class="btn-about">About &amp; Sources →</a>
         <button class="btn-restart" onclick="restart()">Try a different path</button>
       </div>
@@ -539,7 +655,10 @@
         <p>Cabral (1973) wrote that liberation is not a gift — it requires building the capacity that colonial structures deliberately prevented. AfriSat proves this: the technology gap is not natural. It was engineered over centuries of extraction.</p>
         <p>The question is whether the current generation should bear that cost, or whether the demand for immediate sovereignty is itself a sacrifice imposed on the powerless by those who will not feel it.</p>
       </div>
-      <div class="res-cta">
+      <div class="ending-question">
+        <p class="eq-text">Seven years to build what SpaceX offered in six weeks. Is patience a luxury that only the connected can afford?</p>
+      </div>
+      <div class="res-cta res-cta-delayed">
         <a href="about.html" class="btn-about">About &amp; Sources →</a>
         <button class="btn-restart" onclick="restart()">Try a different path</button>
       </div>
@@ -563,7 +682,10 @@
         <p>Moyo (2012) warned that the narrative of "South-South cooperation" can mask new forms of extraction. China's infrastructure model in Africa — build, finance, maintain, control — mirrors colonial patterns with updated language.</p>
         <p>The question is not which empire is kinder. The question is whether any nation in the Global South can achieve genuine digital sovereignty when every available path was paved by someone else.</p>
       </div>
-      <div class="res-cta">
+      <div class="ending-question">
+        <p class="eq-text">You rejected American dependency and chose Chinese dependency. Is the ability to choose your colonizer a form of sovereignty?</p>
+      </div>
+      <div class="res-cta res-cta-delayed">
         <a href="about.html" class="btn-about">About &amp; Sources →</a>
         <button class="btn-restart" onclick="restart()">Try a different path</button>
       </div>
