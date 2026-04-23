@@ -38,9 +38,32 @@
       <span class="pp-dot" id="ppd-2"></span>
       <span class="pp-dot" id="ppd-3"></span>
       <span class="pp-dot" id="ppd-4"></span>
+      <span class="pp-dot" id="ppd-5"></span>
+      <span class="pp-dot" id="ppd-6"></span>
     </div>
 
+    <!-- Scene 1: Meet Amara -->
     <div id="pp-1" class="pp-scene active">
+      <div class="pp-inner">
+        <p class="pp-eyebrow">Mweru District · Rural Kwanda</p>
+        <div class="pp-card pp-card-amara">
+          <div class="pp-amara-header">
+            <div class="pp-amara-avatar">A</div>
+            <div>
+              <p class="pp-amara-name">Amara Diallo</p>
+              <p class="pp-amara-role">Head Nurse · Mweru District Hospital</p>
+            </div>
+          </div>
+          <p class="pp-amara-quote">"Last Tuesday a young man came in with symptoms I didn't recognise. I had three textbooks, none of them recent. The nearest specialist is six hours away. I did what I could."</p>
+          <p class="pp-amara-quote pp-amara-outcome">"He didn't make it. If I'd had internet access, I would have diagnosed him in two minutes."</p>
+        </div>
+        <p class="pp-scene-context">Amara is one of <strong>312 rural clinic staff</strong> across Kwanda with no reliable internet. You've spent the last year trying to change that.</p>
+        <button class="btn-pp-continue" onclick="advancePrePhase(2)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- Scene 2: World Bank rejection -->
+    <div id="pp-2" class="pp-scene">
       <div class="pp-inner">
         <p class="pp-eyebrow">3 months ago · World Bank</p>
         <div class="pp-card pp-card-letter">
@@ -48,11 +71,13 @@
           <p class="pp-letter-body">Your application for $200M in undersea cable infrastructure funding has been reviewed. Given the current allocation of the Digital Infrastructure Cycle, <strong>your application has been noted for the next review period.</strong></p>
           <p class="pp-letter-verdict">Expected review timeline: <strong>18–24 months.</strong></p>
         </div>
-        <button class="btn-pp-continue" onclick="advancePrePhase(2)">Continue →</button>
+        <p class="pp-scene-context">Amara's patients can't wait 18 months.</p>
+        <button class="btn-pp-continue" onclick="advancePrePhase(3)">Continue →</button>
       </div>
     </div>
 
-    <div id="pp-2" class="pp-scene">
+    <!-- Scene 3: Safaricom pricing -->
+    <div id="pp-3" class="pp-scene">
       <div class="pp-inner">
         <p class="pp-eyebrow">6 weeks ago · Regional Telecom</p>
         <div class="pp-card">
@@ -72,11 +97,13 @@
             </div>
           </div>
         </div>
-        <button class="btn-pp-continue" onclick="advancePrePhase(3)">Continue →</button>
+        <p class="pp-scene-context">Amara earns $4.20 a month. She can't subsidise her own connectivity.</p>
+        <button class="btn-pp-continue" onclick="advancePrePhase(4)">Continue →</button>
       </div>
     </div>
 
-    <div id="pp-3" class="pp-scene">
+    <!-- Scene 4: AfriSat timeline + Huawei offer -->
+    <div id="pp-4" class="pp-scene">
       <div class="pp-inner">
         <p class="pp-eyebrow">Last week · African Union</p>
         <div class="pp-card">
@@ -97,17 +124,44 @@
             <button class="btn-pp-decline" onclick="respondRouters(false)">Decline</button>
           </div>
         </div>
-        <button class="btn-pp-continue hidden" id="btn-pp-3-next" onclick="advancePrePhase(4)">Continue →</button>
+        <button class="btn-pp-continue hidden" id="btn-pp-3-next" onclick="advancePrePhase(5)">Continue →</button>
       </div>
     </div>
 
-    <div id="pp-4" class="pp-scene">
+    <!-- Scene 5: The stakes, through Amara's eyes -->
+    <div id="pp-5" class="pp-scene">
+      <div class="pp-inner">
+        <p class="pp-eyebrow">This morning · Your office</p>
+        <div class="pp-card pp-card-stakes">
+          <p class="pp-stakes-lead">While you've been in meetings, Amara has been working.</p>
+          <div class="pp-stakes-grid">
+            <div class="pp-stakes-stat">
+              <span class="pp-stakes-num">312</span>
+              <span class="pp-stakes-lbl">rural clinics offline</span>
+            </div>
+            <div class="pp-stakes-stat">
+              <span class="pp-stakes-num">847</span>
+              <span class="pp-stakes-lbl">schools with no connectivity</span>
+            </div>
+            <div class="pp-stakes-stat">
+              <span class="pp-stakes-num">2.4M</span>
+              <span class="pp-stakes-lbl">citizens cut off</span>
+            </div>
+          </div>
+          <p class="pp-stakes-footer">You have tried every option. The bureaucracies have said no. The market won't reach these people. Africa's own satellite is nine years away.</p>
+        </div>
+        <button class="btn-pp-continue" onclick="advancePrePhase(6)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- Scene 6: SpaceX offer -->
+    <div id="pp-6" class="pp-scene">
       <div class="pp-inner pp-inner-final">
         <p class="pp-eyebrow">Today</p>
         <p class="pp-final-intro">Then SpaceX called.</p>
         <div class="pp-final-offer">
           <p>Nationwide satellite internet. <strong>Operational in six weeks.</strong> No infrastructure investment required from Kwanda.</p>
-          <p style="margin-top:.75rem;color:rgba(233,229,221,0.5);font-style:italic;">There is no viable alternative. There has never been one.</p>
+          <p style="margin-top:.75rem;color:rgba(233,229,221,0.5);font-style:italic;">Amara could be online by the end of the month.</p>
         </div>
         <button class="btn-primary" onclick="enterMainExperience()">Make your choice →</button>
       </div>
@@ -206,12 +260,16 @@
           <p class="tp-quote" id="tp-quote-joy"></p>
         </div>
         <div class="tp-col tp-right">
-          <p class="tp-timer-label">Three years pass —</p>
-          <p class="tp-timer-countdown"><span id="timer-sec">8</span><span class="tp-timer-unit">s</span></p>
+          <p class="tp-timer-label">Time passes in Kwanda</p>
+          <p class="tp-timer-countdown"><span id="timer-days">Day 0</span></p>
           <div class="tp-timer-track">
             <div id="timer-fill" class="tp-timer-fill"></div>
           </div>
           <p class="tp-map-hint">Click the glowing dots on the map to hear from citizens</p>
+          <div id="joy-transition-prompt" class="hidden">
+            <p class="jtp-text">Something has shifted. The data is flowing — but where?</p>
+            <button class="btn-jtp" onclick="manualTriggerCrimea()">Year 3 — See what changed →</button>
+          </div>
         </div>
       </div>
 
@@ -743,6 +801,42 @@
           <button class="btn-contract-back" onclick="document.getElementById('contract-overlay').classList.add('hidden')">← Back</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Data-flow extraction primer -->
+  <div id="data-flow-primer" class="hidden">
+    <div class="dfp-modal">
+      <p class="dfp-eyebrow">Before you begin</p>
+      <h2 class="dfp-title">What you just agreed to</h2>
+      <div class="dfp-diagram">
+        <div class="dfp-node dfp-node-kwanda">
+          <span class="dfp-node-icon">🌍</span>
+          <span class="dfp-node-label">Kwanda</span>
+          <span class="dfp-node-sub">schools · hospitals · govt</span>
+        </div>
+        <div class="dfp-arrow-wrap">
+          <div class="dfp-arrow-line"></div>
+          <span class="dfp-arrow-label">all data</span>
+        </div>
+        <div class="dfp-node dfp-node-starlink">
+          <span class="dfp-node-icon">📡</span>
+          <span class="dfp-node-label">Starlink</span>
+          <span class="dfp-node-sub">SpaceX · private</span>
+        </div>
+        <div class="dfp-arrow-wrap">
+          <div class="dfp-arrow-line"></div>
+          <span class="dfp-arrow-label">routed through</span>
+        </div>
+        <div class="dfp-node dfp-node-us">
+          <span class="dfp-node-icon">🏛️</span>
+          <span class="dfp-node-label">US Servers</span>
+          <span class="dfp-node-sub">CLOUD Act · no appeal</span>
+        </div>
+      </div>
+      <p class="dfp-body">Every hospital record, government message, and student search now flows through servers in California — subject to US law, accessible to US federal authorities without a Kwandan court order.</p>
+      <p class="dfp-body dfp-body-tension">Your citizens will be online. <strong>The question is who else is watching.</strong></p>
+      <button class="btn-dfp-continue" onclick="dismissDataFlowPrimer()">My people need this connection. Continue →</button>
     </div>
   </div>
 

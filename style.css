@@ -198,10 +198,9 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
 /* Timer (joy right col) */
 .tp-timer-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); }
-.tp-timer-countdown { font-size:3rem; font-weight:700; color:var(--accent); line-height:1; }
-.tp-timer-unit { font-size:1.2rem; font-weight:400; }
+.tp-timer-countdown { font-size:1.65rem; font-weight:700; color:var(--accent); line-height:1.1; font-variant-numeric: tabular-nums; }
 .tp-timer-track { height:4px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; margin-top:.5rem; }
-.tp-timer-fill { height:100%; width:100%; background:var(--accent); border-radius:2px; transition:width 8s linear; }
+.tp-timer-fill { height:100%; width:100%; background:var(--accent); border-radius:2px; transition:width 14s linear; }
 
 /* Money display (anger left col) */
 .money-big { display:flex; flex-direction:column; gap:.15rem; }
@@ -1109,6 +1108,254 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   color: rgba(233,229,221,0.7);
 }
 .pp-final-offer strong { color: var(--text); }
+
+/* ══════════════════════════════════════
+   AMARA NARRATIVE SCENES (Phase 4)
+══════════════════════════════════════ */
+.pp-card-amara {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 2px 4px 4px 2px;
+  padding: 1.25rem 1.5rem;
+}
+
+.pp-amara-header {
+  display: flex; align-items: center; gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.pp-amara-avatar {
+  width: 2.4rem; height: 2.4rem; border-radius: 50%;
+  background: var(--accent); color: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1rem; flex-shrink: 0;
+}
+
+.pp-amara-name {
+  font-weight: 600; font-size: 0.9rem; color: var(--text);
+  margin: 0;
+}
+
+.pp-amara-role {
+  font-size: 0.72rem; color: var(--muted);
+  letter-spacing: 0.04em; margin: 0.15rem 0 0;
+}
+
+.pp-amara-quote {
+  font-family: var(--serif); font-style: italic;
+  font-size: 0.95rem; line-height: 1.7; color: rgba(233,229,221,0.75);
+  margin: 0 0 0.6rem;
+}
+
+.pp-amara-outcome {
+  color: var(--angry); font-style: italic;
+  border-top: 1px solid rgba(232,64,64,0.15);
+  padding-top: 0.6rem; margin-top: 0.2rem;
+}
+
+.pp-scene-context {
+  font-size: 0.82rem; color: var(--muted); margin: 1rem 0;
+  line-height: 1.6;
+}
+
+.pp-scene-context strong { color: var(--text); }
+
+/* Stakes scene */
+.pp-card-stakes {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.4rem 1.75rem;
+}
+
+.pp-stakes-lead {
+  font-family: var(--serif); font-size: 0.95rem;
+  color: var(--muted); margin: 0 0 1.1rem; font-style: italic;
+}
+
+.pp-stakes-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; margin-bottom: 1.1rem;
+}
+
+.pp-stakes-stat {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.25rem; text-align: center;
+}
+
+.pp-stakes-num {
+  font-size: 1.5rem; font-weight: 700; color: var(--accent);
+  line-height: 1;
+}
+
+.pp-stakes-lbl {
+  font-size: 0.65rem; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+.pp-stakes-footer {
+  font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+  border-top: 1px solid var(--border); padding-top: 0.9rem; margin: 0;
+}
+
+/* ══════════════════════════════════════
+   JOY TRANSITION PROMPT (Phase 2)
+══════════════════════════════════════ */
+#joy-transition-prompt {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  animation: fadeInUp 0.5s ease both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.jtp-text {
+  font-family: var(--serif); font-style: italic;
+  font-size: 0.8rem; color: var(--muted);
+  margin: 0 0 0.6rem; line-height: 1.5;
+}
+
+.btn-jtp {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: var(--text); padding: 0.5rem 1rem;
+  font-family: var(--sans); font-size: 0.72rem;
+  letter-spacing: 0.06em; cursor: pointer;
+  border-radius: 2px; transition: all 0.2s; width: 100%;
+  text-align: left;
+}
+
+.btn-jtp:hover {
+  border-color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.04);
+}
+
+/* ══════════════════════════════════════
+   DATA-FLOW PRIMER OVERLAY (Phase 5)
+══════════════════════════════════════ */
+#data-flow-primer {
+  position: fixed; inset: 0;
+  background: rgba(8,8,14,0.92);
+  backdrop-filter: blur(8px);
+  z-index: 1400;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+}
+
+#data-flow-primer.hidden { display: none; }
+
+.dfp-modal {
+  background: var(--bg-2);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  max-width: 560px; width: 100%;
+  padding: 2.25rem 2.5rem;
+  text-align: center;
+}
+
+.dfp-eyebrow {
+  font-size: 0.65rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--angry);
+  margin: 0 0 0.6rem;
+}
+
+.dfp-title {
+  font-family: var(--serif); font-size: 1.5rem;
+  color: var(--text); margin: 0 0 1.75rem; font-weight: 400;
+}
+
+.dfp-diagram {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin-bottom: 1.75rem;
+  flex-wrap: nowrap;
+}
+
+.dfp-node {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.3rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 4px; padding: 0.85rem 1rem;
+  min-width: 100px; flex-shrink: 0;
+}
+
+.dfp-node-us { border-color: rgba(232,64,64,0.3); }
+
+.dfp-node-icon { font-size: 1.4rem; }
+
+.dfp-node-label {
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--text); letter-spacing: 0.04em;
+}
+
+.dfp-node-sub {
+  font-size: 0.6rem; color: var(--muted);
+  letter-spacing: 0.04em; text-align: center;
+  line-height: 1.4;
+}
+
+.dfp-node-us .dfp-node-sub { color: rgba(232,64,64,0.7); }
+
+.dfp-arrow-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.2rem;
+  padding: 0 0.4rem; flex-shrink: 0;
+}
+
+.dfp-arrow-line {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, var(--border), rgba(255,255,255,0.15));
+  position: relative;
+}
+
+.dfp-arrow-line::after {
+  content: '›'; position: absolute;
+  right: -6px; top: -9px;
+  color: var(--muted); font-size: 1rem;
+}
+
+.dfp-arrow-label {
+  font-size: 0.56rem; color: var(--muted);
+  letter-spacing: 0.05em; white-space: nowrap;
+}
+
+.dfp-body {
+  font-family: var(--serif); font-size: 0.95rem;
+  line-height: 1.75; color: rgba(233,229,221,0.65);
+  margin: 0 0 0.85rem; text-align: left;
+}
+
+.dfp-body-tension {
+  color: rgba(233,229,221,0.8);
+  border-top: 1px solid var(--border);
+  padding-top: 0.85rem; margin-top: 0.4rem;
+}
+
+.dfp-body-tension strong { color: var(--text); }
+
+.btn-dfp-continue {
+  margin-top: 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--muted); padding: 0.75rem 1.5rem;
+  font-family: var(--sans); font-size: 0.78rem;
+  letter-spacing: 0.06em; cursor: pointer;
+  border-radius: 2px; transition: all 0.25s;
+  width: 100%;
+}
+
+.btn-dfp-continue:hover {
+  border-color: rgba(255,255,255,0.3);
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+}
 
 /* ══════════════════════════════════════
    ENDING QUESTIONS (Phase 8)

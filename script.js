@@ -223,6 +223,7 @@ let purchasingPowerInterval = null;
 let vignetteTimer           = null;
 let angerPhaseStarted       = false;
 let acceptedRouters         = false;
+let crimeaTriggered         = false;
 let newsTickerInterval      = null;
 
 // ══════════════════════════════════════════════════════════════
@@ -510,28 +511,55 @@ function stopQuotes() {
 //  JOY TIMER (8s countdown → Crimea flash)
 // ══════════════════════════════════════════════════════════════
 
+const JOY_TIMER_DURATION = 14;  // real seconds
+const JOY_SIM_DAYS       = 1095; // 3 years
+
+function simDay(secondsElapsed) {
+  return Math.round((secondsElapsed / JOY_TIMER_DURATION) * JOY_SIM_DAYS);
+}
+
+function updateDayDisplay(secondsElapsed) {
+  const el = document.getElementById('timer-days');
+  if (el) el.textContent = 'Day ' + simDay(secondsElapsed).toLocaleString();
+}
+
 function startJoyTimer() {
-  timerSeconds = 8;
-  document.getElementById('timer-sec').textContent = timerSeconds;
+  crimeaTriggered = false;
+  timerSeconds = JOY_TIMER_DURATION;
+  updateDayDisplay(0);
 
   // CSS transition depletion
   const fill = document.getElementById('timer-fill');
   fill.style.transition = 'none';
   fill.style.width = '100%';
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    fill.style.transition = 'width 8s linear';
+    fill.style.transition = `width ${JOY_TIMER_DURATION}s linear`;
     fill.style.width = '0%';
   }));
 
   timerInterval = setInterval(() => {
     timerSeconds--;
-    const el = document.getElementById('timer-sec');
-    if (el) el.textContent = Math.max(timerSeconds, 0);
+    const elapsed = JOY_TIMER_DURATION - Math.max(timerSeconds, 0);
+    updateDayDisplay(elapsed);
     if (timerSeconds <= 0) {
       clearInterval(timerInterval);
-      triggerCrimea();
+      // Show user-controlled prompt instead of auto-advancing
+      const prompt = document.getElementById('joy-transition-prompt');
+      if (prompt) prompt.classList.remove('hidden');
+      // Fallback: auto-advance after 6 more seconds if user doesn't click
+      setTimeout(() => {
+        if (!crimeaTriggered) triggerCrimea();
+      }, 6000);
     }
   }, 1000);
+}
+
+function manualTriggerCrimea() {
+  if (crimeaTriggered) return;
+  crimeaTriggered = true;
+  const prompt = document.getElementById('joy-transition-prompt');
+  if (prompt) prompt.classList.add('hidden');
+  triggerCrimea();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -868,8 +896,19 @@ const CHINESE_ALT_TOASTS = [
 ];
 
 let toastTimeouts = [];
+let toastQueue    = [];
+let toastActive   = false;
 
 function showToast(t) {
+  toastQueue.push(t);
+  drainToastQueue();
+}
+
+function drainToastQueue() {
+  if (toastActive || toastQueue.length === 0) return;
+  toastActive = true;
+  const t = toastQueue.shift();
+
   const container = document.getElementById('toast-container');
   const el = document.createElement('div');
   el.className = 'toast' + (t.critical ? ' toast-critical' : '');
@@ -883,7 +922,11 @@ function showToast(t) {
 
   setTimeout(() => {
     el.classList.add('removing');
-    setTimeout(() => el.remove(), 420);
+    setTimeout(() => {
+      el.remove();
+      toastActive = false;
+      drainToastQueue();
+    }, 420);
   }, 6500);
 }
 
@@ -897,6 +940,8 @@ function scheduleToasts(list) {
 function clearToasts() {
   toastTimeouts.forEach(t => clearTimeout(t));
   toastTimeouts = [];
+  toastQueue    = [];
+  toastActive   = false;
   const container = document.getElementById('toast-container');
   if (container) container.innerHTML = '';
 }
@@ -1496,7 +1541,7 @@ function addJoyLabels() {
         const el = document.getElementById('jlbl-' + c.id);
         if (el) el.classList.add('visible');
       }, 150);
-    }, 2000 + i * 500);
+    }, 2000 + i * 900);
   });
 }
 
@@ -1518,7 +1563,7 @@ function advancePrePhase(n) {
   document.querySelectorAll('.pp-scene').forEach(s => s.classList.remove('active'));
   const next = document.getElementById('pp-' + n);
   if (next) next.classList.add('active');
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 6; i++) {
     const dot = document.getElementById('ppd-' + i);
     if (dot) dot.classList.toggle('active', i <= n);
   }
@@ -1559,6 +1604,11 @@ function showContract() {
 
 function signContract() {
   document.getElementById('contract-overlay').classList.add('hidden');
+  document.getElementById('data-flow-primer').classList.remove('hidden');
+}
+
+function dismissDataFlowPrimer() {
+  document.getElementById('data-flow-primer').classList.add('hidden');
   makeChoice('adopt');
 }
 
@@ -1593,7 +1643,7 @@ function makeChoice(choice) {
     updateMarkers('joy');
     setHappiness('joy');
     showPanel('tp-joy');
-    showMoneySidebar('joy');
+    setTimeout(() => showMoneySidebar('joy'), 3000);
     startQuotes('tp-quote-joy', 'quote_joy');
     scheduleToasts(JOY_TOASTS);
     addJoyLabels();
@@ -1613,6 +1663,7 @@ function makeChoice(choice) {
 // ══════════════════════════════════════════════════════════════
 
 function triggerCrimea() {
+  crimeaTriggered = true;
   stopQuotes();
   document.getElementById('crimea-flash').classList.add('active');
   crimeaAutoTimer = setTimeout(dismissCrimea, 6000);
