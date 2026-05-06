@@ -511,47 +511,54 @@ function stopQuotes() {
 //  JOY TIMER (8s countdown → Crimea flash)
 // ══════════════════════════════════════════════════════════════
 
-const JOY_TIMER_DURATION = 14;  // real seconds
-const JOY_SIM_DAYS       = 1095; // 3 years
+const JOY_TIMER_DURATION = 20000; // ms — 20 real seconds = 3 simulation years
+const JOY_SIM_DAYS       = 1095;  // 3 years
 
-function simDay(secondsElapsed) {
-  return Math.round((secondsElapsed / JOY_TIMER_DURATION) * JOY_SIM_DAYS);
-}
-
-function updateDayDisplay(secondsElapsed) {
-  const el = document.getElementById('timer-days');
-  if (el) el.textContent = 'Day ' + simDay(secondsElapsed).toLocaleString();
+function cancelJoyTimer() {
+  if (!timerInterval) return;
+  if (typeof timerInterval === 'object' && timerInterval.cancel) {
+    timerInterval.cancel();
+  } else {
+    clearTimeout(timerInterval);
+  }
+  timerInterval = null;
 }
 
 function startJoyTimer() {
   crimeaTriggered = false;
-  timerSeconds = JOY_TIMER_DURATION;
-  updateDayDisplay(0);
 
-  // CSS transition depletion
-  const fill = document.getElementById('timer-fill');
-  fill.style.transition = 'none';
-  fill.style.width = '100%';
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    fill.style.transition = `width ${JOY_TIMER_DURATION}s linear`;
-    fill.style.width = '0%';
-  }));
+  const daysEl = document.getElementById('timer-days');
+  const fill   = document.getElementById('timer-fill');
 
-  timerInterval = setInterval(() => {
-    timerSeconds--;
-    const elapsed = JOY_TIMER_DURATION - Math.max(timerSeconds, 0);
-    updateDayDisplay(elapsed);
-    if (timerSeconds <= 0) {
-      clearInterval(timerInterval);
-      // Show user-controlled prompt instead of auto-advancing
+  if (daysEl) daysEl.textContent = 'Day 0';
+  if (fill)   { fill.style.transition = 'none'; fill.style.width = '100%'; }
+
+  const startTime = Date.now();
+  let rafId = null;
+
+  function tick() {
+    const elapsed  = Date.now() - startTime;
+    const progress = Math.min(elapsed / JOY_TIMER_DURATION, 1);
+    const day      = Math.round(progress * JOY_SIM_DAYS);
+
+    if (daysEl) daysEl.textContent = 'Day ' + day.toLocaleString();
+    if (fill)   fill.style.width = (100 * (1 - progress)).toFixed(2) + '%';
+
+    if (progress < 1) {
+      rafId = requestAnimationFrame(tick);
+    } else {
+      // Timer finished — show user prompt, fallback auto-advance after 6s
       const prompt = document.getElementById('joy-transition-prompt');
       if (prompt) prompt.classList.remove('hidden');
-      // Fallback: auto-advance after 6 more seconds if user doesn't click
-      setTimeout(() => {
+      timerInterval = setTimeout(() => {
         if (!crimeaTriggered) triggerCrimea();
       }, 6000);
     }
-  }, 1000);
+  }
+
+  // Store rafId so restart can cancel it
+  timerInterval = { cancel: () => { if (rafId) cancelAnimationFrame(rafId); } };
+  rafId = requestAnimationFrame(tick);
 }
 
 function manualTriggerCrimea() {
@@ -1347,7 +1354,7 @@ function showEnding() {
   clearToasts();
   removeFlowLines();
   removeRejectLabels();
-  if (timerInterval) clearInterval(timerInterval);
+  cancelJoyTimer();
 
   const endingMap = {
     'negotiate':  'ending-negotiate',

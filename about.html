@@ -138,6 +138,27 @@
       margin: 3.5rem 0 1.25rem;
     }
 
+    /* ── Sub-headings ── */
+    h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 2.25rem 0 0.6rem;
+      line-height: 1.4;
+    }
+
+    h3 + p { margin-top: 0; }
+
+    code {
+      font-family: 'SF Mono', 'Fira Mono', monospace;
+      font-size: 0.82rem;
+      background: rgba(255,255,255,0.06);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+      color: var(--accent);
+    }
+
     /* ── Body prose ── */
     p {
       font-family: var(--serif);
@@ -301,7 +322,7 @@
     <div class="meta-grid">
       <div class="meta-item">
         <div class="meta-label">Designer</div>
-        <div class="meta-value">[Your Name]</div>
+        <div class="meta-value">Kien Le</div>
       </div>
       <div class="meta-item">
         <div class="meta-label">Course</div>
@@ -387,6 +408,87 @@
 
     <p>
       The goal is not to tell you what to think about Starlink. The goal is to make the weight of the question feel impossible to ignore.
+    </p>
+
+    <hr />
+
+    <!-- ── Design Explanation ── -->
+    <h2>Design Explanation</h2>
+
+    <p>
+      The tool is a single-page web simulation built in vanilla HTML, CSS, and JavaScript with no framework or build step. It runs entirely in the browser from three files — <em>index.html</em>, <em>style.css</em>, and <em>script.js</em> — and requires no installation or server. An interactive map is provided by Leaflet.js.
+    </p>
+
+    <p>
+      The design is structured in five sequential phases, each serving a specific function in the ethical argument.
+    </p>
+
+    <h3>Phase 1 — Narrative Onboarding</h3>
+
+    <p>
+      Before any choice is presented, the user passes through six scenes that establish why no good option exists. These are not background reading — they are the argument. Scene 1 introduces Amara Diallo, a nurse at a rural clinic whose patient died for lack of internet access. Scenes 2–4 show the three alternatives that have already failed: a World Bank rejection, a regional provider whose prices are triple the average monthly income, and an African satellite consortium nine years from completion. Scene 5 summarises the stakes (312 clinics offline, 847 schools without connectivity, 2.4 million people excluded). Scene 6 presents the SpaceX offer.
+    </p>
+
+    <p>
+      The purpose of this sequence is to make the choice structurally coerced before the user encounters it. Testing showed that users who arrived directly at the choice without this context treated it as a straightforward policy decision. The onboarding is designed to close that exit.
+    </p>
+
+    <h3>Phase 2 — The Choice and the Contract</h3>
+
+    <p>
+      The main experience opens on an interactive map showing six communities across Africa, Southeast Asia, and Latin America as grey dots. The user must visit at least three communities before the choice buttons activate — this ensures they encounter the human cost of exclusion before deciding.
+    </p>
+
+    <p>
+      Choosing to adopt Starlink triggers a contract overlay — a realistic legal document with four clauses drawn from standard technology service agreements. The clauses cover data jurisdiction (US law, CLOUD Act), service termination rights (SpaceX discretion, no arbitration), pricing modification rights, and data sovereignty requests (no binding commitment). The user must sign — they cannot skip the contract.
+    </p>
+
+    <p>
+      After signing, a data-flow primer overlay shows the extraction architecture before the joy phase begins: Kwanda → Starlink → US Servers. This is the only moment in the tool where the structure is made explicitly visible rather than experienced through consequence.
+    </p>
+
+    <h3>Phase 3 — Consequence Simulation</h3>
+
+    <p>
+      The joy phase simulates three years of connectivity in 20 real seconds. A day counter runs from Day 0 to Day 1,095 using a <code>requestAnimationFrame</code> loop. As time passes: map markers shift from grey to glowing green, community stat labels fade in one at a time (staggered to avoid information overload), toast notifications appear sequentially — one at a time, each fully visible before the next — reporting real connectivity benefits (school pass rates, clinic stockouts, language archives). A phone notification from the user's daughter reads: "Papa, we have internet at school!!" A second message, from the US Ambassador, congratulates Kwanda on its "forward-thinking leadership."
+    </p>
+
+    <p>
+      At Day 1,095, rather than auto-advancing, the tool shows a prompt: "Something has shifted. The data is flowing — but where?" The user clicks to continue. This moment of user-controlled pacing was introduced after testing showed that auto-advancing felt disorienting. The pause gives the user a beat of reflection before the Crimea flash.
+    </p>
+
+    <p>
+      The Crimea flash is a full-screen overlay: "September 2022 — Elon Musk personally orders Starlink switched off over Crimea. A private individual just determined the outcome of a military conflict. No vote. No court. No appeal." The screen is clickable to dismiss. After dismissal, the map redraws: markers shift to orange, data flow lines appear between communities and a server node, a money counter begins ticking upward ($2.4M per month leaving Kwanda), and anger-phase toasts report surveillance, pricing increases, and subpoenaed patient records. The same connectivity that caused joy is revealed as the mechanism of extraction.
+    </p>
+
+    <p>
+      The reject path runs in parallel: markers turn dark, a days-without-access counter begins climbing, and three years of consequences unfold through grief-phase toasts — clinic deaths, school closures, missed development opportunities. Neither path is designed to feel comfortable.
+    </p>
+
+    <h3>Phase 4 — The Second Choice</h3>
+
+    <p>
+      After the consequence phase, the user faces a second decision. On the adopt path: negotiate better terms with SpaceX (partial concessions, continued dependency), accept the dependency and build domestic capacity in parallel, or fund the African Union satellite consortium. On the reject path: capitulate and adopt Starlink anyway, join a regional fibre consortium, or accept Chinese infrastructure on equivalent terms. Each of the six options represents a real-world policy response that governments in the Global South have actually taken or considered.
+    </p>
+
+    <h3>Phase 5 — Endings</h3>
+
+    <p>
+      Each of the six paths ends on a dedicated screen. Every ending names what actually happened — what the real-world equivalent of this choice produced — and identifies the post-colonial theorist whose framework explains why it was structurally inevitable. Endings are not graded as good or bad. Each ends with a question the user is left to sit with. An "About & Sources" link leads to this page.
+    </p>
+
+    <h3>Key Design Decisions</h3>
+
+    <p>
+      <strong>No correct answer.</strong> The tool does not signal which choice is right. Both paths produce harm. The impact bars (Human Welfare, Economic Growth, Sovereignty, Infrastructure) shift in both directions on every path. The endings name failure modes, not victories.
+    </p>
+
+    <p>
+      <strong>Information sequencing over information density.</strong> Early versions fired all stimuli simultaneously — map labels, toasts, sidebar statistics, and top-panel text all appeared at once. Testing showed this produced confusion, not reflection. The current version staggers every information layer: the sidebar delays 3 seconds after the choice, map labels appear one community at a time 900ms apart, and toasts queue so only one is visible at a time. The argument is the same; the pacing allows the user to actually receive it.
+    </p>
+
+    <p>
+      <strong>Specificity over abstraction.</strong> Every statistic in the tool is drawn from real data — drug stockout rates in East African clinics, UNESCO literacy statistics, actual Starlink contract terms, the 2022 Crimea incident. Kwanda is fictional; its conditions are not. The decision to use a fictional nation was deliberate: it removes the cognitive escape hatch of "but I know how this story ends" that real country names provide.
     </p>
 
     <hr />
