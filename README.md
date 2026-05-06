@@ -1,14 +1,32 @@
 # The Choice — Starlink & Digital Sovereignty
 
-An interactive ethics simulation for Critical Media Ethics (CME), 2026.
+An interactive ethics simulation where you play the Minister of Digital Infrastructure of Kwanda, a fictional East African nation, and must decide whether to adopt Starlink to connect 2.4 million people who have no internet access.
+
+**[Play the tool →](https://shiken08.github.io/starlink-ethics-tool/)**
 
 ---
 
-## What This Is
+## How to Use
 
-**The Choice** is a branching narrative web tool that puts the user in the role of a government minister deciding whether to adopt Starlink in a fictional East African nation called Kwanda. The tool is designed to make the ethical weight of digital sovereignty tangible — not through argument or lecture, but through simulated consequence.
+1. **Read the context** — six short scenes establish why no good option exists before the choice appears
+2. **Visit communities** — click at least 3 dots on the map to hear from citizens before the choice unlocks
+3. **Make your choice** — adopt Starlink or reject it. Read the contract before you sign.
+4. **Watch three years pass** — live consequences unfold on the map over 20 seconds
+5. **Face the second decision** — shaped by what just happened
+6. **See your ending** — six possible paths, each named by a post-colonial theorist
 
-The target audience is someone with no prior knowledge of postcolonialism or digital infrastructure. They should finish the experience having *felt* something, not just having learned a fact.
+There is no correct answer. Both options cause harm.
+
+---
+
+## About
+
+- **Designer:** Kien Le
+- **Course:** Critical Media Ethics (CME), 2026
+- **Technology:** Starlink / Low-Earth Orbit Satellite Internet
+- **Ethical Framework:** Post-Colonial Ethics
+
+For the full design explanation, annotated sources, and ethical argumentation, see the [About & Sources](about.html) page inside the tool (linked on every ending screen).
 
 ---
 
